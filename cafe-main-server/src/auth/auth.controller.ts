@@ -14,26 +14,27 @@ import { JwtAuthGuard } from './guard/jwtAuthGuard';
 import { RoleGuard } from './guard/roleGuard';
 import { UserRole } from '../user/entity/user.entity';
 import { Roles } from './roles/roles.decorator';
+import { API } from '../constants/endpoints';
 
-@Controller('auth')
+@Controller(API.AUTH)
 export class AuthController {
   @Inject(AuthService)
   private readonly service: AuthService;
 
   @UseGuards(LocalAuthGuard)
-  @Post('/login')
+  @Post(API.LOG_IN)
   async login(@Body() user: CreateUserDto): Promise<any> {
     return this.service.login(user);
   }
 
-  @Post('/register')
+  @Post(API.SIGN_UP)
   async register(@Body() user: CreateUserDto): Promise<any> {
     return this.service.register(user);
   }
 
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Get('/users')
+  @Get(API.GET_ALL_USERS)
   async getProfile(@Req() req) {
     return this.service.allUsers();
   }
