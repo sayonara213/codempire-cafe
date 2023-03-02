@@ -25,6 +25,7 @@ export const COLOR = {
   light: '#c2c2c3',
   white: '#FFFFFF',
   border: '#e0e0e0',
+  borderDark: '#303032',
   notActive: '#AAADB3',
   purple: '#6200EE',
 };

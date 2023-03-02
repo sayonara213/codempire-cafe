@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { getRole, getToken } from "../../../services/auth.service";
+
+import { getToken, getRole } from "../../../services/storage.service";
 import { ROUTES } from './../../../constants/routes';
 
 const RoleRouter = () => {

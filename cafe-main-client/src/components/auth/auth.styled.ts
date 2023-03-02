@@ -69,3 +69,9 @@ export const SkipAuth = styled.a`
   font-size: ${({ theme }) => theme.fontSize.small};
   color: ${({ theme }) => theme.color.text};
 `;
+
+
+export const AuthInputWrap = styled.div`
+  width: 100%;
+  margin-bottom: 20px;
+`

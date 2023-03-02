@@ -22,10 +22,10 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
   };
 
   const onSubmit = async (formsData: FormValues) => {
-      const user = isLogin ? await login(formsData) : await register(formsData);
-      if (user) {
-        navigate(ROUTES.menu);
-      }
+    const user = isLogin ? await login(formsData) : await register(formsData);
+    if (user) {
+      navigate(ROUTES.menu);
+    }
   };
 
   const formik = useFormik({
@@ -41,13 +41,16 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
           <Styled.Logo src={IMAGES.logo} />
         </Styled.AuthTitleWrap>
         {formInputs.map((input, index) => (
-          <Input
-            key={index}
-            placeholder={input}
-            value={formik.values[input.toLowerCase()]}
-            onchange={formik.handleChange}
-            isPassword={input === 'Password'}
-          />
+          <Styled.AuthInputWrap>
+            <Input
+              key={index}
+              placeholder={input}
+              value={formik.values[input.toLowerCase()]}
+              onchange={formik.handleChange}
+              isPassword={input === 'Password'}
+              isLight={true}
+            />
+          </Styled.AuthInputWrap>
         ))}
         {isLogin ? (
           <Styled.AuthAdditionalWrap>
