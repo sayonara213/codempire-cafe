@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -23,6 +24,7 @@ export class User {
   public email: string;
 
   @Column({ type: 'varchar', length: 120 })
+  @Exclude({ toPlainOnly: true })
   public password: string;
 
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })

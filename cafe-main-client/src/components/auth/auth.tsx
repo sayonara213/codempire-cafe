@@ -12,8 +12,11 @@ import { login, register } from '../../services/auth.service';
 import { AuthProps, FormValues } from '../../types/types.auth';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from './../../constants/routes';
+import { useAppDispatch } from './../../hooks/hooks';
+import { setUser } from '../../redux/user.slice';
 
 const Auth: React.FC<AuthProps> = ({ isLogin }) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const formInputs = ['Email', 'Password'];
   const initialValues: FormValues = {
@@ -22,8 +25,9 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
   };
 
   const onSubmit = async (formsData: FormValues) => {
-    const user = isLogin ? await login(formsData) : await register(formsData);
+    const { user } = isLogin ? await login(formsData) : await register(formsData);
     if (user) {
+      dispatch(setUser(user));
       navigate(ROUTES.menu);
     }
   };

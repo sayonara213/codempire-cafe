@@ -26,7 +26,7 @@ export class AuthService {
   async login(user: any) {
     const currentUser = await this.userService.findOne(user.email);
     return {
-      access_token: await this.createToken(currentUser),
+      access_token: await (await this.createToken(currentUser)).access_token,
       user: currentUser,
     };
   }
@@ -34,7 +34,7 @@ export class AuthService {
   async register(user: any) {
     const newUser = await this.userService.createUser(user);
     return {
-      access_token: await this.createToken(newUser),
+      access_token: await (await this.createToken(newUser)).access_token,
       user: newUser,
     };
   }
