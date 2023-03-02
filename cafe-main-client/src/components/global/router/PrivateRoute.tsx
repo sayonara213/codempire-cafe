@@ -1,5 +1,6 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { getToken } from './../../../services/auth.service';
+import { ROUTES } from './../../../constants/routes';
 
 const PrivateRoutes = () => {
 
@@ -7,7 +8,7 @@ const PrivateRoutes = () => {
     console.log(token);
 
     return (
-        token ? <Outlet/> : <Navigate to="/login"/>
+        token ? <Outlet/> : <Navigate to={ROUTES.login}/>
     )
 }
 

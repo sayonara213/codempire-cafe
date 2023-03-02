@@ -16,7 +16,7 @@ const AppRouter: React.FC = () => {
     <Routes>
       <Route element={<Layout />}>
         <Route path='/' element={ <PrivateRoutes/> }>
-          <Route path='/' element={<Navigate to={ROUTES.home} replace />} />
+          <Route path='/' element={<Navigate to={ROUTES.menu} replace />} />
         </Route>
         <Route path={ROUTES.menu} element={ <Main /> }/>
         <Route path={ROUTES.login} element={<Auth isLogin={true} />} />

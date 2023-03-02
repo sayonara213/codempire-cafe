@@ -11,6 +11,7 @@ import Button from '../global/Button/button';
 import { login, register } from '../../services/auth.service';
 import { AuthProps, FormValues } from '../../types/types.auth';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from './../../constants/routes';
 
 const Auth: React.FC<AuthProps> = ({ isLogin }) => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
   const onSubmit = async (formsData: FormValues) => {
       const user = isLogin ? await login(formsData) : await register(formsData);
       if (user) {
-        navigate('/menu');
+        navigate(ROUTES.menu);
       }
   };
 
@@ -51,11 +52,11 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
         {isLogin ? (
           <Styled.AuthAdditionalWrap>
             <Styled.AuthAdditional to={'/'}>Forgot password?</Styled.AuthAdditional>
-            <Styled.AuthAdditional to={'/sign-up'}>Sign up</Styled.AuthAdditional>
+            <Styled.AuthAdditional to={ROUTES.register}>Sign up</Styled.AuthAdditional>
           </Styled.AuthAdditionalWrap>
         ) : (
           <Styled.LoginWrap>
-            <Styled.AuthAdditional to={'/login'}>Log in</Styled.AuthAdditional>
+            <Styled.AuthAdditional to={ROUTES.login}>Log in</Styled.AuthAdditional>
           </Styled.LoginWrap>
         )}
         <Button type={'submit'} isActive={!formik.errors.email && !formik.errors.password}>
