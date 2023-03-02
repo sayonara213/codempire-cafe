@@ -8,19 +8,12 @@ import { IMAGES } from '../../constants/images';
 import * as Styled from './auth.styled';
 import Input from '../global/Input/input';
 import Button from '../global/Button/button';
-import { AuthAdditional } from './auth.styled';
-
-interface FormValues {
-  [key: string]: string;
-  email: string;
-  password: string;
-}
-
-interface AuthProps {
-  isLogin: boolean;
-}
+import { login, register } from '../../services/auth.service';
+import { AuthProps, FormValues } from '../../types/types.auth';
+import { useNavigate } from 'react-router-dom';
 
 const Auth: React.FC<AuthProps> = ({ isLogin }) => {
+  const navigate = useNavigate();
   const formInputs = ['Email', 'Password'];
   const initialValues: FormValues = {
     email: '',
@@ -28,7 +21,10 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
   };
 
   const onSubmit = async (formsData: FormValues) => {
-    console.log(formsData);
+      const user = isLogin ? await login(formsData) : await register(formsData);
+      if (user) {
+        navigate('/menu');
+      }
   };
 
   const formik = useFormik({
@@ -54,12 +50,12 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
         ))}
         {isLogin ? (
           <Styled.AuthAdditionalWrap>
-            <AuthAdditional to={'/'}>Forgot password?</AuthAdditional>
-            <AuthAdditional to={'/sign-up'}>Sign up</AuthAdditional>
+            <Styled.AuthAdditional to={'/'}>Forgot password?</Styled.AuthAdditional>
+            <Styled.AuthAdditional to={'/sign-up'}>Sign up</Styled.AuthAdditional>
           </Styled.AuthAdditionalWrap>
         ) : (
           <Styled.LoginWrap>
-            <AuthAdditional to={'/login'}>Log in</AuthAdditional>
+            <Styled.AuthAdditional to={'/login'}>Log in</Styled.AuthAdditional>
           </Styled.LoginWrap>
         )}
         <Button type={'submit'} isActive={!formik.errors.email && !formik.errors.password}>
