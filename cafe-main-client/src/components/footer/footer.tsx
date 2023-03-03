@@ -11,16 +11,14 @@ const sections = [
 
 const Footer: React.FC = () => {
   return (
-    <Styled.FooterWrap>
-      <Styled.FooterContainer>
-        {sections.map((section) => (
-          <Styled.FooterContent>
-            <Styled.FooterIcon src={IMAGES.footerProfile} />
-            <Styled.FooterText>{section.title}</Styled.FooterText>
-          </Styled.FooterContent>
-        ))}
-      </Styled.FooterContainer>
-    </Styled.FooterWrap>
+    <Styled.FooterContainer>
+      {sections.map((section) => (
+        <Styled.FooterContent>
+          <Styled.FooterIcon src={IMAGES.footerProfile} />
+          <Styled.FooterText>{section.title}</Styled.FooterText>
+        </Styled.FooterContent>
+      ))}
+    </Styled.FooterContainer>
   );
 };
 

@@ -1,18 +1,11 @@
 import styled from 'styled-components';
 
-export const FooterWrap = styled.footer`
-  position: absolute;
-
-  width: 100%;
-  height: 100px;
-  bottom: 0;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const FooterContainer = styled.div`
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
   width: 308px;
   height: 56px;
 
