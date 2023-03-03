@@ -47,7 +47,7 @@ const GlobalStyle = createGlobalStyle`
   ${normalize}
   ${reset}
   body {
-    background: ${COLOR.background};
+    background: ${COLOR.white};
   }
 `;
 

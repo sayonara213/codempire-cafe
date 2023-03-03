@@ -5,6 +5,8 @@ import bell from '../assets/icons/bell.svg';
 import cart from '../assets/icons/cart.svg';
 import find from '../assets/icons/find.svg';
 import testUser from '../assets/images/user-test.png';
+import footerHome from '../assets/icons/footer-home.svg';
+import footerProfile from '../assets/icons/footer-profile.svg';
 
 export const IMAGES = {
   logo,
@@ -14,4 +16,6 @@ export const IMAGES = {
   cart,
   find,
   testUser,
+  footerHome,
+  footerProfile,
 };

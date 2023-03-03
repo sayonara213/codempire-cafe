@@ -11,14 +11,13 @@ import Main from '../../main/main';
 import { Navigate } from 'react-router-dom';
 
 const AppRouter: React.FC = () => {
-
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path='/' element={ <PrivateRoutes/> }>
+        <Route path='/' element={<PrivateRoutes />}>
           <Route path='/' element={<Navigate to={ROUTES.menu} replace />} />
         </Route>
-        <Route path={ROUTES.menu} element={ <Main /> }/>
+        <Route path={ROUTES.menu} element={<Main />} />
         <Route path={ROUTES.login} element={<Auth isLogin={true} />} />
         <Route path={ROUTES.register} element={<Auth isLogin={false} />} />
         <Route path={ROUTES.splashScreen} element={<SplashScreen />} />
