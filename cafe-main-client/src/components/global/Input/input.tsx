@@ -7,11 +7,19 @@ interface InputProps {
   placeholder: string;
   value: any;
   onchange: React.ChangeEventHandler<HTMLInputElement>;
-
   isPassword?: boolean;
+  isLight?: boolean;
+  icon?: string;
 }
 
-const Input: React.FC<InputProps> = ({ placeholder, value, onchange, isPassword }) => {
+const Input: React.FC<InputProps> = ({
+  placeholder,
+  value,
+  onchange,
+  isPassword,
+  isLight,
+  icon,
+}) => {
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
   const [isSelected, setIsSelected] = React.useState(false);
 
@@ -28,12 +36,13 @@ const Input: React.FC<InputProps> = ({ placeholder, value, onchange, isPassword 
   const onFocused = () => {
     setIsSelected(true);
   };
+
   const onBlurred = (e: React.FormEvent<HTMLInputElement>) => {
     e.currentTarget.value === '' && setIsSelected(false);
   };
 
   return (
-    <Styled.InputWrap isFocused={isSelected}>
+    <Styled.InputWrap isFocused={isSelected} isLight={isLight}>
       <Styled.InputField
         type={isPassword ? (isPasswordVisible ? 'text' : 'password') : 'text'}
         onFocus={onFocused}
@@ -41,14 +50,16 @@ const Input: React.FC<InputProps> = ({ placeholder, value, onchange, isPassword 
         value={value}
         onChange={onchange}
         name={placeholder.toLowerCase()}
+        isLight={isLight}
       />
-      <Styled.InputPlaceholder>{placeholder}</Styled.InputPlaceholder>
+      <Styled.InputPlaceholder isLight={isLight}>{placeholder}</Styled.InputPlaceholder>
       {isPassword && (
         <Styled.InputIcon
           src={isPasswordVisible ? IMAGES.show : IMAGES.hide}
           onClick={changePasswordVisibility}
         />
       )}
+      {icon && <Styled.InputIcon src={icon} />}
     </Styled.InputWrap>
   );
 };

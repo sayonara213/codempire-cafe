@@ -1,5 +1,6 @@
 import { Outlet, Navigate } from "react-router-dom";
-import { getToken } from './../../../services/auth.service';
+
+import { getToken } from "../../../services/storage.service";
 import { ROUTES } from './../../../constants/routes';
 
 const PrivateRoutes = () => {

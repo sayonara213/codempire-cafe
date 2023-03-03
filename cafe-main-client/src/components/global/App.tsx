@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Theme } from './theme';
 import '../../App.css';
 
-function App() {
+const App = () => {
   return (
     <Theme>
       <BrowserRouter>
@@ -14,6 +14,6 @@ function App() {
       </BrowserRouter>
     </Theme>
   );
-}
+};
 
 export default App;

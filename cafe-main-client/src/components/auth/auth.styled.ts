@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export const AuthContainer = styled.div`
   width: 100%;
-  height: calc(100vh - 75px);
+  height: calc(100vh - 90px);
 
   background-color: ${({ theme }) => theme.color.white};
 
@@ -68,4 +68,9 @@ export const SkipAuth = styled.a`
   font-family: ${({ theme }) => theme.font.medium};
   font-size: ${({ theme }) => theme.fontSize.small};
   color: ${({ theme }) => theme.color.text};
+`;
+
+export const AuthInputWrap = styled.div`
+  width: 100%;
+  margin-bottom: 20px;
 `;

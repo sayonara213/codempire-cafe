@@ -35,7 +35,7 @@ export class AuthController {
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Get(API.GET_ALL_USERS)
-  async getProfile(@Req() req) {
+  async getProfile(@Req() req: any) {
     return this.service.allUsers();
   }
 }
