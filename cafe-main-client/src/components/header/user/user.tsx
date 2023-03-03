@@ -4,7 +4,7 @@ import { IMAGES } from './../../../constants/images';
 import { useAppSelector } from '../../../hooks/hooks';
 
 const User: React.FC = () => {
-  const { user } = useAppSelector((user) => user.user);
+  const user = useAppSelector((store) => store.user);
 
   return (
     <Styled.UserWrap>
