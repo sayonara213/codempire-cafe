@@ -1,17 +1,17 @@
 export const removeToken = () => {
-    localStorage.removeItem("user");
-}
+  localStorage.removeItem('token');
+};
 
 export const getToken = () => {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    return user.access_token;
-}
+  const user = JSON.parse(localStorage.getItem('token') || '{}');
+  return user.access_token;
+};
 
 export const setToken = (user: any) => {
-    localStorage.setItem("user", JSON.stringify(user));
-}
+  localStorage.setItem('token', JSON.stringify(user));
+};
 
 export const getRole = () => {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    return user.role;
-}
+  const user = JSON.parse(localStorage.getItem('token') || '{}');
+  return user.role;
+};
