@@ -1,15 +1,14 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from 'react-router-dom';
 
-import { getToken, getRole } from "../../../services/storage.service";
+import { getToken } from '../../../services/storage.service';
 import { ROUTES } from './../../../constants/routes';
+import { useAppSelector } from '../../../hooks/hooks';
 
 const RoleRouter = () => {
-    const token = getToken();
-    const role = getRole();
+  const token = getToken();
+  const { user } = useAppSelector((store) => store.user);
 
-    return (
-        token && role === "admin" ? <Outlet/> : <Navigate to={ROUTES.login}/>
-    )
-}
+  return token && user.role === 'admin' ? <Outlet /> : <Navigate to={ROUTES.login} />;
+};
 
 export default RoleRouter;

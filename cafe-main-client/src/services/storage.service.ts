@@ -10,8 +10,3 @@ export const getToken = () => {
 export const setToken = (token: any) => {
   localStorage.setItem('token', JSON.stringify(token));
 };
-
-export const getRole = () => {
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
-  return user.role;
-};

@@ -1,17 +1,10 @@
-import axios from 'axios';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { apiPost } from '../../services/api.service';
 import { madeCompressedBase64 } from '../../services/images.service';
+import { IMenu } from '../../types/types.menu';
+import { API_URL } from './../../constants/url';
 
-export interface IMenu {
-  name: string;
-  price: number;
-  weight: number;
-  description: string;
-  image: any;
-}
-
-const MenuEdit = () => {
+const MenuEdit: React.FC = () => {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files![0];
     if (file) {
@@ -21,9 +14,9 @@ const MenuEdit = () => {
     }
   };
 
-  const handleSubmit = async (values: IMenu) => {
+  const handleSubmit = async (values: Omit<IMenu, 'id'>) => {
     console.log(values);
-    axios.post('http://localhost:5000/menu/add', {
+    apiPost(API_URL.ADD, {
       name: values.name,
       price: values.price,
       weight: values.weight,

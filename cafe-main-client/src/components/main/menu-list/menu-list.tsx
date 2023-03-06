@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { MenuListContainer } from './menu-list.styled';
 import MenuListItem from './menu-list-item/menu-list-item';
-import { IMAGES } from './../../../constants/images';
-import { IMenu } from './../../menu-edit/menu-edit';
-import axios from 'axios';
+import { RoleProps } from './../../../types/types.role';
+import { IMenu } from '../../../types/types.menu';
+import { apiGet } from './../../../services/api.service';
+import { API_URL } from './../../../constants/url';
 
-const MenuList: React.FC = () => {
+const MenuList: React.FC<RoleProps> = ({ isAdmin }) => {
   const [menuItems, setMenuItems] = useState<IMenu[]>([]);
 
   useEffect(() => {
     const getMenuItems = async () => {
-      const response = await axios.get('http://localhost:5000/menu');
-      console.log(response.data);
+      const response = await apiGet(API_URL.GET_ALL);
       setMenuItems(response.data);
     };
     getMenuItems();
@@ -22,56 +22,17 @@ const MenuList: React.FC = () => {
       {menuItems.map((item) => {
         return (
           <MenuListItem
-            key={item.name}
+            key={item.id}
+            id={item.id}
             name={item.name}
             description={item.description}
             price={item.price}
             image={item.image}
+            weight={item.weight}
+            isAdmin={isAdmin}
           />
         );
       })}
-      <MenuListItem
-        name={'test'}
-        description={'test description'}
-        price={500}
-        image={IMAGES.placeholderDish}
-      />
-      <MenuListItem
-        name={'test'}
-        description={'test description'}
-        price={500}
-        image={IMAGES.placeholderDish}
-      />
-      <MenuListItem
-        name={'test'}
-        description={'test description'}
-        price={500}
-        image={IMAGES.placeholderDish}
-      />
-      <MenuListItem
-        name={'test'}
-        description={'test description'}
-        price={500}
-        image={IMAGES.placeholderDish}
-      />
-      <MenuListItem
-        name={'test'}
-        description={'test description'}
-        price={500}
-        image={IMAGES.placeholderDish}
-      />
-      <MenuListItem
-        name={'test'}
-        description={'test description'}
-        price={500}
-        image={IMAGES.placeholderDish}
-      />
-      <MenuListItem
-        name={'test'}
-        description={'test description'}
-        price={500}
-        image={IMAGES.placeholderDish}
-      />
     </MenuListContainer>
   );
 };

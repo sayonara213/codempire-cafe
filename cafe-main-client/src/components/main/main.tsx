@@ -1,17 +1,22 @@
 import React from 'react';
-import Filters from './filters/filters';
 
+import { useAppSelector } from '../../hooks/hooks';
+
+import Filters from './filters/filters';
 import Heading from './heading/heading';
-import { BodyContainer, MainContainer } from './main.styled';
 import MenuList from './menu-list/menu-list';
 
+import { BodyContainer, MainContainer } from './main.styled';
+
 const Main: React.FC = () => {
+  const { user } = useAppSelector((store) => store.user);
+
   return (
     <MainContainer>
-      <Heading />
+      <Heading isAdmin={user.role === 'admin'} />
       <BodyContainer>
         <Filters />
-        <MenuList />
+        <MenuList isAdmin={user.role === 'admin'} />
       </BodyContainer>
     </MainContainer>
   );

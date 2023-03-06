@@ -1,8 +1,8 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Footer from '../footer/footer';
-
 import Header from '../header/header';
+import { ROUTES } from './../../constants/routes';
 
 const Layout: React.FC = () => {
   const location = useLocation();
@@ -11,7 +11,7 @@ const Layout: React.FC = () => {
     <>
       <Header />
       <Outlet />
-      {location.pathname !== '/login' && location.pathname !== '/register' && <Footer />}
+      {location.pathname !== ROUTES.login && location.pathname !== ROUTES.register && <Footer />}
     </>
   );
 };

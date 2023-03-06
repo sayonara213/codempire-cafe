@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-import { URL } from '../constants/auth.url';
+import { API_URL } from '../constants/url';
 import { setToken } from './storage.service';
 
 export const login = async (data: any) => {
   try {
-    const res = await axios.post(URL.LOGIN, data);
+    const res = await axios.post(API_URL.LOGIN, data);
     if (res.data.access_token) {
       setToken(res.data.access_token);
     }
@@ -17,7 +17,7 @@ export const login = async (data: any) => {
 
 export const register = async (data: any) => {
   try {
-    const res = await axios.post(URL.REGISTER, data);
+    const res = await axios.post(API_URL.REGISTER, data);
     if (res.data.access_token) {
       setToken(res.data.access_token);
     }

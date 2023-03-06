@@ -25,4 +25,9 @@ export class MenuService {
   async getAllMenu(): Promise<Menu[]> {
     return this.menuRepository.find();
   }
+
+  async deleteMenu(id: string): Promise<Menu> {
+    const menu = await this.menuRepository.findOne({ where: { id: id } });
+    return await this.menuRepository.remove(menu);
+  }
 }
