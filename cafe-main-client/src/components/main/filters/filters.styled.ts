@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const FiltersContainer = styled.div`
-  width: 225px;
+  min-width: 225px;
   height: 600px;
 
   position: sticky;

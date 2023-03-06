@@ -14,7 +14,8 @@ export const HeadingContainer = styled.div`
 export const HeadingButtonWrap = styled.div``;
 
 export const HeadingButton = styled.button`
-  margin-right: 16px;
+  margin-right: 20px;
+  padding: 0;
 
   width: 225px;
   height: 50px;

@@ -16,10 +16,10 @@ const Filters: React.FC = () => {
         <Styled.FiltersHeaderTitle>Filters</Styled.FiltersHeaderTitle>
       </Styled.FiltersHeader>
       {filters.map((filter) => (
-        <Styled.FiltersCategory>
+        <Styled.FiltersCategory key={filter.name}>
           <Styled.FiltersCategoryTitle>{filter.name}</Styled.FiltersCategoryTitle>
-          {filter.categories.map((category) => (
-            <CheckBox label={category} checked={true} />
+          {filter.categories.map((category, index) => (
+            <CheckBox label={category} checked={true} key={index} />
           ))}
         </Styled.FiltersCategory>
       ))}

@@ -21,6 +21,12 @@ export class Menu {
   @Column({ type: 'int' })
   public weight: number;
 
+  @Column({ type: 'varchar', nullable: true })
+  public image: string;
+
+  @Column({ type: 'varchar', length: 120, nullable: true })
+  public description: string;
+
   @ManyToMany(() => Product)
   @JoinTable()
   products: Product[];

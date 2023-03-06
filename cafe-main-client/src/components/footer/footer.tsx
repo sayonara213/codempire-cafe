@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
   return (
     <Styled.FooterContainer>
       {sections.map((section) => (
-        <Styled.FooterContent>
+        <Styled.FooterContent key={section.title}>
           <Styled.FooterIcon src={IMAGES.footerProfile} />
           <Styled.FooterText>{section.title}</Styled.FooterText>
         </Styled.FooterContent>

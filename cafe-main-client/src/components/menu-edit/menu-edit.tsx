@@ -1,33 +1,35 @@
+import axios from 'axios';
 import { useFormik } from 'formik';
+import { useState } from 'react';
+import { madeCompressedBase64 } from '../../services/images.service';
+
+export interface IMenu {
+  name: string;
+  price: number;
+  weight: number;
+  description: string;
+  image: any;
+}
 
 const MenuEdit = () => {
-  interface IMenu {
-    name: string;
-    price: number;
-    description: string;
-    image: any;
-  }
-
-  const convertImageToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        resolve(reader.result as string);
-      };
-      reader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    formik.setFieldValue('image', e.currentTarget.files![0]);
-    console.log(e.currentTarget.files![0]);
+    const file = e.currentTarget.files![0];
+    if (file) {
+      madeCompressedBase64(file, (dataUrl) => {
+        formik.setFieldValue('image', dataUrl);
+      });
+    }
   };
 
-  const handleSubmit = (values: IMenu) => {
+  const handleSubmit = async (values: IMenu) => {
     console.log(values);
+    axios.post('http://localhost:5000/menu/add', {
+      name: values.name,
+      price: values.price,
+      weight: values.weight,
+      description: values.description,
+      image: values.image,
+    });
   };
 
   const formik = useFormik({
@@ -35,6 +37,7 @@ const MenuEdit = () => {
       name: '',
       price: 0,
       description: '',
+      weight: 0,
       image: '',
     },
     onSubmit: handleSubmit,
@@ -56,6 +59,13 @@ const MenuEdit = () => {
           placeholder='Price'
           value={formik.values.price}
           name={'price'}
+          onChange={formik.handleChange}
+        />
+        <input
+          type='number'
+          placeholder='Weight'
+          value={formik.values.weight}
+          name={'weight'}
           onChange={formik.handleChange}
         />
         <input

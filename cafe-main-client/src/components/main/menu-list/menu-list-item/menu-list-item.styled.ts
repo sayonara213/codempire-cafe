@@ -1,21 +1,17 @@
 import styled from 'styled-components';
 
 export const MenuListItemContainer = styled.div`
-  width: 226px;
+  width: 225px;
   height: 391px;
 
-  margin: 0 10px 20px 10px;
+  margin: 0 20px 20px 0;
   padding: 16px;
   box-sizing: border-box;
 
   display: flex;
   flex-direction: column;
 
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
-
-  box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-
-  box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.14);
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.2);
 `;
 
 export const MenuListItemImage = styled.img`
