@@ -9,6 +9,7 @@ import PrivateRoutes from './PrivateRoute';
 import { ROUTES } from '../../../constants/routes';
 import Main from '../../main/main';
 import { Navigate } from 'react-router-dom';
+import MenuEdit from './../../menu-edit/menu-edit';
 
 const AppRouter: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const AppRouter: React.FC = () => {
       <Route element={<Layout />}>
         <Route path='/' element={<PrivateRoutes />}>
           <Route path='/' element={<Navigate to={ROUTES.menu} replace />} />
+          <Route path='/add' element={<MenuEdit />} />
         </Route>
         <Route path={ROUTES.menu} element={<Main />} />
         <Route path={ROUTES.login} element={<Auth isLogin={true} />} />

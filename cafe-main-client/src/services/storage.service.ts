@@ -3,15 +3,15 @@ export const removeToken = () => {
 };
 
 export const getToken = () => {
-  const user = JSON.parse(localStorage.getItem('token') || '{}');
-  return user.access_token;
+  const token = JSON.parse(localStorage.getItem('token') || '{}');
+  return token;
 };
 
-export const setToken = (user: any) => {
-  localStorage.setItem('token', JSON.stringify(user));
+export const setToken = (token: any) => {
+  localStorage.setItem('token', JSON.stringify(token));
 };
 
 export const getRole = () => {
-  const user = JSON.parse(localStorage.getItem('token') || '{}');
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
   return user.role;
 };
