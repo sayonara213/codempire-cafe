@@ -9,9 +9,9 @@ const Heading: React.FC = () => {
         <Styled.HeadingButton>PRODUCTS</Styled.HeadingButton>
       </Styled.HeadingButtonWrap>
       <Styled.HeadingSelect>
-        <Styled.SelectOption>SORTING BY</Styled.SelectOption>
-        <Styled.SelectOption>123</Styled.SelectOption>
-        <Styled.SelectOption>123</Styled.SelectOption>
+        <Styled.SelectOption hidden>SORTING BY</Styled.SelectOption>
+        <Styled.SelectOption>Price Asc</Styled.SelectOption>
+        <Styled.SelectOption>Price Desc</Styled.SelectOption>
       </Styled.HeadingSelect>
     </Styled.HeadingContainer>
   );

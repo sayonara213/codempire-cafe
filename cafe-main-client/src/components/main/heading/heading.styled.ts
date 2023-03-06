@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const HeadingContainer = styled.div`
   width: 100%;
-  padding: 24px 0;
+  padding: 24px 0 0 0;
   box-sizing: border-box;
 
   display: flex;

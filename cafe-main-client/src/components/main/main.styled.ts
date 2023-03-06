@@ -9,3 +9,10 @@ export const MainContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+export const BodyContainer = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+`;
