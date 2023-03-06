@@ -5,6 +5,7 @@ import { getEnvPath } from './common/helper/env.helper';
 import { TypeOrmConfigService } from './shared/typeorm/typeorm.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { MenuModule } from './menu/menu.module';
 
 const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
 
@@ -17,6 +18,7 @@ const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
     }),
     AuthModule,
     UserModule,
+    MenuModule,
   ],
 })
 export class AppModule {}
