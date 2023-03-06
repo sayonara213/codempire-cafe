@@ -16,27 +16,28 @@ import { JwtAuthGuard } from 'src/auth/guard/jwtAuthGuard';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { UserRole } from 'src/user/entity/user.entity';
 import { RoleGuard } from 'src/auth/guard/roleGuard';
+import { API } from './../constants/endpoints';
 
-@Controller('menu')
+@Controller(API.MENU)
 export class MenuController {
   @Inject(MenuService)
   private readonly service: MenuService;
 
-  @Get()
+  @Get(API.LIST_ALL)
   getMenus(): Promise<Menu[]> {
     return this.service.getAllMenu();
   }
 
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Post('add')
+  @Post(API.ADD)
   addMenu(@Body() menu: CreateMenuDto): Promise<Menu | undefined> {
     return this.service.createMenu(menu);
   }
 
   @Roles(UserRole.ADMIN)
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Delete('delete/:id')
+  @Delete(`${API.DELETE}/:id`)
   deleteMenu(@Param('id') id: string): Promise<Menu> {
     return this.service.deleteMenu(id);
   }

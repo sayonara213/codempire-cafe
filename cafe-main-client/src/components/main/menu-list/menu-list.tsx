@@ -9,11 +9,12 @@ import { API_URL } from './../../../constants/url';
 const MenuList: React.FC<RoleProps> = ({ isAdmin }) => {
   const [menuItems, setMenuItems] = useState<IMenu[]>([]);
 
+  const getMenuItems = async () => {
+    const response = await apiGet(API_URL.GET_ALL);
+    setMenuItems(response.data);
+  };
+
   useEffect(() => {
-    const getMenuItems = async () => {
-      const response = await apiGet(API_URL.GET_ALL);
-      setMenuItems(response.data);
-    };
     getMenuItems();
   }, []);
 
