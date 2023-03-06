@@ -6,7 +6,7 @@ import { useAppSelector } from '../../../hooks/hooks';
 
 const RoleRouter = () => {
   const token = getToken();
-  const { user } = useAppSelector((store) => store.user);
+  const user = useAppSelector((store) => store.user);
 
   return token && user.role === 'admin' ? <Outlet /> : <Navigate to={ROUTES.login} />;
 };

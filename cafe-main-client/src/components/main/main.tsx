@@ -9,7 +9,7 @@ import MenuList from './menu-list/menu-list';
 import { BodyContainer, MainContainer } from './main.styled';
 
 const Main: React.FC = () => {
-  const { user } = useAppSelector((store) => store.user);
+  const user = useAppSelector((store) => store.user);
 
   return (
     <MainContainer>
