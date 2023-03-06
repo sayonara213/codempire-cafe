@@ -5,10 +5,7 @@ export const initialState: IUser = {
   id: '',
   name: '',
   email: '',
-  password: '',
   role: '',
-  createdAt: new Date(),
-  updatedAt: new Date(),
 };
 
 const userSlice = createSlice({
@@ -16,7 +13,8 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      return (state = action.payload);
+      state = action.payload;
+      return state;
     },
   },
 });

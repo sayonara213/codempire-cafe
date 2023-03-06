@@ -28,6 +28,7 @@ export const COLOR = {
   borderDark: '#303032',
   notActive: '#AAADB3',
   purple: '#6200EE',
+  red: '#ff0000',
 };
 export const BORDER_RADIUS = {
   small: '4px',
@@ -47,7 +48,7 @@ const GlobalStyle = createGlobalStyle`
   ${normalize}
   ${reset}
   body {
-    background: ${COLOR.background};
+    background: ${COLOR.white};
   }
 `;
 

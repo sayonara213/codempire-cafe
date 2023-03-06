@@ -35,8 +35,10 @@ export class User {
   public isDeleted: boolean;
 
   @CreateDateColumn({ type: 'timestamp' })
+  @Exclude()
   public createdAt: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
+  @Exclude()
   public updatedAt: Date;
 }

@@ -1,24 +1,30 @@
 import React from 'react';
 
 import { Route, Routes } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import Layout from '../Layout';
 import Auth from '../../auth/auth';
 import SplashScreen from '../splash-screen/splash-screen';
-import PrivateRoutes from './PrivateRoute';
-import { ROUTES } from '../../../constants/routes';
 import Main from '../../main/main';
-import { Navigate } from 'react-router-dom';
+import MenuEdit from './../../menu-edit/menu-edit';
+
+import PrivateRoutes from './PrivateRoute';
+import RoleRouter from './RoleRoute';
+
+import { ROUTES } from '../../../constants/routes';
 
 const AppRouter: React.FC = () => {
-
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path='/' element={ <PrivateRoutes/> }>
+        <Route path='/' element={<PrivateRoutes />}>
           <Route path='/' element={<Navigate to={ROUTES.menu} replace />} />
+          <Route path='/' element={<RoleRouter />}>
+            <Route path={ROUTES.createMenu} element={<MenuEdit />} />
+          </Route>
         </Route>
-        <Route path={ROUTES.menu} element={ <Main /> }/>
+        <Route path={ROUTES.menu} element={<Main />} />
         <Route path={ROUTES.login} element={<Auth isLogin={true} />} />
         <Route path={ROUTES.register} element={<Auth isLogin={false} />} />
         <Route path={ROUTES.splashScreen} element={<SplashScreen />} />
