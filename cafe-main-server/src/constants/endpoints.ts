@@ -6,5 +6,7 @@ export const API = {
   MENU: '/menu',
   ADD: '/add',
   DELETE: '/delete',
+  GET: '/get',
   LIST_ALL: '/list',
+  UPDATE: '/update',
 };

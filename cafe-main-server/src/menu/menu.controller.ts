@@ -6,7 +6,6 @@ import {
   Inject,
   Param,
   Post,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { Menu } from './entity/menu.entity';
@@ -40,5 +39,10 @@ export class MenuController {
   @Delete(`${API.DELETE}/:id`)
   deleteMenu(@Param('id') id: string): Promise<Menu> {
     return this.service.deleteMenu(id);
+  }
+
+  @Get(`${API.GET}/:id`)
+  getMenuById(@Param('id') id: string): Promise<Menu> {
+    return this.service.getMenuById(id);
   }
 }

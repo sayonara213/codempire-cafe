@@ -1,7 +1,6 @@
-import { IsArray, IsNotEmpty, IsString } from 'class-validator';
-import { Product } from 'src/product/entity/product.entity';
+import { IsNotEmpty, IsString, IsArray } from 'class-validator';
 
-export class CreateMenuDto {
+export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
   public name: string;
@@ -17,10 +16,8 @@ export class CreateMenuDto {
   public weight: number;
 
   @IsString()
-  @IsNotEmpty()
   public image: string;
 
-  @IsNotEmpty()
   @IsArray()
-  products: string[];
+  public ingredients: string[];
 }
