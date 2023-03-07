@@ -11,6 +11,8 @@ const MenuList: React.FC<RoleProps> = ({ isAdmin }) => {
 
   const getMenuItems = async () => {
     const response = await apiGet(API_URL.GET_ALL);
+    console.log(response.data);
+
     setMenuItems(response.data);
   };
 

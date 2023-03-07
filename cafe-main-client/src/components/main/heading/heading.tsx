@@ -4,6 +4,37 @@ import { useNavigate } from 'react-router-dom';
 import { RoleProps } from '../../../types/types.role';
 import { ROUTES } from './../../../constants/routes';
 
+const options = [
+  { value: 'priceAsc', label: 'Price Asc' },
+  { value: 'priceDesc', label: 'Price Desc' },
+  { value: 'weightAsc', label: 'Weight Asc' },
+  { value: 'weightDesc', label: 'Weight Desc' },
+  { value: 'nameAsc', label: 'Name Asc' },
+  { value: 'nameDesc', label: 'Name Desc' },
+];
+
+const customStyles = {
+  control: (provided: any) => ({
+    ...provided,
+    background: 'none',
+    border: 'none',
+    boxShadow: 'none',
+  }),
+  option: (provided: any, state: any) => ({
+    ...provided,
+    backgroundColor: state.isFocused ? 'black' : 'white',
+    color: state.isFocused ? 'white' : 'black',
+    ':hover': {
+      backgroundColor: 'black',
+      color: 'white',
+    },
+  }),
+  singleValue: (provided: any) => ({
+    ...provided,
+    color: 'black',
+  }),
+};
+
 const Heading: React.FC<RoleProps> = ({ isAdmin }) => {
   const navigate = useNavigate();
 
@@ -18,11 +49,7 @@ const Heading: React.FC<RoleProps> = ({ isAdmin }) => {
         <Styled.HeadingButton>PRODUCTS</Styled.HeadingButton>
         {isAdmin && <Styled.HeadingButton onClick={handleAddMenu}>ADD</Styled.HeadingButton>}
       </Styled.HeadingButtonWrap>
-      <Styled.HeadingSelect>
-        <Styled.SelectOption hidden>SORTING BY</Styled.SelectOption>
-        <Styled.SelectOption>Price Asc</Styled.SelectOption>
-        <Styled.SelectOption>Price Desc</Styled.SelectOption>
-      </Styled.HeadingSelect>
+      <Styled.HeadingSelect options={options} styles={customStyles} />
     </Styled.HeadingContainer>
   );
 };

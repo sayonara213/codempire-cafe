@@ -28,7 +28,7 @@ export class ProductService {
   }
 
   async getAllProduct(): Promise<Product[]> {
-    return this.productRepository.find();
+    return this.productRepository.find({ relations: ['ingredients'] });
   }
 
   async deleteProduct(id: string): Promise<Product> {

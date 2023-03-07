@@ -5,4 +5,5 @@ export interface IMenu {
   price: number;
   weight: number;
   image: string;
+  products?: string[];
 }

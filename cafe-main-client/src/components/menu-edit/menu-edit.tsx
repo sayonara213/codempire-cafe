@@ -1,10 +1,24 @@
 import { useFormik } from 'formik';
-import { apiPost } from '../../services/api.service';
+import { useEffect, useState } from 'react';
+import { apiGet, apiPost } from '../../services/api.service';
 import { madeCompressedBase64 } from '../../services/images.service';
 import { IMenu } from '../../types/types.menu';
 import { API_URL } from './../../constants/url';
 
 const MenuEdit: React.FC = () => {
+  const [products, setProducts] = useState<any>([]);
+
+  const fetchProducts = async () => {
+    const response = await apiGet(API_URL.GET_ALL_PRODUCTS);
+    console.log(response.data);
+
+    setProducts(response.data);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files![0];
     if (file) {
@@ -12,6 +26,10 @@ const MenuEdit: React.FC = () => {
         formik.setFieldValue('image', dataUrl);
       });
     }
+  };
+
+  const handleProduct = (id: string) => {
+    formik.setFieldValue('products', [...formik.values.products, id]);
   };
 
   const handleSubmit = async (values: Omit<IMenu, 'id'>) => {
@@ -22,6 +40,7 @@ const MenuEdit: React.FC = () => {
       weight: values.weight,
       description: values.description,
       image: values.image,
+      products: values.products,
     });
   };
 
@@ -32,6 +51,7 @@ const MenuEdit: React.FC = () => {
       description: '',
       weight: 0,
       image: '',
+      products: [],
     },
     onSubmit: handleSubmit,
   });
@@ -69,6 +89,18 @@ const MenuEdit: React.FC = () => {
           onChange={formik.handleChange}
         />
         <input type='file' name={'image'} onChange={(e) => handleFile(e)} />
+        <div>
+          {products.length > 0 &&
+            products.map((item: any) => {
+              return (
+                <div key={item.id}>
+                  <button type='button' onClick={() => handleProduct(item.id)}>
+                    {item.name}
+                  </button>
+                </div>
+              );
+            })}
+        </div>
         <button type='submit'>Submit</button>
       </form>
     </div>

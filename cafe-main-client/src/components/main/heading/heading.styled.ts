@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Select from 'react-select';
 
 export const HeadingContainer = styled.div`
   width: 100%;
@@ -28,17 +29,18 @@ export const HeadingButton = styled.button`
   font-size: ${({ theme }) => theme.fontSize.medium};
 `;
 
-export const HeadingSelect = styled.select`
+export const SelectWrap = styled.div`
+  width: 225px;
+`;
+
+export const HeadingSelect = styled(Select)`
   width: 225px;
   height: 50px;
 
-  color: ${({ theme }) => theme.color.dark};
   font-family: ${({ theme }) => theme.font.medium};
-  font-size: ${({ theme }) => theme.fontSize.medium};
 
-  background-color: transparent;
-  border: none;
-  outline: none;
+  display: flex;
+  align-items: center;
 `;
 
 export const SelectOption = styled.option`

@@ -35,7 +35,11 @@ export class MenuService {
   }
 
   async getAllMenu(): Promise<Menu[]> {
-    return this.menuRepository.find();
+    return this.menuRepository
+      .createQueryBuilder('menu')
+      .leftJoinAndSelect('menu.products', 'product')
+      .leftJoinAndSelect('product.ingredients', 'ingredient')
+      .getMany();
   }
 
   async deleteMenu(id: string): Promise<Menu> {
