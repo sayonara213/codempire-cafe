@@ -49,7 +49,7 @@ const Heading: React.FC<RoleProps> = ({ isAdmin }) => {
         <Styled.HeadingButton>PRODUCTS</Styled.HeadingButton>
         {isAdmin && <Styled.HeadingButton onClick={handleAddMenu}>ADD</Styled.HeadingButton>}
       </Styled.HeadingButtonWrap>
-      <Styled.HeadingSelect options={options} styles={customStyles} />
+      <Styled.HeadingSelect options={options} styles={customStyles} defaultValue={options[0]} />
     </Styled.HeadingContainer>
   );
 };
