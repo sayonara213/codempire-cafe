@@ -1,10 +1,17 @@
 import { Menu } from 'src/menu/entity/menu.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
+import { Ingredient } from '../ingredient/entity/ingredient.entity';
 
 @Entity('product')
 export class Product {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({ type: 'varchar', length: 120 })
   name: string;
@@ -20,4 +27,8 @@ export class Product {
 
   @ManyToMany(() => Menu, (menu) => menu.products)
   menus: Menu[];
+
+  @ManyToMany(() => Ingredient)
+  @JoinTable()
+  ingredients: Ingredient[];
 }
