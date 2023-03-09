@@ -53,6 +53,7 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
               onchange={formik.handleChange}
               isPassword={input === 'Password'}
               isLight={true}
+              isPlaceholder={true}
             />
           </Styled.AuthInputWrap>
         ))}

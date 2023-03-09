@@ -9,6 +9,7 @@ interface InputProps {
   onchange: React.ChangeEventHandler<HTMLInputElement>;
   isPassword?: boolean;
   isLight?: boolean;
+  isPlaceholder?: boolean;
   icon?: string;
 }
 
@@ -19,6 +20,7 @@ const Input: React.FC<InputProps> = ({
   isPassword,
   isLight,
   icon,
+  isPlaceholder,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
   const [isSelected, setIsSelected] = React.useState(false);
@@ -51,8 +53,11 @@ const Input: React.FC<InputProps> = ({
         onChange={onchange}
         name={placeholder.toLowerCase()}
         isLight={isLight}
+        placeholder={isPlaceholder ? '' : placeholder}
       />
-      <Styled.InputPlaceholder isLight={isLight}>{placeholder}</Styled.InputPlaceholder>
+      {isPlaceholder && (
+        <Styled.InputPlaceholder isLight={isLight}>{placeholder}</Styled.InputPlaceholder>
+      )}
       {isPassword && (
         <Styled.InputIcon
           src={isPasswordVisible ? IMAGES.show : IMAGES.hide}

@@ -3,15 +3,20 @@ import { useEffect, useState } from 'react';
 import { apiGet, apiPost } from '../../services/api.service';
 import { madeCompressedBase64 } from '../../services/images.service';
 import { IMenu } from '../../types/types.menu';
+import { MainContainer } from '../main/main.styled';
 import { API_URL } from './../../constants/url';
+import * as Styled from './menu-edit.styled';
+import { IMAGES } from './../../constants/images';
+import Input from './../global/Input/input';
+import GlobalSelect from '../global/Select/select';
+import { IProduct } from '../../types/types.products';
+import Button from '../global/Button/button';
 
 const MenuEdit: React.FC = () => {
-  const [products, setProducts] = useState<any>([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
 
   const fetchProducts = async () => {
     const response = await apiGet(API_URL.GET_ALL_PRODUCTS);
-    console.log(response.data);
-
     setProducts(response.data);
   };
 
@@ -28,8 +33,8 @@ const MenuEdit: React.FC = () => {
     }
   };
 
-  const handleProduct = (id: string) => {
-    formik.setFieldValue('products', [...formik.values.products, id]);
+  const handleProduct = (products: string[]) => {
+    formik.setFieldValue('products', products);
   };
 
   const handleSubmit = async (values: Omit<IMenu, 'id'>) => {
@@ -57,53 +62,65 @@ const MenuEdit: React.FC = () => {
   });
 
   return (
-    <div>
-      <h1>Menu Edit</h1>
-      <form onSubmit={formik.handleSubmit}>
-        <input
-          type='text'
-          placeholder='Name'
-          value={formik.values.name}
-          name={'name'}
-          onChange={formik.handleChange}
-        />
-        <input
-          type='number'
-          placeholder='Price'
-          value={formik.values.price}
-          name={'price'}
-          onChange={formik.handleChange}
-        />
-        <input
-          type='number'
-          placeholder='Weight'
-          value={formik.values.weight}
-          name={'weight'}
-          onChange={formik.handleChange}
-        />
-        <input
-          type='text'
-          placeholder='Description'
-          value={formik.values.description}
-          name={'description'}
-          onChange={formik.handleChange}
-        />
-        <input type='file' name={'image'} onChange={(e) => handleFile(e)} />
-        <div>
-          {products.length > 0 &&
-            products.map((item: any) => {
-              return (
-                <div key={item.id}>
-                  <button type='button' onClick={() => handleProduct(item.id)}>
-                    {item.name}
-                  </button>
-                </div>
-              );
-            })}
-        </div>
-        <button type='submit'>Submit</button>
-      </form>
-    </div>
+    <MainContainer>
+      <Styled.MenuEditForm>
+        <Styled.BackButton type='button'>Back</Styled.BackButton>
+        <Styled.InputsWrap>
+          <Styled.MenuEditFormLeft>
+            <Styled.MenuEditImage src={IMAGES.placeholderDish} />
+            <Styled.MenuEditButton>UPLOAD</Styled.MenuEditButton>
+          </Styled.MenuEditFormLeft>
+          <Styled.MenuEditFormRight>
+            <Styled.FlexContainer>
+              <Styled.InputWrap>
+                <Styled.InputLabel>Description</Styled.InputLabel>
+                <Input
+                  placeholder='Description'
+                  value={''}
+                  onchange={() => console.log('hello')}
+                  isLight={true}></Input>
+              </Styled.InputWrap>
+            </Styled.FlexContainer>
+            <Styled.FlexContainer>
+              <Styled.InputWrap>
+                <Styled.InputLabel>Product</Styled.InputLabel>
+                <GlobalSelect items={products} onchange={handleProduct} />
+              </Styled.InputWrap>
+              <Styled.InputWrap>
+                <Styled.InputLabel>Product</Styled.InputLabel>
+                <GlobalSelect items={products} onchange={handleProduct} />
+              </Styled.InputWrap>
+            </Styled.FlexContainer>
+            <Styled.FlexContainer>
+              <Styled.InputWrap>
+                <Styled.InputLabel>Description</Styled.InputLabel>
+                <Input
+                  placeholder='Description'
+                  value={''}
+                  onchange={() => console.log('hello')}
+                  isLight={true}></Input>
+              </Styled.InputWrap>
+              <Styled.InputWrap>
+                <Styled.InputLabel>Description</Styled.InputLabel>
+                <Input
+                  placeholder='Description'
+                  value={''}
+                  onchange={() => console.log('hello')}
+                  isLight={true}></Input>
+              </Styled.InputWrap>
+            </Styled.FlexContainer>
+          </Styled.MenuEditFormRight>
+        </Styled.InputsWrap>
+        <Styled.ButtonsWrap>
+          <Button type={'button'} isActive={true}>
+            CREATE
+          </Button>
+          <Button type={'button'} isActive={true}>
+            SKIP
+          </Button>
+        </Styled.ButtonsWrap>
+      </Styled.MenuEditForm>
+    </MainContainer>
   );
 };
 

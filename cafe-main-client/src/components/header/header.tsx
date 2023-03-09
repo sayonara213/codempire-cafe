@@ -32,6 +32,7 @@ const Header: React.FC = () => {
         <Styled.HeaderFormWrap>
           <Input
             placeholder={'Search...'}
+            isPlaceholder={false}
             value={value}
             onchange={onChange}
             isLight={false}

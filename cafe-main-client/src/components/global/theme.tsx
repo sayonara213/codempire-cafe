@@ -27,6 +27,7 @@ export const COLOR = {
   border: '#e0e0e0',
   borderDark: '#303032',
   notActive: '#AAADB3',
+  selectItem: '#eeeeee',
   purple: '#6200EE',
   red: '#ff0000',
 };
