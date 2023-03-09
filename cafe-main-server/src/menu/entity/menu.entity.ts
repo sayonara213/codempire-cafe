@@ -1,3 +1,4 @@
+import { Allergen } from 'src/allergen/allergen.entity';
 import { Product } from 'src/product/entity/product.entity';
 import {
   Entity,
@@ -30,4 +31,8 @@ export class Menu {
   @ManyToMany(() => Product)
   @JoinTable()
   products: Product[];
+
+  @ManyToMany(() => Allergen)
+  @JoinTable()
+  allergens: Allergen[];
 }

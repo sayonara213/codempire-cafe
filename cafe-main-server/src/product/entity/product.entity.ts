@@ -7,6 +7,7 @@ import {
   JoinTable,
 } from 'typeorm';
 import { Ingredient } from '../ingredient/entity/ingredient.entity';
+import { Allergen } from './../../allergen/allergen.entity';
 
 @Entity('product')
 export class Product {

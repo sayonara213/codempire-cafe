@@ -28,7 +28,11 @@ export class ProductService {
   }
 
   async getAllProduct(): Promise<Product[]> {
-    return this.productRepository.find({ relations: ['ingredients'] });
+    return this.productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.ingredients', 'ingredient')
+      .leftJoinAndSelect('ingredient.allergens', 'allergen')
+      .getMany();
   }
 
   async deleteProduct(id: string): Promise<Product> {

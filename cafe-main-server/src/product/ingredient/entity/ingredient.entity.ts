@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import { Allergen } from 'src/allergen/allergen.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import { Product } from '../../entity/product.entity';
 
 @Entity('ingredient')
@@ -9,9 +16,10 @@ export class Ingredient {
   @Column({ type: 'varchar', length: 120 })
   name: string;
 
-  @Column({ array: true, type: 'varchar', length: 120 })
-  allergens: string[];
-
   @ManyToMany(() => Product, (product) => product.ingredients)
   products: Product[];
+
+  @ManyToMany(() => Allergen)
+  @JoinTable()
+  allergens: Allergen[];
 }

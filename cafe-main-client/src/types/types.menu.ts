@@ -6,4 +6,5 @@ export interface IMenu {
   weight: number;
   image: string;
   products?: string[];
+  allergens?: string[];
 }

@@ -18,27 +18,34 @@ const MenuEdit: React.FC = () => {
     handleProduct,
     handleAllergens,
     inputs,
+    fetchAllergens,
+    setSelectedAllergens,
+    selectedAllergens,
   } = useMenuEditState();
 
   useEffect(() => {
     fetchProducts();
+    fetchAllergens();
   }, []);
 
   useEffect(() => {
     const filteredProducts = products.filter((product) =>
       formik.values.products?.includes(product.id),
     );
+    console.log(filteredProducts);
+
     const currentAllergens = Array.from(
       new Set(
         filteredProducts
           .flatMap((product) => product.ingredients.flatMap((ingredient) => ingredient.allergens))
-          .reduce((acc: string[], allergen) => {
+          .reduce((acc: any[], allergen) => {
             acc.push(allergen);
             return acc;
           }, []),
       ),
     );
-    setAllergens(currentAllergens);
+
+    setSelectedAllergens(currentAllergens);
   }, [formik.values.products]);
 
   return (
@@ -54,11 +61,15 @@ const MenuEdit: React.FC = () => {
             </Styled.ImageInputLabel>
           </Styled.MenuEditFormLeft>
           <Styled.MenuEditFormRight>
-            {inputs.map((input) => (
-              <Styled.InputWrap>
+            {inputs.map((input, index) => (
+              <Styled.InputWrap key={index}>
                 <Styled.InputLabel>{input.label}</Styled.InputLabel>
                 {input.type === 'select' ? (
-                  <GlobalSelect items={products} onchange={handleProduct} />
+                  <GlobalSelect
+                    items={input.label === 'Allergens' ? allergens : products}
+                    onchange={input.label === 'Allergens' ? handleAllergens : handleProduct}
+                    selectedItems={input.label === 'Allergens' ? selectedAllergens : undefined}
+                  />
                 ) : (
                   <Input
                     value={input.formikValue}

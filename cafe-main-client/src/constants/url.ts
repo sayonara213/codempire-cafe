@@ -5,4 +5,5 @@ export const API_URL = {
   ADD: 'http://localhost:5000/menu/add',
   GET_ALL: 'http://localhost:5000/menu/list',
   GET_ALL_PRODUCTS: 'http://localhost:5000/product/list',
+  GET_ALL_ALLERGENS: 'http://localhost:5000/allergen/list',
 };
