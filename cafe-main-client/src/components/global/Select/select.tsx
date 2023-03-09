@@ -35,12 +35,19 @@ const customStyles = {
 
 interface GlobalSelectProps {
   items: IProduct[];
+  selectedItems?: string[];
   onchange: (item: string[]) => void;
 }
 
-const GlobalSelect: React.FC<GlobalSelectProps> = ({ items, onchange }) => {
+const GlobalSelect: React.FC<GlobalSelectProps> = ({ items, onchange, selectedItems }) => {
   const options = items?.map((item: IProduct) => ({ value: item.id, label: item.name }));
   const [selected, setSelected] = React.useState<OptionType[]>([]);
+
+  useEffect(() => {
+    if (selectedItems) {
+      setSelected(selectedItems.map((item) => ({ value: item, label: item })));
+    }
+  }, [selectedItems]);
 
   const handleChange = (item: any) => {
     if (!selected.some((i) => i.value === item.value)) {

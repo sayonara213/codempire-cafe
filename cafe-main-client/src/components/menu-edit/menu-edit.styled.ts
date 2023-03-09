@@ -38,35 +38,51 @@ export const InputsWrap = styled.div`
 
 export const MenuEditFormLeft = styled.div`
   margin-right: 24px;
-  min-width: 308px;
+  width: 25%;
+`;
+
+export const MenuEditFormRight = styled.div`
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+
+  flex-wrap: wrap;
+  justify-content: space-between;
 `;
 
 export const MenuEditImage = styled.img`
   width: 100%;
+  object-fit: cover;
 `;
 
-export const MenuEditButton = styled.button`
+export const ImageInputLabel = styled.label`
+  display: block;
+  margin-top: 10px;
   width: 100%;
-  height: 40px;
-  margin: 0;
-  padding: 0;
 
-  background-color: transparent;
-  border: none;
   color: ${({ theme }) => theme.color.purple};
   font-family: ${({ theme }) => theme.font.medium};
   font-size: ${({ theme }) => theme.fontSize.medium};
   text-align: center;
 `;
 
-export const MenuEditFormRight = styled.div`
-  width: 80%;
+export const ImageInput = styled.input`
+  display: none;
 `;
 
 export const InputWrap = styled.div`
-  width: 100%;
+  margin-bottom: 24px;
+  width: 48%;
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+
+  :first-child {
+    width: 100%;
+  }
+  :nth-child(2) {
+    width: 100%;
+  }
 `;
 
 export const InputLabel = styled.label`

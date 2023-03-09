@@ -7,7 +7,7 @@ export const madeCompressedBase64 = async (
   const imageFile = file;
 
   const options = {
-    maxSizeMB: 0.1,
+    maxSizeMB: 0.2,
     maxWidthOrHeight: 360,
     useWebWorker: true,
   };

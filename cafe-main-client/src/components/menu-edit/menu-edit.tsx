@@ -1,121 +1,81 @@
-import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
-import { apiGet, apiPost } from '../../services/api.service';
-import { madeCompressedBase64 } from '../../services/images.service';
-import { IMenu } from '../../types/types.menu';
+import { useEffect } from 'react';
 import { MainContainer } from '../main/main.styled';
-import { API_URL } from './../../constants/url';
 import * as Styled from './menu-edit.styled';
-import { IMAGES } from './../../constants/images';
 import Input from './../global/Input/input';
 import GlobalSelect from '../global/Select/select';
-import { IProduct } from '../../types/types.products';
 import Button from '../global/Button/button';
+import { useMenuEditState } from './menu-edit.state';
 
 const MenuEdit: React.FC = () => {
-  const [products, setProducts] = useState<IProduct[]>([]);
-
-  const fetchProducts = async () => {
-    const response = await apiGet(API_URL.GET_ALL_PRODUCTS);
-    setProducts(response.data);
-  };
+  const {
+    fetchProducts,
+    products,
+    image,
+    allergens,
+    setAllergens,
+    formik,
+    handleFile,
+    handleProduct,
+    handleAllergens,
+    inputs,
+  } = useMenuEditState();
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.currentTarget.files![0];
-    if (file) {
-      madeCompressedBase64(file, (dataUrl) => {
-        formik.setFieldValue('image', dataUrl);
-      });
-    }
-  };
-
-  const handleProduct = (products: string[]) => {
-    formik.setFieldValue('products', products);
-  };
-
-  const handleSubmit = async (values: Omit<IMenu, 'id'>) => {
-    console.log(values);
-    apiPost(API_URL.ADD, {
-      name: values.name,
-      price: values.price,
-      weight: values.weight,
-      description: values.description,
-      image: values.image,
-      products: values.products,
-    });
-  };
-
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-      price: 0,
-      description: '',
-      weight: 0,
-      image: '',
-      products: [],
-    },
-    onSubmit: handleSubmit,
-  });
+  useEffect(() => {
+    const filteredProducts = products.filter((product) =>
+      formik.values.products?.includes(product.id),
+    );
+    const currentAllergens = Array.from(
+      new Set(
+        filteredProducts
+          .flatMap((product) => product.ingredients.flatMap((ingredient) => ingredient.allergens))
+          .reduce((acc: string[], allergen) => {
+            acc.push(allergen);
+            return acc;
+          }, []),
+      ),
+    );
+    setAllergens(currentAllergens);
+  }, [formik.values.products]);
 
   return (
     <MainContainer>
-      <Styled.MenuEditForm>
+      <Styled.MenuEditForm onSubmit={formik.handleSubmit}>
         <Styled.BackButton type='button'>Back</Styled.BackButton>
         <Styled.InputsWrap>
           <Styled.MenuEditFormLeft>
-            <Styled.MenuEditImage src={IMAGES.placeholderDish} />
-            <Styled.MenuEditButton>UPLOAD</Styled.MenuEditButton>
+            <Styled.MenuEditImage src={image} />
+            <Styled.ImageInputLabel htmlFor='img-input'>
+              <Styled.ImageInput type={'file'} onChange={handleFile} id='img-input' />
+              UPLOAD
+            </Styled.ImageInputLabel>
           </Styled.MenuEditFormLeft>
           <Styled.MenuEditFormRight>
-            <Styled.FlexContainer>
+            {inputs.map((input) => (
               <Styled.InputWrap>
-                <Styled.InputLabel>Description</Styled.InputLabel>
-                <Input
-                  placeholder='Description'
-                  value={''}
-                  onchange={() => console.log('hello')}
-                  isLight={true}></Input>
+                <Styled.InputLabel>{input.label}</Styled.InputLabel>
+                {input.type === 'select' ? (
+                  <GlobalSelect items={products} onchange={handleProduct} />
+                ) : (
+                  <Input
+                    value={input.formikValue}
+                    onchange={formik.handleChange}
+                    placeholder={input.label}
+                    isLight={true}
+                  />
+                )}
               </Styled.InputWrap>
-            </Styled.FlexContainer>
-            <Styled.FlexContainer>
-              <Styled.InputWrap>
-                <Styled.InputLabel>Product</Styled.InputLabel>
-                <GlobalSelect items={products} onchange={handleProduct} />
-              </Styled.InputWrap>
-              <Styled.InputWrap>
-                <Styled.InputLabel>Product</Styled.InputLabel>
-                <GlobalSelect items={products} onchange={handleProduct} />
-              </Styled.InputWrap>
-            </Styled.FlexContainer>
-            <Styled.FlexContainer>
-              <Styled.InputWrap>
-                <Styled.InputLabel>Description</Styled.InputLabel>
-                <Input
-                  placeholder='Description'
-                  value={''}
-                  onchange={() => console.log('hello')}
-                  isLight={true}></Input>
-              </Styled.InputWrap>
-              <Styled.InputWrap>
-                <Styled.InputLabel>Description</Styled.InputLabel>
-                <Input
-                  placeholder='Description'
-                  value={''}
-                  onchange={() => console.log('hello')}
-                  isLight={true}></Input>
-              </Styled.InputWrap>
-            </Styled.FlexContainer>
+            ))}
           </Styled.MenuEditFormRight>
         </Styled.InputsWrap>
         <Styled.ButtonsWrap>
-          <Button type={'button'} isActive={true}>
+          <Button type={'submit'} isActive={true}>
             CREATE
           </Button>
-          <Button type={'button'} isActive={true}>
+          <Button type={'button'} isActive={true} isCancel={true}>
             SKIP
           </Button>
         </Styled.ButtonsWrap>

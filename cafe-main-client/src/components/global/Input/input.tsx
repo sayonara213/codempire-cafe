@@ -11,6 +11,7 @@ interface InputProps {
   isLight?: boolean;
   isPlaceholder?: boolean;
   icon?: string;
+  type?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -21,6 +22,7 @@ const Input: React.FC<InputProps> = ({
   isLight,
   icon,
   isPlaceholder,
+  type,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
   const [isSelected, setIsSelected] = React.useState(false);
@@ -46,7 +48,7 @@ const Input: React.FC<InputProps> = ({
   return (
     <Styled.InputWrap isFocused={isSelected} isLight={isLight}>
       <Styled.InputField
-        type={isPassword ? (isPasswordVisible ? 'text' : 'password') : 'text'}
+        type={isPassword ? (isPasswordVisible ? 'text' : 'password') : type}
         onFocus={onFocused}
         onBlur={onBlurred}
         value={value}
