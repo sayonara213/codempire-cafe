@@ -19,34 +19,12 @@ const MenuEdit: React.FC = () => {
     handleAllergens,
     inputs,
     fetchAllergens,
-    setSelectedAllergens,
-    selectedAllergens,
   } = useMenuEditState();
 
   useEffect(() => {
     fetchProducts();
     fetchAllergens();
   }, []);
-
-  useEffect(() => {
-    const filteredProducts = products.filter((product) =>
-      formik.values.products?.includes(product.id),
-    );
-    console.log(filteredProducts);
-
-    const currentAllergens = Array.from(
-      new Set(
-        filteredProducts
-          .flatMap((product) => product.ingredients.flatMap((ingredient) => ingredient.allergens))
-          .reduce((acc: any[], allergen) => {
-            acc.push(allergen);
-            return acc;
-          }, []),
-      ),
-    );
-
-    setSelectedAllergens(currentAllergens);
-  }, [formik.values.products]);
 
   return (
     <MainContainer>
@@ -68,7 +46,7 @@ const MenuEdit: React.FC = () => {
                   <GlobalSelect
                     items={input.label === 'Allergens' ? allergens : products}
                     onchange={input.label === 'Allergens' ? handleAllergens : handleProduct}
-                    selectedItems={input.label === 'Allergens' ? selectedAllergens : undefined}
+                    selectedItems={input.label === 'Allergens' ? formik.values.allergens : formik.values.products}
                   />
                 ) : (
                   <Input

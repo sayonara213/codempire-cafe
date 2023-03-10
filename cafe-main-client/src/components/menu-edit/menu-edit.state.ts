@@ -1,3 +1,4 @@
+import { log } from 'console';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { IMAGES } from '../../constants/images';
@@ -13,7 +14,6 @@ export const useMenuEditState = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [image, setImage] = useState<string>(IMAGES.placeholderDish);
   const [allergens, setAllergens] = useState<IAllergen[]>([]);
-  const [selectedAllergens, setSelectedAllergens] = useState<IAllergen[]>([]);
 
   const fetchProducts = async () => {
     const response = await apiGet(API_URL.GET_ALL_PRODUCTS);
@@ -25,6 +25,12 @@ export const useMenuEditState = () => {
     setAllergens(response.data);
   };
 
+  const fetchProductAllergens = async (id: string) => {
+    if(id !== undefined){
+      return await apiGet(API_URL.GET_ALL_PRODUCTS + id + '/allergens');
+    }
+  }
+
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files![0];
     setImage(URL.createObjectURL(file));
@@ -35,8 +41,12 @@ export const useMenuEditState = () => {
     }
   };
 
-  const handleProduct = (products: string[]) => {
+  const handleProduct = async (products: any[]) => {
+    const productIds = products.map((product) => product.id);    
     formik.setFieldValue('products', products);
+    const allergensArr = await productIds.map(async (id) => await fetchProductAllergens(id))
+    console.log(allergensArr);
+    formik.setFieldValue('allergens', allergensArr);
   };
 
   const handleAllergens = (allergens: string[]) => {
@@ -45,21 +55,21 @@ export const useMenuEditState = () => {
 
   const handleSubmit = async (values: Omit<IMenu, 'id'>) => {
     console.log(values);
-    apiPost(API_URL.ADD, {
-      name: values.name,
-      price: values.price,
-      weight: values.weight,
-      description: values.description,
-      image: values.image,
-      products: values.products,
-      allergens: values.allergens,
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // apiPost(API_URL.ADD, {
+    //   name: values.name,
+    //   price: values.price,
+    //   weight: values.weight,
+    //   description: values.description,
+    //   image: values.image,
+    //   products: values.products,
+    //   allergens: values.allergens,
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   const formik = useFormik<Omit<IMenu, 'id'>>({
@@ -122,7 +132,5 @@ export const useMenuEditState = () => {
     handleAllergens,
     inputs,
     fetchAllergens,
-    selectedAllergens,
-    setSelectedAllergens,
   };
 };

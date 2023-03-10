@@ -5,6 +5,7 @@ import { Product } from './entity/product.entity';
 import { CreateProductDto } from './dto/product.dto';
 import { IngredientService } from './ingredient/ingredient.service';
 import { Ingredient } from './ingredient/entity/ingredient.entity';
+import { Allergen } from 'src/allergen/allergen.entity';
 
 @Injectable()
 export class ProductService {
@@ -32,7 +33,22 @@ export class ProductService {
       .createQueryBuilder('product')
       .leftJoinAndSelect('product.ingredients', 'ingredient')
       .leftJoinAndSelect('ingredient.allergens', 'allergen')
+      .select([
+        'product',
+        'ingredient',
+        'allergen'
+      ])
       .getMany();
+  }
+
+  async findProductAllergens(productId: string): Promise<any> {
+    const query = this.productRepository.createQueryBuilder('product')
+      .leftJoinAndSelect('product.ingredients', 'ingredient')
+      .leftJoinAndSelect('ingredient.allergens', 'allergen')
+      .where('product.id = :productId', { productId })
+      .getOne();
+    const product = await query;
+    return product.ingredients.flatMap((ingredient) => ingredient.allergens);
   }
 
   async deleteProduct(id: string): Promise<Product> {

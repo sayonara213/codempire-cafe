@@ -36,43 +36,31 @@ const customStyles = {
 
 interface GlobalSelectProps {
   items: IProduct[] | IAllergen[];
-  selectedItems?: IAllergen[];
-  onchange: (item: string[]) => void;
+  selectedItems: IProduct[] | IAllergen[];
+  onchange: (item: any[]) => void;
 }
 
 const GlobalSelect: React.FC<GlobalSelectProps> = ({ items, onchange, selectedItems }) => {
   const options = items?.map((item: IProduct | IAllergen) => ({
-    value: item.id,
+    value: item,
     label: item.name,
   }));
-  const [selected, setSelected] = React.useState<OptionType[]>([]);
-
-  useEffect(() => {
-    if (selectedItems) {
-      setSelected(selectedItems.map((item) => ({ value: item.id, label: item.name })));
-    }
-  }, [selectedItems]);
 
   const handleChange = (item: any) => {
-    if (!selected.some((i) => i.value === item.value)) {
-      setSelected([...selected, item]);
+    if (!selectedItems?.some((i) => i.name === item)) {
+      onchange([...selectedItems, item.value]);
     }
   };
-
+  
   const handleRemove = (label: any) => {
-    setSelected(selected.filter((item) => item.label !== label));
+    onchange(selectedItems.filter((item) => item.name !== label));
   };
-
-  useEffect(() => {
-    const values = selected.map((item) => item.value);
-    onchange(values);
-  }, [selected]);
-
+  
   return (
     <Styled.SelectContainer>
       <Styled.SelectItemWrap>
-        {selected.map((item, index) => (
-          <SelectItem item={item.label} remove={handleRemove} key={index} />
+        {selectedItems?.map((item, index) => (
+          <SelectItem item={item.name} remove={handleRemove} key={index} />
         ))}
       </Styled.SelectItemWrap>
       <Select options={options} onChange={(label) => handleChange(label)} styles={customStyles} />

@@ -32,6 +32,8 @@ const MenuList: React.FC<RoleProps> = ({ isAdmin }) => {
             price={item.price}
             image={item.image}
             weight={item.weight}
+            products={item.products}
+            allergens={item.allergens}
             isAdmin={isAdmin}
           />
         );
