@@ -1,4 +1,3 @@
-import { log } from 'console';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { IMAGES } from '../../constants/images';
@@ -8,7 +7,6 @@ import { madeCompressedBase64 } from '../../services/images.service';
 import { IAllergen } from '../../types/types.allergens';
 import { IMenu } from '../../types/types.menu';
 import { IProduct } from '../../types/types.products';
-import { OptionType } from '../../types/types.select';
 
 export const useMenuEditState = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -26,50 +24,31 @@ export const useMenuEditState = () => {
   };
 
   const fetchProductAllergens = async (id: string) => {
-    if(id !== undefined){
-      return await apiGet(API_URL.GET_ALL_PRODUCTS + id + '/allergens');
+    if (id !== undefined) {
+      const response = await apiGet(API_URL.GET_ALL_PRODUCTS + id + '/allergens');
+      return response.data;
     }
-  }
-
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.currentTarget.files![0];
-    setImage(URL.createObjectURL(file));
-    if (file) {
-      madeCompressedBase64(file, (dataUrl) => {
-        formik.setFieldValue('image', dataUrl);
-      });
-    }
-  };
-
-  const handleProduct = async (products: any[]) => {
-    const productIds = products.map((product) => product.id);    
-    formik.setFieldValue('products', products);
-    const allergensArr = await productIds.map(async (id) => await fetchProductAllergens(id))
-    console.log(allergensArr);
-    formik.setFieldValue('allergens', allergensArr);
-  };
-
-  const handleAllergens = (allergens: string[]) => {
-    formik.setFieldValue('allergens', allergens);
   };
 
   const handleSubmit = async (values: Omit<IMenu, 'id'>) => {
     console.log(values);
-    // apiPost(API_URL.ADD, {
-    //   name: values.name,
-    //   price: values.price,
-    //   weight: values.weight,
-    //   description: values.description,
-    //   image: values.image,
-    //   products: values.products,
-    //   allergens: values.allergens,
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    const propudctIds = values.products.map((product) => product.id);
+    const allergensIds = values.allergens.map((allergen) => allergen.id);
+    apiPost(API_URL.ADD, {
+      name: values.name,
+      price: values.price,
+      weight: values.weight,
+      description: values.description,
+      image: values.image,
+      products: propudctIds,
+      allergens: allergensIds,
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const formik = useFormik<Omit<IMenu, 'id'>>({
@@ -84,6 +63,63 @@ export const useMenuEditState = () => {
     },
     onSubmit: handleSubmit,
   });
+
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.currentTarget.files![0];
+    setImage(URL.createObjectURL(file));
+    if (file) {
+      madeCompressedBase64(file, (dataUrl) => {
+        formik.setFieldValue('image', dataUrl);
+      });
+    }
+  };
+
+  const handleProduct = async (products: any[]) => {
+    const productIds = products.map((product) => product.id);
+    const allergensArr = await Promise.all(
+      productIds.map(async (id) => {
+        return await fetchProductAllergens(id);
+      }),
+    );
+    const uniqueAllergens = getUniqueAllergens(allergensArr);
+    console.log(uniqueAllergens);
+
+    const totalPrice = getTotalPrice(products);
+    const totalWeight = getTotalWeight(products);
+
+    formik.setFieldValue('products', products);
+    formik.setFieldValue('allergens', uniqueAllergens);
+    formik.setFieldValue('price', totalPrice);
+    formik.setFieldValue('weight', totalWeight);
+  };
+
+  const getTotalPrice = (products: IProduct[]) => {
+    const total = products.reduce((acc, product) => {
+      return acc + product.price;
+    }, 0);
+    return total;
+  };
+
+  const getTotalWeight = (products: IProduct[]) => {
+    const total = products.reduce((acc, product) => {
+      return acc + product.weight;
+    }, 0);
+    return total;
+  };
+
+  const getUniqueAllergens = (allergens: IAllergen[][]) => {
+    const uniqueAllergens = Array.from(
+      new Set(allergens.flat().map((allergen) => allergen.id)),
+    ).map((id) => {
+      const allergen = allergens.flat().find((allergen) => allergen.id === id);
+      return { id: allergen?.id, name: allergen?.name };
+    });
+    return uniqueAllergens;
+  };
+
+  const handleAllergens = (allergens: string[]) => {
+    formik.setFieldValue('allergens', allergens);
+  };
 
   const inputs = [
     {

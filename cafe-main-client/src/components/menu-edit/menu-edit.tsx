@@ -26,6 +26,10 @@ const MenuEdit: React.FC = () => {
     fetchAllergens();
   }, []);
 
+  useEffect(() => {
+    console.log(formik.values.allergens);
+  }, [formik.values.allergens]);
+
   return (
     <MainContainer>
       <Styled.MenuEditForm onSubmit={formik.handleSubmit}>
@@ -46,7 +50,9 @@ const MenuEdit: React.FC = () => {
                   <GlobalSelect
                     items={input.label === 'Allergens' ? allergens : products}
                     onchange={input.label === 'Allergens' ? handleAllergens : handleProduct}
-                    selectedItems={input.label === 'Allergens' ? formik.values.allergens : formik.values.products}
+                    selectedItems={
+                      input.label === 'Allergens' ? formik.values.allergens : formik.values.products
+                    }
                   />
                 ) : (
                   <Input

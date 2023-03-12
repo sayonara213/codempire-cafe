@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as Styled from './select.styled';
-import Select, { Options } from 'react-select';
+import Select from 'react-select';
 import SelectItem from './select-item/select-item';
 import { IProduct } from './../../../types/types.products';
-import { OptionType } from '../../../types/types.select';
 import { IAllergen } from './../../../types/types.allergens';
 
 const customStyles = {
@@ -51,11 +50,11 @@ const GlobalSelect: React.FC<GlobalSelectProps> = ({ items, onchange, selectedIt
       onchange([...selectedItems, item.value]);
     }
   };
-  
+
   const handleRemove = (label: any) => {
     onchange(selectedItems.filter((item) => item.name !== label));
   };
-  
+
   return (
     <Styled.SelectContainer>
       <Styled.SelectItemWrap>
