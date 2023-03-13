@@ -46,7 +46,7 @@ const GlobalSelect: React.FC<GlobalSelectProps> = ({ items, onchange, selectedIt
   }));
 
   const handleChange = (item: any) => {
-    if (!selectedItems?.some((i) => i.name === item)) {
+    if (!selectedItems?.some((i) => i.name === item.label)) {
       onchange([...selectedItems, item.value]);
     }
   };
@@ -62,7 +62,7 @@ const GlobalSelect: React.FC<GlobalSelectProps> = ({ items, onchange, selectedIt
           <SelectItem item={item.name} remove={handleRemove} key={index} />
         ))}
       </Styled.SelectItemWrap>
-      <Select options={options} onChange={(label) => handleChange(label)} styles={customStyles} />
+      <Select options={options} onChange={(item) => handleChange(item)} styles={customStyles} />
     </Styled.SelectContainer>
   );
 };
