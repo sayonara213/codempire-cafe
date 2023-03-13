@@ -1,3 +1,6 @@
+import { IAllergen } from "./types.allergens";
+import { IProduct } from "./types.products";
+
 export interface IMenu {
   id: string;
   name: string;
@@ -5,4 +8,6 @@ export interface IMenu {
   price: number;
   weight: number;
   image: string;
+  products: IProduct[];
+  allergens: IAllergen[];
 }

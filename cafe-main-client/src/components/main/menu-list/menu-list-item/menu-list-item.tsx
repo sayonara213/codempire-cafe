@@ -16,6 +16,8 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
   isAdmin,
   weight,
   id,
+  products,
+  allergens,
 }) => {
   const handleDelete = () => {
     apiDelete(API_URL.DELETE, id);

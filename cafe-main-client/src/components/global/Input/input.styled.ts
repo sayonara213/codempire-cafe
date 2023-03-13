@@ -19,25 +19,30 @@ export const InputWrap = styled.div<InputProps>`
   align-items: center;
   justify-content: center;
 
-  border: 1px solid ${({ theme, isFocused, isLight }) => (isLight ? isFocused ? theme.color.dark : theme.color.border : theme.color.borderDark)};
+  border: 1px solid
+    ${({ theme, isFocused, isLight }) =>
+      isLight ? (isFocused ? theme.color.dark : theme.color.border) : theme.color.borderDark};
   border-radius: ${({ theme }) => theme.borderRadius.small};
 
   ${({ isFocused }) => isFocused && `label { transform: translateY(-220%); font-size: 12px;}`}
 `;
 
-export const InputField = styled.input<Omit<InputProps, "isFocused">>`
+export const InputField = styled.input<Omit<InputProps, 'isFocused'>>`
   all: unset;
 
   width: 100%;
 
   font-family: ${({ theme }) => theme.font.regular};
   font-size: ${({ theme }) => theme.fontSize.medium};
-  color: ${({ theme, isLight }) => isLight ? theme.color.text : theme.color.white};
+  color: ${({ theme, isLight }) => (isLight ? theme.color.text : theme.color.white)};
 
-  z-index: 5;
+  z-index: 0;
 
   &:-webkit-autofill {
     -webkit-background-clip: text;
+  }
+  &::placeholder {
+    color: ${({ theme, isLight }) => (isLight ? theme.color.text : theme.color.white)};
   }
 `;
 
@@ -47,17 +52,17 @@ export const InputIcon = styled.img`
   object-fit: contain;
 `;
 
-export const InputPlaceholder = styled.label<Omit<InputProps, "isFocused">>`
+export const InputPlaceholder = styled.label<Omit<InputProps, 'isFocused'>>`
   padding: 0 5px;
   text-align: center;
-  background-color: ${({ theme, isLight }) => isLight ? theme.color.white : theme.color.dark};
+  background-color: ${({ theme, isLight }) => (isLight ? theme.color.white : theme.color.dark)};
 
   position: absolute;
   left: 10px;
 
   font-family: ${({ theme }) => theme.font.regular};
   font-size: ${({ theme }) => theme.fontSize.medium};
-  color: ${({ theme, isLight }) => isLight ? theme.color.text : theme.color.white};
+  color: ${({ theme, isLight }) => (isLight ? theme.color.text : theme.color.white)};
 
   z-index: 3;
   transition: transform 150ms ease-out, font-size 150ms ease-out;

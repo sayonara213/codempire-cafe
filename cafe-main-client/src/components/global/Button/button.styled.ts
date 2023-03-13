@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface ButtonProps {
   readonly isActive: boolean;
+  isCancel?: boolean;
   type?: string;
 }
 export const ButtonBody = styled.button<ButtonProps>`
@@ -11,12 +12,12 @@ export const ButtonBody = styled.button<ButtonProps>`
   height: 48px;
 
   border-radius: ${({ theme }) => theme.borderRadius.small};
-  background-color: ${({ theme, isActive }) =>
-    isActive ? theme.color.dark : theme.color.notActive};
+  background-color: ${({ theme, isActive, isCancel }) =>
+    isActive ? (isCancel ? 'transparent' : theme.color.dark) : theme.color.light};
 
-  color: ${({ theme }) => theme.color.white};
+  color: ${({ theme, isCancel }) => (isCancel ? theme.color.purple : theme.color.white)};
   text-align: center;
-  font-family: ${({ theme }) => theme.font.regular};
+  font-family: ${({ theme }) => theme.font.medium};
   font-size: ${({ theme }) => theme.fontSize.small};
   letter-spacing: 1.25px;
 

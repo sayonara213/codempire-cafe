@@ -108,6 +108,7 @@ export const normalize = css`
   [type="button"],
   [type="reset"],
   [type="submit"] {
+    cursor: pointer;
     -webkit-appearance: button;
   }
 

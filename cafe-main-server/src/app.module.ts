@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { MenuModule } from './menu/menu.module';
 import { ProductModule } from './product/product.module';
 import { IngredientModule } from './product/ingredient/ingredient.module';
+import { AllergenModule } from './allergen/allergen.module';
 
 const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
 
@@ -23,6 +24,7 @@ const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
     MenuModule,
     ProductModule,
     IngredientModule,
+    AllergenModule,
   ],
 })
 export class AppModule {}

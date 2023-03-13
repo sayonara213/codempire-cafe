@@ -1,77 +1,76 @@
-import { useFormik } from 'formik';
-import { apiPost } from '../../services/api.service';
-import { madeCompressedBase64 } from '../../services/images.service';
-import { IMenu } from '../../types/types.menu';
-import { API_URL } from './../../constants/url';
+import { useEffect } from 'react';
+import { MainContainer } from '../main/main.styled';
+import * as Styled from './menu-edit.styled';
+import Input from './../global/Input/input';
+import GlobalSelect from '../global/Select/select';
+import Button from '../global/Button/button';
+import { useMenuEditState } from './menu-edit.state';
 
 const MenuEdit: React.FC = () => {
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.currentTarget.files![0];
-    if (file) {
-      madeCompressedBase64(file, (dataUrl) => {
-        formik.setFieldValue('image', dataUrl);
-      });
-    }
-  };
+  const {
+    fetchProducts,
+    products,
+    image,
+    allergens,
+    formik,
+    handleFile,
+    handleProduct,
+    handleAllergens,
+    inputs,
+    fetchAllergens,
+  } = useMenuEditState();
 
-  const handleSubmit = async (values: Omit<IMenu, 'id'>) => {
-    console.log(values);
-    apiPost(API_URL.ADD, {
-      name: values.name,
-      price: values.price,
-      weight: values.weight,
-      description: values.description,
-      image: values.image,
-    });
-  };
-
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-      price: 0,
-      description: '',
-      weight: 0,
-      image: '',
-    },
-    onSubmit: handleSubmit,
-  });
+  useEffect(() => {
+    fetchProducts();
+    fetchAllergens();
+  }, []);
 
   return (
-    <div>
-      <h1>Menu Edit</h1>
-      <form onSubmit={formik.handleSubmit}>
-        <input
-          type='text'
-          placeholder='Name'
-          value={formik.values.name}
-          name={'name'}
-          onChange={formik.handleChange}
-        />
-        <input
-          type='number'
-          placeholder='Price'
-          value={formik.values.price}
-          name={'price'}
-          onChange={formik.handleChange}
-        />
-        <input
-          type='number'
-          placeholder='Weight'
-          value={formik.values.weight}
-          name={'weight'}
-          onChange={formik.handleChange}
-        />
-        <input
-          type='text'
-          placeholder='Description'
-          value={formik.values.description}
-          name={'description'}
-          onChange={formik.handleChange}
-        />
-        <input type='file' name={'image'} onChange={(e) => handleFile(e)} />
-        <button type='submit'>Submit</button>
-      </form>
-    </div>
+    <MainContainer>
+      <Styled.MenuEditForm onSubmit={formik.handleSubmit}>
+        <Styled.BackButton type='button'>Back</Styled.BackButton>
+        <Styled.InputsWrap>
+          <Styled.MenuEditFormLeft>
+            <Styled.MenuEditImage src={image} />
+            <Styled.ImageInputLabel htmlFor='img-input'>
+              <Styled.ImageInput type={'file'} onChange={handleFile} id='img-input' />
+              UPLOAD
+            </Styled.ImageInputLabel>
+          </Styled.MenuEditFormLeft>
+          <Styled.MenuEditFormRight>
+            {inputs.map((input, index) => (
+              <Styled.InputWrap key={index}>
+                <Styled.InputLabel>{input.label}</Styled.InputLabel>
+                {input.type === 'select' ? (
+                  <GlobalSelect
+                    items={input.label === 'Allergens' ? allergens : products}
+                    onchange={input.label === 'Allergens' ? handleAllergens : handleProduct}
+                    selectedItems={
+                      input.label === 'Allergens' ? formik.values.allergens : formik.values.products
+                    }
+                  />
+                ) : (
+                  <Input
+                    value={input.formikValue}
+                    onchange={formik.handleChange}
+                    placeholder={input.label}
+                    isLight={true}
+                  />
+                )}
+              </Styled.InputWrap>
+            ))}
+          </Styled.MenuEditFormRight>
+        </Styled.InputsWrap>
+        <Styled.ButtonsWrap>
+          <Button type={'submit'} isActive={true}>
+            CREATE
+          </Button>
+          <Button type={'button'} isActive={true} isCancel={true}>
+            SKIP
+          </Button>
+        </Styled.ButtonsWrap>
+      </Styled.MenuEditForm>
+    </MainContainer>
   );
 };
 

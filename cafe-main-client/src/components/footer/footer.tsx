@@ -1,5 +1,9 @@
 import React from 'react';
+
+import { useNavigate } from 'react-router-dom';
+
 import * as Styled from './footer.styled';
+
 import { IMAGES } from './../../constants/images';
 import { ROUTES } from '../../constants/routes';
 
@@ -10,10 +14,15 @@ const sections = [
 ];
 
 const Footer: React.FC = () => {
+  const navigate = useNavigate();
+  const handleNavigate = (url: string) => {
+    navigate(url);
+  };
+
   return (
     <Styled.FooterContainer>
       {sections.map((section) => (
-        <Styled.FooterContent key={section.title}>
+        <Styled.FooterContent key={section.title} to={section.url}>
           <Styled.FooterIcon src={IMAGES.footerProfile} />
           <Styled.FooterText>{section.title}</Styled.FooterText>
         </Styled.FooterContent>
