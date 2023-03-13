@@ -31,8 +31,7 @@ export const useMenuEditState = () => {
   };
 
   const handleSubmit = async (values: Omit<IMenu, 'id'>) => {
-    console.log(values);
-    const propudctIds = values.products.map((product) => product.id);
+    const productIds = values.products.map((product) => product.id);
     const allergensIds = values.allergens.map((allergen) => allergen.id);
     apiPost(API_URL.ADD, {
       name: values.name,
@@ -40,7 +39,7 @@ export const useMenuEditState = () => {
       weight: values.weight,
       description: values.description,
       image: values.image,
-      products: propudctIds,
+      products: productIds,
       allergens: allergensIds,
     })
       .then((response) => {
@@ -82,7 +81,6 @@ export const useMenuEditState = () => {
       }),
     );
     const uniqueAllergens = getUniqueAllergens(allergensArr);
-    console.log(uniqueAllergens);
 
     const totalPrice = getTotalPrice(products);
     const totalWeight = getTotalWeight(products);
@@ -108,13 +106,9 @@ export const useMenuEditState = () => {
   };
 
   const getUniqueAllergens = (allergens: IAllergen[][]) => {
-    const uniqueAllergens = Array.from(
-      new Set(allergens.flat().map((allergen) => allergen.id)),
-    ).map((id) => {
-      const allergen = allergens.flat().find((allergen) => allergen.id === id);
-      return { id: allergen?.id, name: allergen?.name };
-    });
-    return uniqueAllergens;
+    return allergens
+      .flat()
+      .filter((allergen, index, self) => self.findIndex((item) => item.id === allergen.id));
   };
 
   const handleAllergens = (allergens: string[]) => {

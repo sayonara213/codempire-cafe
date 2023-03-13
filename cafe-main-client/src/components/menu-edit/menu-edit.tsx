@@ -12,7 +12,6 @@ const MenuEdit: React.FC = () => {
     products,
     image,
     allergens,
-    setAllergens,
     formik,
     handleFile,
     handleProduct,
@@ -25,10 +24,6 @@ const MenuEdit: React.FC = () => {
     fetchProducts();
     fetchAllergens();
   }, []);
-
-  useEffect(() => {
-    console.log(formik.values.allergens);
-  }, [formik.values.allergens]);
 
   return (
     <MainContainer>

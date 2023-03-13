@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const FooterContainer = styled.div`
@@ -23,7 +24,8 @@ export const FooterContainer = styled.div`
   box-shadow: 0px 4px 5px 0px rgba(123, 97, 255, 0.25);
 `;
 
-export const FooterContent = styled.div`
+export const FooterContent = styled(Link)`
+  display: block;
   width: 100%;
 
   display: flex;
@@ -37,6 +39,8 @@ export const FooterContent = styled.div`
   &:hover {
     background-color: ${({ theme }) => theme.color.borderDark};
   }
+
+  text-decoration: none;
 `;
 
 export const FooterIcon = styled.img`
@@ -50,4 +54,8 @@ export const FooterText = styled.p`
   color: ${({ theme }) => theme.color.light};
   font-size: ${({ theme }) => theme.fontSize.footer};
   font-family: ${({ theme }) => theme.font.light};
+`;
+
+export const FooterLink = styled(Link)`
+  display: block;
 `;
