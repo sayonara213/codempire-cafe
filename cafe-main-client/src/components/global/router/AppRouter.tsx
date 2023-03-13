@@ -13,6 +13,7 @@ import PrivateRoutes from './PrivateRoute';
 import RoleRouter from './RoleRoute';
 
 import { ROUTES } from '../../../constants/routes';
+import ProductEdit from '../../menu-edit/product-edit/product-edit';
 
 const AppRouter: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const AppRouter: React.FC = () => {
           <Route path='/' element={<Navigate to={ROUTES.menu} replace />} />
           <Route path='/' element={<RoleRouter />}>
             <Route path={ROUTES.createMenu} element={<MenuEdit />} />
+            <Route path={ROUTES.createProduct} element={<ProductEdit />} />
           </Route>
         </Route>
         <Route path={ROUTES.menu} element={<Main />} />

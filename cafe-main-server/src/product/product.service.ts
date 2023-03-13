@@ -33,16 +33,13 @@ export class ProductService {
       .createQueryBuilder('product')
       .leftJoinAndSelect('product.ingredients', 'ingredient')
       .leftJoinAndSelect('ingredient.allergens', 'allergen')
-      .select([
-        'product',
-        'ingredient',
-        'allergen'
-      ])
+      .select(['product', 'ingredient', 'allergen'])
       .getMany();
   }
 
   async findProductAllergens(productId: string): Promise<any> {
-    const query = this.productRepository.createQueryBuilder('product')
+    const query = this.productRepository
+      .createQueryBuilder('product')
       .leftJoinAndSelect('product.ingredients', 'ingredient')
       .leftJoinAndSelect('ingredient.allergens', 'allergen')
       .where('product.id = :productId', { productId })

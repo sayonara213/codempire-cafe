@@ -4,8 +4,14 @@ import { IMenu } from './../../../../types/types.menu';
 import { apiDelete } from './../../../../services/api.service';
 import { API_URL } from '../../../../constants/url';
 
-interface MenuListItemProps extends IMenu {
-  isAdmin?: boolean;
+interface MenuListItemProps {
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  weight: number;
+  isAdmin: boolean;
+  id: string;
 }
 
 const MenuListItem: React.FC<MenuListItemProps> = ({
@@ -16,9 +22,9 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
   isAdmin,
   weight,
   id,
-  products,
-  allergens,
 }) => {
+  //const productsString = products?.map((product) => product.name).join(', ');
+
   const handleDelete = () => {
     apiDelete(API_URL.DELETE, id);
   };

@@ -2,6 +2,7 @@ import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/
 import userSlice from './user.slice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
+import menuListSlice from './menuList.slice';
 
 const persistConfig = {
   key: 'root',
@@ -11,6 +12,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   user: userSlice,
+  menuList: menuListSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

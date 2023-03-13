@@ -4,6 +4,7 @@ import Select from 'react-select';
 import SelectItem from './select-item/select-item';
 import { IProduct } from './../../../types/types.products';
 import { IAllergen } from './../../../types/types.allergens';
+import { IIngredient } from './../../../types/types.ingredient';
 
 const customStyles = {
   control: (provided: any) => ({
@@ -34,13 +35,13 @@ const customStyles = {
 };
 
 interface GlobalSelectProps {
-  items: IProduct[] | IAllergen[];
-  selectedItems: IProduct[] | IAllergen[];
+  items: IProduct[] | IAllergen[] | IIngredient[];
+  selectedItems: IProduct[] | IAllergen[] | IIngredient[];
   onchange: (item: any[]) => void;
 }
 
 const GlobalSelect: React.FC<GlobalSelectProps> = ({ items, onchange, selectedItems }) => {
-  const options = items?.map((item: IProduct | IAllergen) => ({
+  const options = items?.map((item: IProduct | IAllergen | IIngredient) => ({
     value: item,
     label: item.name,
   }));
