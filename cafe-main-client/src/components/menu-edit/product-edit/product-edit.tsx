@@ -44,11 +44,10 @@ const ProductEdit: React.FC = () => {
                 <Styled.InputLabel>{input.label}</Styled.InputLabel>
                 {input.type === 'select' ? (
                   <GlobalSelect
-                    items={input.label === 'Allergens' ? allergens : products}
-                    onchange={input.label === 'Allergens' ? handleAllergens : handleIngredient}
-                    selectedItems={
-                      input.label === 'Allergens' ? selectedAllergens : formik.values.ingredients
-                    }
+                    items={input.items!}
+                    onchange={input.onchange!}
+                    selectedItems={input.selectedItems!}
+                    isMulti={input.isMulti!}
                   />
                 ) : (
                   <Input

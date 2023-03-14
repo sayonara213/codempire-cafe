@@ -7,12 +7,14 @@ import { fetchMenuList } from '../../../redux/menuList.slice';
 import MenuListItemsPlaceholder from './menu-list-item/placeholder/menu-list-items-placeholder';
 
 const MenuList: React.FC<RoleProps> = ({ isAdmin }) => {
-  const { menuList, menuListLoading, isProduct } = useAppSelector((store) => store.menuList);
+  const { menuList, menuListLoading, isProduct, orderBy, types } = useAppSelector(
+    (store) => store.menuList,
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchMenuList(isProduct));
-  }, [isProduct]);
+    dispatch(fetchMenuList({ isProduct, orderBy, types }));
+  }, [isProduct, orderBy, types]);
 
   if (menuListLoading) {
     return (

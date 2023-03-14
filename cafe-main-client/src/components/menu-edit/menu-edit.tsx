@@ -48,6 +48,7 @@ const MenuEdit: React.FC = () => {
                     selectedItems={
                       input.label === 'Allergens' ? formik.values.allergens : formik.values.products
                     }
+                    isMulti={input.isMulti!}
                   />
                 ) : (
                   <Input

@@ -9,6 +9,20 @@ interface MenuListState {
   menuListLoading: boolean;
   menuListError: string | null;
   isProduct: boolean;
+  orderBy: {
+    name: string;
+    order: 'asc' | 'desc';
+  };
+  types: string[];
+}
+
+interface FetchMenuListPayload {
+  isProduct: boolean;
+  orderBy?: {
+    name: string;
+    order: 'asc' | 'desc';
+  };
+  types: string[];
 }
 
 const initialState: MenuListState = {
@@ -16,13 +30,27 @@ const initialState: MenuListState = {
   menuListLoading: false,
   menuListError: null,
   isProduct: false,
+  orderBy: {
+    name: 'name',
+    order: 'asc',
+  },
+  types: [],
 };
 
 export const fetchMenuList = createAsyncThunk(
   'menuList/fetchMenuList',
-  async (isProduct: boolean) => {
-    const api = isProduct ? API_URL.GET_ALL_PRODUCTS : API_URL.GET_ALL_MENUS;
-    const response = await apiGet(api);
+  async (payload: FetchMenuListPayload) => {
+    const { isProduct, orderBy, types } = payload;
+
+    const typesString = types
+      .map((type) => `&types=${type}`)
+      .join('')
+      .toLowerCase();
+
+    const getProductApi = `${API_URL.SEARCH_ALL_PRODUCTS}?sortBy=${orderBy?.name}&order=${orderBy?.order}${typesString}`;
+    const getMenuApi = `${API_URL.GET_ALL_MENUS}?sortBy=${orderBy?.name}&order=${orderBy?.order}${typesString}`;
+
+    const response = await apiGet(isProduct ? getProductApi : getMenuApi);
     return [...response.data];
   },
 );
@@ -47,9 +75,15 @@ const menuListSlice = createSlice({
     setIsProduct: (state, action) => {
       state.isProduct = action.payload;
     },
+    setOrderBy: (state, action) => {
+      state.orderBy = action.payload;
+    },
+    setTypes: (state, action) => {
+      state.types = action.payload;
+    },
   },
 });
 
 export default menuListSlice.reducer;
 
-export const { setIsProduct } = menuListSlice.actions;
+export const { setIsProduct, setOrderBy, setTypes } = menuListSlice.actions;

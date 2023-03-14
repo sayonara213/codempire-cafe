@@ -35,15 +35,16 @@ const customStyles = {
 };
 
 interface GlobalSelectProps {
-  items: IProduct[] | IAllergen[] | IIngredient[];
+  items: IProduct[] | IAllergen[] | IIngredient[] | string[];
   selectedItems: IProduct[] | IAllergen[] | IIngredient[];
-  onchange: (item: any[]) => void;
+  onchange: (item: any) => void;
+  isMulti?: boolean;
 }
 
-const GlobalSelect: React.FC<GlobalSelectProps> = ({ items, onchange, selectedItems }) => {
-  const options = items?.map((item: IProduct | IAllergen | IIngredient) => ({
+const GlobalSelect: React.FC<GlobalSelectProps> = ({ items, onchange, selectedItems, isMulti }) => {
+  const options = items?.map((item) => ({
     value: item,
-    label: item.name,
+    label: item instanceof Object ? item.name : item,
   }));
 
   const handleChange = (item: any) => {
@@ -55,6 +56,22 @@ const GlobalSelect: React.FC<GlobalSelectProps> = ({ items, onchange, selectedIt
   const handleRemove = (label: any) => {
     onchange(selectedItems.filter((item) => item.name !== label));
   };
+
+  const handleChangeOne = (item: any) => {
+    onchange(item.value);
+  };
+
+  if (!isMulti) {
+    return (
+      <Styled.SelectContainer>
+        <Select
+          options={options}
+          onChange={(item) => handleChangeOne(item)}
+          styles={customStyles}
+        />
+      </Styled.SelectContainer>
+    );
+  }
 
   return (
     <Styled.SelectContainer>

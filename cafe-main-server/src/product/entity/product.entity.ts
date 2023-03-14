@@ -28,6 +28,9 @@ export class Product {
   @Column({ type: 'varchar' })
   image: string;
 
+  @Column({ type: 'varchar' })
+  type: string;
+
   @ManyToMany(() => Menu, (menu) => menu.products)
   menus: Menu[];
 

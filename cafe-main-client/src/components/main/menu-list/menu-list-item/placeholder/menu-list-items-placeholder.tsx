@@ -7,7 +7,7 @@ const MenuListItemsPlaceholder: React.FC = () => {
   return (
     <>
       {placeholderArray.map((item) => (
-        <Styled.PlaceholderContainer>
+        <Styled.PlaceholderContainer key={item}>
           <Styled.PlaceholderImage />
           <Styled.PlaceholderTitle />
           <Styled.PlaceholderDescription />

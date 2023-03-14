@@ -5,7 +5,7 @@ import { API_URL } from '../../../constants/url';
 import { apiGet, apiPost } from '../../../services/api.service';
 import { madeCompressedBase64 } from '../../../services/images.service';
 import { IAllergen } from '../../../types/types.allergens';
-import { IProduct } from '../../../types/types.products';
+import { IProduct, productTypes } from '../../../types/types.products';
 
 export const useProductEditState = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -33,6 +33,7 @@ export const useProductEditState = () => {
       weight: values.weight,
       description: values.description,
       image: values.image,
+      type: values.type,
       ingredients: ingredientsId,
     })
       .then((response) => {
@@ -50,6 +51,7 @@ export const useProductEditState = () => {
       description: '',
       weight: 0,
       image: '',
+      type: '',
       ingredients: [],
     },
     onSubmit: handleSubmit,
@@ -66,6 +68,8 @@ export const useProductEditState = () => {
   };
 
   const handleIngredient = async (ingredients: any[]) => {
+    console.log(ingredients);
+
     const allergens = ingredients.map((ingredient) => ingredient.allergens);
 
     const uniqueAllergens = getUniqueAllergens(allergens);
@@ -83,6 +87,10 @@ export const useProductEditState = () => {
     formik.setFieldValue('allergens', allergens);
   };
 
+  const handleType = (type: string) => {
+    formik.setFieldValue('type', type);
+  };
+
   const inputs = [
     {
       label: 'Name',
@@ -98,13 +106,19 @@ export const useProductEditState = () => {
       label: 'Ingredients',
       type: 'select',
       items: products,
+      onchange: handleIngredient,
+      selectedItems: formik.values.ingredients,
       formikValue: formik.values.ingredients,
+      isMulti: true,
     },
     {
       label: 'Allergens',
       type: 'select',
       items: allergens,
+      onchange: handleAllergens,
+      selectedItems: selectedAllergens,
       formikValue: selectedAllergens,
+      isMulti: true,
     },
     {
       label: 'Price',
@@ -115,6 +129,14 @@ export const useProductEditState = () => {
       label: 'Weight',
       type: 'field',
       formikValue: formik.values.weight,
+    },
+    {
+      label: 'Type',
+      type: 'select',
+      items: productTypes,
+      onchange: handleType,
+      formikValue: formik.values.type,
+      isMulti: false,
     },
   ];
 

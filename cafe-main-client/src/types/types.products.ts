@@ -1,4 +1,3 @@
-import { IAllergen } from './types.allergens';
 import { IIngredient } from './types.ingredient';
 
 export interface IProduct {
@@ -7,6 +6,21 @@ export interface IProduct {
   price: number;
   description: string;
   image: string;
+  type: string;
   weight: number;
   ingredients: IIngredient[];
 }
+
+export const productTypes = [
+  'pizza',
+  'salad',
+  'drink',
+  'dessert',
+  'burger',
+  'juice',
+  'sandwich',
+  'soup',
+  'tea',
+  'coffee',
+  'other',
+];

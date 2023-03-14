@@ -18,6 +18,9 @@ export class CreateProductDto {
   @IsString()
   public image: string;
 
+  @IsString()
+  public type: string;
+
   @IsArray()
   public ingredients: string[];
 }
