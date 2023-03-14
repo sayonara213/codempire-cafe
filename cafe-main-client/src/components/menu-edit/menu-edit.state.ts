@@ -41,13 +41,7 @@ export const useMenuEditState = () => {
       image: values.image,
       products: productIds,
       allergens: allergensIds,
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    });
   };
 
   const formik = useFormik<Omit<IMenu, 'id'>>({
@@ -80,12 +74,7 @@ export const useMenuEditState = () => {
         return await fetchProductAllergens(id);
       }),
     );
-    console.log(allergensArr);
-
     const uniqueAllergens = getUniqueAllergens(allergensArr);
-
-    console.log(uniqueAllergens);
-
     const totalPrice = getTotalPrice(products);
     const totalWeight = getTotalWeight(products);
 

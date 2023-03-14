@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
-import { IMAGES } from '../../../constants/images';
-import * as Styled from './filters.styled';
+import React from 'react';
+
 import CheckBox from './../../global/CheckBox/checkbox';
+
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { setTypes } from '../../../redux/menuList.slice';
+
+import * as Styled from './filters.styled';
+import { IMAGES } from '../../../constants/images';
 
 const filters = [
   { name: 'Drinks', categories: ['Coffee', 'Tea', 'Juice', 'Water'] },
@@ -13,10 +16,6 @@ const filters = [
 const Filters: React.FC = () => {
   const dispatch = useAppDispatch();
   const selectedTypes = useAppSelector((store) => store.menuList.types);
-
-  useEffect(() => {
-    selectAll();
-  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked, value } = e.target;

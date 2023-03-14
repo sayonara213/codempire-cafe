@@ -46,7 +46,13 @@ export class ProductService {
     const orderField = orderOptions[order] || 'ASC';
 
     if (types === undefined) {
-      return undefined;
+      return this.productRepository
+        .createQueryBuilder('product')
+        .leftJoinAndSelect('product.ingredients', 'ingredient')
+        .leftJoinAndSelect('ingredient.allergens', 'allergen')
+        .select(['product', 'ingredient', 'allergen'])
+        .orderBy(sortField, orderField)
+        .getMany();
     }
 
     return this.productRepository

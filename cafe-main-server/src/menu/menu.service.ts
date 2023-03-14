@@ -65,7 +65,15 @@ export class MenuService {
     const orderField = orderOptions[order] || 'ASC';
 
     if (types === undefined) {
-      return undefined;
+      return this.menuRepository
+        .createQueryBuilder('menu')
+        .leftJoinAndSelect('menu.allergens', 'menu_allergen')
+        .leftJoinAndSelect('menu.products', 'product')
+        .leftJoinAndSelect('product.ingredients', 'ingredient')
+        .leftJoinAndSelect('ingredient.allergens', 'allergen')
+        .select(['menu', 'menu_allergen', 'product', 'ingredient', 'allergen'])
+        .orderBy(sortField, orderField)
+        .getMany();
     }
 
     return this.menuRepository

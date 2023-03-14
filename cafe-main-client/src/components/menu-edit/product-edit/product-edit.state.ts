@@ -27,6 +27,7 @@ export const useProductEditState = () => {
     console.log(values);
 
     const ingredientsId = values.ingredients.map((ingredient) => ingredient.id);
+
     apiPost(API_URL.ADD_PRODUCT, {
       name: values.name,
       price: values.price,
@@ -68,8 +69,6 @@ export const useProductEditState = () => {
   };
 
   const handleIngredient = async (ingredients: any[]) => {
-    console.log(ingredients);
-
     const allergens = ingredients.map((ingredient) => ingredient.allergens);
 
     const uniqueAllergens = getUniqueAllergens(allergens);
