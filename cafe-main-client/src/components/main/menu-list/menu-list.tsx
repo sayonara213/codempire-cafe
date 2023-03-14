@@ -1,26 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { MenuListContainer } from './menu-list.styled';
 import MenuListItem from './menu-list-item/menu-list-item';
 import { RoleProps } from './../../../types/types.role';
-import { IMenu } from '../../../types/types.menu';
-import { apiGet } from './../../../services/api.service';
-import { API_URL } from './../../../constants/url';
+import { useAppDispatch, useAppSelector } from './../../../hooks/hooks';
+import { fetchMenuList } from '../../../redux/menuList.slice';
+import MenuListItemsPlaceholder from './menu-list-item/placeholder/menu-list-items-placeholder';
 
 const MenuList: React.FC<RoleProps> = ({ isAdmin }) => {
-  const [menuItems, setMenuItems] = useState<IMenu[]>([]);
-
-  const getMenuItems = async () => {
-    const response = await apiGet(API_URL.GET_ALL);
-    setMenuItems(response.data);
-  };
+  const { menuList, menuListLoading, isProduct, orderBy, types } = useAppSelector(
+    (store) => store.menuList,
+  );
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getMenuItems();
-  }, []);
+    dispatch(fetchMenuList({ isProduct, orderBy, types }));
+  }, [isProduct, orderBy, types]);
+
+  if (menuListLoading) {
+    return (
+      <MenuListContainer>
+        <MenuListItemsPlaceholder />
+      </MenuListContainer>
+    );
+  }
 
   return (
     <MenuListContainer>
-      {menuItems.map((item) => {
+      {menuList.map((item) => {
         return (
           <MenuListItem
             key={item.id}
@@ -30,8 +36,6 @@ const MenuList: React.FC<RoleProps> = ({ isAdmin }) => {
             price={item.price}
             image={item.image}
             weight={item.weight}
-            products={item.products}
-            allergens={item.allergens}
             isAdmin={isAdmin}
           />
         );

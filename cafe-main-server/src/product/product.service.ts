@@ -1,12 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Product } from './entity/product.entity';
 import { CreateProductDto } from './dto/product.dto';
 import { IngredientService } from './ingredient/ingredient.service';
-import { Ingredient } from './ingredient/entity/ingredient.entity';
-import { Allergen } from 'src/allergen/allergen.entity';
-
+import { IsArray } from 'class-validator';
 @Injectable()
 export class ProductService {
   constructor(
@@ -28,21 +26,57 @@ export class ProductService {
     return await this.productRepository.save(newProduct);
   }
 
+  async getAllProductWithParam(
+    sortBy: string,
+    order: string,
+    types: string[],
+  ): Promise<Product[]> {
+    const sortOptions = {
+      name: 'product.name',
+      price: 'product.price',
+      weight: 'product.weight',
+    };
+
+    const orderOptions = {
+      asc: 'ASC',
+      desc: 'DESC',
+    };
+
+    const sortField = sortOptions[sortBy] || 'product.name';
+    const orderField = orderOptions[order] || 'ASC';
+
+    if (types === undefined) {
+      return this.productRepository
+        .createQueryBuilder('product')
+        .leftJoinAndSelect('product.ingredients', 'ingredient')
+        .leftJoinAndSelect('ingredient.allergens', 'allergen')
+        .select(['product', 'ingredient', 'allergen'])
+        .orderBy(sortField, orderField)
+        .getMany();
+    }
+
+    return this.productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.ingredients', 'ingredient')
+      .leftJoinAndSelect('ingredient.allergens', 'allergen')
+      .select(['product', 'ingredient', 'allergen'])
+      .where({ type: In(Array.isArray(types) ? types : [types]) })
+      .orderBy(sortField, orderField)
+      .getMany();
+  }
+
   async getAllProduct(): Promise<Product[]> {
     return this.productRepository
       .createQueryBuilder('product')
       .leftJoinAndSelect('product.ingredients', 'ingredient')
       .leftJoinAndSelect('ingredient.allergens', 'allergen')
-      .select([
-        'product',
-        'ingredient',
-        'allergen'
-      ])
+      .select(['product', 'ingredient', 'allergen'])
       .getMany();
   }
 
   async findProductAllergens(productId: string): Promise<any> {
-    const query = this.productRepository.createQueryBuilder('product')
+    const query = this.productRepository
+      .createQueryBuilder('product')
       .leftJoinAndSelect('product.ingredients', 'ingredient')
       .leftJoinAndSelect('ingredient.allergens', 'allergen')
       .where('product.id = :productId', { productId })

@@ -25,7 +25,7 @@ export const useMenuEditState = () => {
 
   const fetchProductAllergens = async (id: string) => {
     if (id !== undefined) {
-      const response = await apiGet(API_URL.GET_ALL_PRODUCTS + id + '/allergens');
+      const response = await apiGet(`${API_URL.GET_ALL_PRODUCTS}/${id}/allergens`);
       return response.data;
     }
   };
@@ -41,13 +41,7 @@ export const useMenuEditState = () => {
       image: values.image,
       products: productIds,
       allergens: allergensIds,
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    });
   };
 
   const formik = useFormik<Omit<IMenu, 'id'>>({
@@ -81,7 +75,6 @@ export const useMenuEditState = () => {
       }),
     );
     const uniqueAllergens = getUniqueAllergens(allergensArr);
-
     const totalPrice = getTotalPrice(products);
     const totalWeight = getTotalWeight(products);
 
@@ -108,7 +101,9 @@ export const useMenuEditState = () => {
   const getUniqueAllergens = (allergens: IAllergen[][]) => {
     return allergens
       .flat()
-      .filter((allergen, index, self) => self.findIndex((item) => item.id === allergen.id));
+      .filter(
+        (allergen, index, self) => self.findIndex((item) => item.id === allergen.id) === index,
+      );
   };
 
   const handleAllergens = (allergens: string[]) => {
@@ -131,12 +126,14 @@ export const useMenuEditState = () => {
       type: 'select',
       items: products,
       formikValue: formik.values.products,
+      isMulti: true,
     },
     {
       label: 'Allergens',
       type: 'select',
       items: allergens,
       formikValue: formik.values.allergens,
+      isMulti: true,
     },
     {
       label: 'Price',

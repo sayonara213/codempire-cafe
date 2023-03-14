@@ -1,27 +1,28 @@
 import { useEffect } from 'react';
-import { MainContainer } from '../main/main.styled';
-import * as Styled from './menu-edit.styled';
-import Input from './../global/Input/input';
-import GlobalSelect from '../global/Select/select';
-import Button from '../global/Button/button';
-import { useMenuEditState } from './menu-edit.state';
+import Button from '../../global/Button/button';
+import Input from '../../global/Input/input';
+import GlobalSelect from '../../global/Select/select';
+import { MainContainer } from '../../main/main.styled';
+import * as Styled from '../menu-edit.styled';
+import { useProductEditState } from './product-edit.state';
 
-const MenuEdit: React.FC = () => {
+const ProductEdit: React.FC = () => {
   const {
-    fetchProducts,
+    fetchIngredients,
     products,
     image,
     allergens,
     formik,
     handleFile,
-    handleProduct,
+    handleIngredient,
     handleAllergens,
     inputs,
     fetchAllergens,
-  } = useMenuEditState();
+    selectedAllergens,
+  } = useProductEditState();
 
   useEffect(() => {
-    fetchProducts();
+    fetchIngredients();
     fetchAllergens();
   }, []);
 
@@ -43,11 +44,9 @@ const MenuEdit: React.FC = () => {
                 <Styled.InputLabel>{input.label}</Styled.InputLabel>
                 {input.type === 'select' ? (
                   <GlobalSelect
-                    items={input.label === 'Allergens' ? allergens : products}
-                    onchange={input.label === 'Allergens' ? handleAllergens : handleProduct}
-                    selectedItems={
-                      input.label === 'Allergens' ? formik.values.allergens : formik.values.products
-                    }
+                    items={input.items!}
+                    onchange={input.onchange!}
+                    selectedItems={input.selectedItems!}
                     isMulti={input.isMulti!}
                   />
                 ) : (
@@ -75,4 +74,4 @@ const MenuEdit: React.FC = () => {
   );
 };
 
-export default MenuEdit;
+export default ProductEdit;

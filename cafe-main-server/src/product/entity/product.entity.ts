@@ -7,7 +7,6 @@ import {
   JoinTable,
 } from 'typeorm';
 import { Ingredient } from '../ingredient/entity/ingredient.entity';
-import { Allergen } from './../../allergen/allergen.entity';
 
 @Entity('product')
 export class Product {
@@ -25,6 +24,12 @@ export class Product {
 
   @Column({ type: 'int' })
   weight: number;
+
+  @Column({ type: 'varchar' })
+  image: string;
+
+  @Column({ type: 'varchar' })
+  type: string;
 
   @ManyToMany(() => Menu, (menu) => menu.products)
   menus: Menu[];

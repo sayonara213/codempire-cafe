@@ -21,7 +21,9 @@ export class IngredientService {
   }
 
   async getAllIngredients(): Promise<Ingredient[]> {
-    return this.ingredientRepository.find();
+    return this.ingredientRepository.find({
+      relations: ['allergens'],
+    });
   }
 
   async deleteIngredient(id: string): Promise<Ingredient> {

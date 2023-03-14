@@ -6,6 +6,7 @@ import {
   Inject,
   Param,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { Menu } from './entity/menu.entity';
@@ -23,8 +24,12 @@ export class MenuController {
   private readonly service: MenuService;
 
   @Get(API.LIST_ALL)
-  getMenus(): Promise<Menu[]> {
-    return this.service.getAllMenu();
+  getMenus(
+    @Query('sortBy') sortBy: string,
+    @Query('order') order: string,
+    @Query('types') types: string[],
+  ): Promise<Menu[]> {
+    return this.service.getAllMenu(sortBy, order, types);
   }
 
   @Roles(UserRole.ADMIN)

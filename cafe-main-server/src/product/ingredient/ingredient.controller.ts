@@ -17,4 +17,9 @@ export class IngredientController {
   async getIngredientById(id: string) {
     return await this.service.getIngredientById(id);
   }
+
+  @Get(API.LIST_ALL)
+  async getAllIngredients() {
+    return await this.service.getAllIngredients();
+  }
 }

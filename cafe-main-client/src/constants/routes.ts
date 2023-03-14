@@ -7,5 +7,6 @@ export const ROUTES = {
   cart: '/cart',
   orders: '/orders',
   splashScreen: '/splash-screen',
-  createMenu: '/create',
+  createMenu: '/menu/create',
+  createProduct: '/product/create',
 };

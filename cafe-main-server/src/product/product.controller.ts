@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product } from 'src/product/entity/product.entity';
@@ -19,8 +20,17 @@ export class ProductController {
   @Inject(ProductService)
   private readonly service: ProductService;
 
+  @Get(API.LIST_ALL + '/param')
+  getProductsParam(
+    @Query('sortBy') sort: string,
+    @Query('order') order: string,
+    @Query('types') types: string[],
+  ): Promise<Product[] | undefined> {
+    return this.service.getAllProductWithParam(sort, order, types);
+  }
+
   @Get(API.LIST_ALL)
-  getProducts(): Promise<Product[] | undefined> {
+  getAllProducts(): Promise<Product[]> {
     return this.service.getAllProduct();
   }
 

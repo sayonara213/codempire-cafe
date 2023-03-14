@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Menu } from './entity/menu.entity';
 import { CreateMenuDto } from './dto/menu.dto';
 import { ProductService } from 'src/product/product.service';
@@ -45,13 +45,48 @@ export class MenuService {
     );
   }
 
-  async getAllMenu(): Promise<Menu[]> {
+  async getAllMenu(
+    sortBy: string,
+    order: string,
+    types: string[],
+  ): Promise<Menu[]> {
+    const sortOptions = {
+      name: 'product.name',
+      price: 'product.price',
+      weight: 'product.weight',
+    };
+
+    const orderOptions = {
+      asc: 'ASC',
+      desc: 'DESC',
+    };
+
+    const sortField = sortOptions[sortBy] || 'product.name';
+    const orderField = orderOptions[order] || 'ASC';
+
+    if (types === undefined) {
+      return this.menuRepository
+        .createQueryBuilder('menu')
+        .leftJoinAndSelect('menu.allergens', 'menu_allergen')
+        .leftJoinAndSelect('menu.products', 'product')
+        .leftJoinAndSelect('product.ingredients', 'ingredient')
+        .leftJoinAndSelect('ingredient.allergens', 'allergen')
+        .select(['menu', 'menu_allergen', 'product', 'ingredient', 'allergen'])
+        .orderBy(sortField, orderField)
+        .getMany();
+    }
+
     return this.menuRepository
       .createQueryBuilder('menu')
       .leftJoinAndSelect('menu.allergens', 'menu_allergen')
       .leftJoinAndSelect('menu.products', 'product')
       .leftJoinAndSelect('product.ingredients', 'ingredient')
       .leftJoinAndSelect('ingredient.allergens', 'allergen')
+      .select(['menu', 'menu_allergen', 'product', 'ingredient', 'allergen'])
+      .where('product.type IN (:...types)', {
+        types: Array.isArray(types) ? types : [types],
+      })
+      .orderBy(sortField, orderField)
       .getMany();
   }
 
