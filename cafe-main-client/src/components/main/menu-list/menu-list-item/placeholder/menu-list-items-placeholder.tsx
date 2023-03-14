@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Styled from './menu-list-item-placeholder.styled';
 
-const placeholderArray = [1, 2, 3, 4, 5, 6, 7];
+const placeholderArray = [1, 2, 3, 4];
 
 const MenuListItemsPlaceholder: React.FC = () => {
   return (

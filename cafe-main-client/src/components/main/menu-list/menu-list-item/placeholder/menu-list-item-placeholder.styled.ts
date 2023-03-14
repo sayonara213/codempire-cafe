@@ -23,6 +23,7 @@ export const PlaceholderContainer = styled.div`
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.2);
 
   div {
+    border-radius: 4px;
     background-color: #ededed;
     background-image: linear-gradient(to right, #e0e0e0 0%, #f0f0f0 50%, #e0e0e0 100%);
     background-size: 200px 100%;
