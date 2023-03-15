@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { MainContainer } from '../main/main.styled';
 import { BackButton } from '../menu-edit/menu-edit.styled';
 import * as Styled from './menu-info.styled';
@@ -16,11 +16,16 @@ interface MenuInfoProps {
 
 const MenuInfo: React.FC<MenuInfoProps> = ({ isProduct }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [item, setItem] = useState<IMenu | null>(null);
   const [allergens, setAllergens] = useState<string[]>([]);
   const [products, setProducts] = useState<string[]>([]);
   const [menuList, setMenuList] = useState<IMenu[]>([]);
+
+  const getBack = () => {
+    navigate(-1);
+  };
 
   const getMenu = async () => {
     const response = await apiGet(API_URL.GET_MENU + id);
@@ -54,13 +59,13 @@ const MenuInfo: React.FC<MenuInfoProps> = ({ isProduct }) => {
   useEffect(() => {
     isProduct ? getProduct() : getMenu();
     fetchLimitMenu();
-  }, []);
+  }, [id]);
 
   return (
     <MainContainer>
       <Styled.MenuInfoContainer>
         <Styled.BackButtonWrap>
-          <BackButton>Back</BackButton>
+          <BackButton onClick={getBack}>Back</BackButton>
         </Styled.BackButtonWrap>
         <Styled.ItemWrap>
           <Styled.ItemSectionWrap>

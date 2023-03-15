@@ -43,8 +43,9 @@ export const ItemImageWrap = styled.div`
 
 export const ItemImage = styled.img`
   width: 308px;
+  max-height: 308px;
 
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 export const ItemTitle = styled.h3`

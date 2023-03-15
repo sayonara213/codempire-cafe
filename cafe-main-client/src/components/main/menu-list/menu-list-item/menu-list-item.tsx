@@ -1,9 +1,11 @@
 import React from 'react';
-import * as Styled from './menu-list-item.styled';
+
 import { apiDelete } from './../../../../services/api.service';
 import { API_URL } from '../../../../constants/url';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from './../../../../constants/routes';
+
+import * as Styled from './menu-list-item.styled';
 
 interface MenuListItemProps {
   name: string;
@@ -33,7 +35,7 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
   };
 
   const showInfo = () => {
-    isProduct ? navigate('/product/' + id) : navigate(id);
+    isProduct ? navigate(ROUTES.product + id) : navigate(ROUTES.menu + id);
   };
 
   return (

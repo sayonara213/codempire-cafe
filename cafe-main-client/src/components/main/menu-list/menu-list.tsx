@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { MenuListContainer } from './menu-list.styled';
-import MenuListItem from './menu-list-item/menu-list-item';
-import { RoleProps } from './../../../types/types.role';
+
 import { useAppDispatch, useAppSelector } from './../../../hooks/hooks';
 import { fetchMenuList } from '../../../redux/menuList.slice';
-import MenuListItemsPlaceholder from './menu-list-item/placeholder/menu-list-items-placeholder';
+import MenuListItem from './menu-list-item/menu-list-item';
+
 import { IProduct } from './../../../types/types.products';
 import { IMenu } from '../../../types/types.menu';
+import { RoleProps } from './../../../types/types.role';
+import MenuListItemsPlaceholder from './menu-list-item/placeholder/menu-list-items-placeholder';
+
+import { MenuListContainer } from './menu-list.styled';
 
 const MenuList: React.FC<RoleProps> = ({ isAdmin }) => {
   const { menuList, menuListLoading, isProduct, orderBy, types, search } = useAppSelector(
