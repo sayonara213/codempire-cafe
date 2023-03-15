@@ -1,8 +1,9 @@
 import React from 'react';
 import * as Styled from './menu-list-item.styled';
-import { IMenu } from './../../../../types/types.menu';
 import { apiDelete } from './../../../../services/api.service';
 import { API_URL } from '../../../../constants/url';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from './../../../../constants/routes';
 
 interface MenuListItemProps {
   name: string;
@@ -12,6 +13,7 @@ interface MenuListItemProps {
   weight: number;
   isAdmin: boolean;
   id: string;
+  isProduct: boolean;
 }
 
 const MenuListItem: React.FC<MenuListItemProps> = ({
@@ -22,15 +24,20 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
   isAdmin,
   weight,
   id,
+  isProduct,
 }) => {
-  //const productsString = products?.map((product) => product.name).join(', ');
+  const navigate = useNavigate();
 
   const handleDelete = () => {
     apiDelete(API_URL.DELETE, id);
   };
 
+  const showInfo = () => {
+    isProduct ? navigate('/product/' + id) : navigate(id);
+  };
+
   return (
-    <Styled.MenuListItemContainer>
+    <Styled.MenuListItemContainer onClick={showInfo}>
       <Styled.MenuImageWrap>
         <Styled.MenuListItemImage src={image} />
       </Styled.MenuImageWrap>

@@ -16,7 +16,7 @@ export class ProductService {
   async getProductById(id: string): Promise<Product> {
     return await this.productRepository.findOne({
       where: { id: id },
-      relations: ['ingredients'],
+      relations: ['ingredients', 'ingredients.allergens'],
     });
   }
 

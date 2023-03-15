@@ -50,4 +50,9 @@ export class MenuController {
   getMenuById(@Param('id') id: string): Promise<Menu> {
     return this.service.getMenuById(id);
   }
+
+  @Get(API.LIST_ALL)
+  getLimitMenus(@Query('limit') limit: number): Promise<Menu[]> {
+    return this.service.getLimitedMenu(limit);
+  }
 }

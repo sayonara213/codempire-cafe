@@ -9,6 +9,7 @@ export const FONT_SIZE = {
   medium: '16px',
   big: '20px',
   large: '24px',
+  xlarge: '36px',
 };
 export const FONT = {
   thin: 'thin',

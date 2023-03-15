@@ -79,7 +79,9 @@ export const useProductEditState = () => {
   const getUniqueAllergens = (allergens: IAllergen[][]) => {
     return allergens
       .flat()
-      .filter((allergen, index, self) => self.findIndex((item) => item.id === allergen.id));
+      .filter(
+        (allergen, index, self) => self.findIndex((item) => item.id === allergen.id) === index,
+      );
   };
 
   const handleAllergens = (allergens: string[]) => {

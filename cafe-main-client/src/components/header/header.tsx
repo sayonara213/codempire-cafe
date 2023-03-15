@@ -4,12 +4,15 @@ import * as Styled from './header.styled';
 import User from './user/user';
 import { IMAGES } from './../../constants/images';
 import Input from '../global/Input/input';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { setSearch } from '../../redux/menuList.slice';
 
 const Header: React.FC = () => {
-  const [value, setValue] = React.useState<string>('');
+  const dispatch = useAppDispatch();
+  const value = useAppSelector((store) => store.menuList.search);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    dispatch(setSearch(e.target.value));
   };
 
   const location = useLocation();

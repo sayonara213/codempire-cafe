@@ -14,6 +14,7 @@ interface MenuListState {
     order: 'asc' | 'desc';
   };
   types: string[];
+  search: string;
 }
 
 interface FetchMenuListPayload {
@@ -35,6 +36,7 @@ const initialState: MenuListState = {
     order: 'asc',
   },
   types: [],
+  search: '',
 };
 
 export const fetchMenuList = createAsyncThunk(
@@ -81,9 +83,12 @@ const menuListSlice = createSlice({
     setTypes: (state, action) => {
       state.types = action.payload;
     },
+    setSearch: (state, action) => {
+      state.search = action.payload;
+    },
   },
 });
 
 export default menuListSlice.reducer;
 
-export const { setIsProduct, setOrderBy, setTypes } = menuListSlice.actions;
+export const { setIsProduct, setOrderBy, setTypes, setSearch } = menuListSlice.actions;

@@ -24,10 +24,11 @@ export const MenuImageWrap = styled.div`
 `;
 
 export const MenuListItemImage = styled.img`
+  height: 100%;
   width: 100%;
   margin-bottom: 16px;
 
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 export const MenuListItemTitle = styled.h3`
