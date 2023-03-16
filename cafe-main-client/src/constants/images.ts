@@ -10,6 +10,7 @@ import footerProfile from '../assets/icons/footer-profile.svg';
 import filter from '../assets/icons/filter.svg';
 import placeholderDish from '../assets/images/placeholder_dish.png';
 import remove from '../assets/icons/remove.svg';
+import arrow from '../assets/icons/arrow.svg';
 
 export const IMAGES = {
   logo,
@@ -24,4 +25,5 @@ export const IMAGES = {
   filter,
   placeholderDish,
   remove,
+  arrow,
 };

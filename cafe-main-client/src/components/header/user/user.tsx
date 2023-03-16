@@ -13,6 +13,10 @@ const User: React.FC = () => {
     navigate(ROUTES.register);
   };
 
+  const profile = () => {
+    navigate(ROUTES.profile);
+  };
+
   if (user.id === '') {
     return (
       <Styled.UserWrap onClick={authorize}>
@@ -24,13 +28,13 @@ const User: React.FC = () => {
   }
 
   return (
-    <Styled.UserWrap>
+    <Styled.UserWrap onClick={profile}>
       <Styled.UserTextWrap>
         <Styled.UserRole>{user.role}</Styled.UserRole>
         <Styled.UserName>{user.name}</Styled.UserName>
       </Styled.UserTextWrap>
       <Styled.UserImageWrap>
-        <Styled.UserImage src={IMAGES.testUser} />
+        <Styled.UserImage src={user.image} />
       </Styled.UserImageWrap>
     </Styled.UserWrap>
   );

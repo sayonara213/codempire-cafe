@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IMAGES } from '../constants/images';
 import { IUser } from '../types/types.user';
 
 export const initialState: IUser = {
@@ -7,6 +8,7 @@ export const initialState: IUser = {
   email: '',
   phone: '',
   role: '',
+  image: IMAGES.testUser,
 };
 
 const userSlice = createSlice({
@@ -15,7 +17,9 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       state = action.payload;
-      state.name = `USER${action.payload.id.substring(0, 5)}`;
+      if (action.payload.name === '' || action.payload.name === null) {
+        state.name = `USER${action.payload.id.substring(0, 5)}`;
+      }
       return state;
     },
     setNameAndPhone: (state, action) => {
@@ -23,9 +27,17 @@ const userSlice = createSlice({
       state.phone = action.payload.phone;
       return state;
     },
+    setPhoto: (state, action) => {
+      state.image = action.payload;
+      return state;
+    },
+    logOut: (state) => {
+      state = initialState;
+      return state;
+    },
   },
 });
 
 export default userSlice.reducer;
 
-export const { setUser, setNameAndPhone } = userSlice.actions;
+export const { setUser, setNameAndPhone, setPhoto, logOut } = userSlice.actions;

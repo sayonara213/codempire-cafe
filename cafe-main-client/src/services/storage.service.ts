@@ -3,7 +3,7 @@ export const removeToken = () => {
 };
 
 export const getToken = () => {
-  const token = JSON.parse(localStorage.getItem('token') || '{}');
+  const token = JSON.parse(localStorage.getItem('token') || 'null');
   return token;
 };
 

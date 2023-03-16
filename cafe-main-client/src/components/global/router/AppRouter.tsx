@@ -16,6 +16,7 @@ import { ROUTES } from '../../../constants/routes';
 import ProductEdit from '../../menu-edit/product-edit/product-edit';
 import MenuInfo from './../../menu-info/menu-info';
 import AdditionalAuth from '../../auth/additional/additional-auth';
+import Profile from '../../user-info/profile';
 
 const AppRouter: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const AppRouter: React.FC = () => {
       <Route element={<Layout />}>
         <Route path='/' element={<PrivateRoutes />}>
           <Route path='/' element={<Navigate to={ROUTES.menu} replace />} />
+          <Route path={ROUTES.profile} element={<Profile />} />
           <Route path='/' element={<RoleRouter />}>
             <Route path={ROUTES.createMenu} element={<MenuEdit />} />
             <Route path={ROUTES.createProduct} element={<ProductEdit />} />

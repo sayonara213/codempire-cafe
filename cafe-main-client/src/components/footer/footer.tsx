@@ -14,11 +14,6 @@ const sections = [
 ];
 
 const Footer: React.FC = () => {
-  const navigate = useNavigate();
-  const handleNavigate = (url: string) => {
-    navigate(url);
-  };
-
   return (
     <Styled.FooterContainer>
       {sections.map((section) => (
