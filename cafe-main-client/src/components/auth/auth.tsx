@@ -28,8 +28,12 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
     const { user } = isLogin ? await login(formsData) : await register(formsData);
     if (user) {
       dispatch(setUser(user));
-      navigate(ROUTES.menu);
+      navigate(isLogin ? ROUTES.menu : ROUTES.registerAdditional);
     }
+  };
+
+  const skip = () => {
+    navigate(ROUTES.menu);
   };
 
   const formik = useFormik({
@@ -70,7 +74,7 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
         <Button type={'submit'} isActive={!formik.errors.email && !formik.errors.password}>
           {isLogin ? 'LOG IN' : 'CREATE'}
         </Button>
-        <Styled.SkipAuth>SKIP</Styled.SkipAuth>
+        <Styled.SkipAuth onClick={skip}>SKIP</Styled.SkipAuth>
       </Styled.AuthWrap>
     </Styled.AuthContainer>
   );

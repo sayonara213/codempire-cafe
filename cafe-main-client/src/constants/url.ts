@@ -1,6 +1,7 @@
 export const API_URL = {
   LOGIN: 'http://localhost:5000/auth/login',
   REGISTER: 'http://localhost:5000/auth/register',
+  REGISTER_ADDITIONAL: 'http://localhost:5000/auth/additional',
   DELETE: 'http://localhost:5000/menu/delete',
   ADD: 'http://localhost:5000/menu/add',
   ADD_PRODUCT: 'http://localhost:5000/product/add',

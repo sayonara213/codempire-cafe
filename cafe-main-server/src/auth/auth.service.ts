@@ -46,6 +46,10 @@ export class AuthService {
     };
   }
 
+  async addNameAndPhone(id: string, body: any): Promise<any> {
+    return await this.userService.updateUserNameAndPhone(id, body);
+  }
+
   async allUsers() {
     return await this.userService.getAllUsers();
   }

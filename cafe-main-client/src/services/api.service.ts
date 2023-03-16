@@ -11,3 +11,7 @@ export const apiPost = async (url: string, data: any) => {
 export const apiDelete = async (url: string, id: string) => {
   return await axiosInstance.delete(`${url}/${id}`);
 };
+
+export const apiUpdate = async (url: string, id: string, data: any) => {
+  return await axiosInstance.put(`${url}/${id}`, data);
+};

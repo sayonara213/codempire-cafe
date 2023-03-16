@@ -15,6 +15,7 @@ import RoleRouter from './RoleRoute';
 import { ROUTES } from '../../../constants/routes';
 import ProductEdit from '../../menu-edit/product-edit/product-edit';
 import MenuInfo from './../../menu-info/menu-info';
+import AdditionalAuth from '../../auth/additional/additional-auth';
 
 const AppRouter: React.FC = () => {
   return (
@@ -32,6 +33,7 @@ const AppRouter: React.FC = () => {
         <Route path={ROUTES.productInfo} element={<MenuInfo isProduct={true} />} />
         <Route path={ROUTES.login} element={<Auth isLogin={true} />} />
         <Route path={ROUTES.register} element={<Auth isLogin={false} />} />
+        <Route path={ROUTES.registerAdditional} element={<AdditionalAuth />} />
         <Route path={ROUTES.splashScreen} element={<SplashScreen />} />
       </Route>
     </Routes>

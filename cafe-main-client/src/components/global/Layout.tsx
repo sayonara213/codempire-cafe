@@ -11,7 +11,9 @@ const Layout: React.FC = () => {
     <>
       <Header />
       <Outlet />
-      {location.pathname !== ROUTES.login && location.pathname !== ROUTES.register && <Footer />}
+      {location.pathname !== ROUTES.login &&
+        location.pathname !== ROUTES.register &&
+        location.pathname !== ROUTES.registerAdditional && <Footer />}
     </>
   );
 };

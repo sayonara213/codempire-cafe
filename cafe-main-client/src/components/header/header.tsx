@@ -17,7 +17,11 @@ const Header: React.FC = () => {
 
   const location = useLocation();
 
-  if (location.pathname === '/login' || location.pathname === '/register')
+  if (
+    location.pathname === '/login' ||
+    location.pathname === '/register' ||
+    location.pathname === '/register/additional'
+  )
     return (
       <Styled.HeaderContainer>
         <Styled.HeaderAuth>
