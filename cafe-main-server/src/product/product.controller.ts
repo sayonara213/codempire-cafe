@@ -57,7 +57,7 @@ export class ProductController {
     return this.service.updateProduct(id, product);
   }
 
-  @Get(API.GET)
+  @Get(`${API.GET}/:id`)
   getProduct(@Param('id') id: string): Promise<Product> {
     return this.service.getProductById(id);
   }

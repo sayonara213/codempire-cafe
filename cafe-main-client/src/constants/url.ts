@@ -9,5 +9,7 @@ export const API_URL = {
   GET_ALL_INGREDIENTS: 'http://localhost:5000/ingredient/list/',
   GET_ALL_ALLERGENS: 'http://localhost:5000/allergen/list',
   GET_PRODUCT: 'http://localhost:5000/product/',
+  GET_PRODUCT_BY_ID: 'http://localhost:5000/product/get/',
+  GET_MENU: 'http://localhost:5000/menu/get/',
   SEARCH_ALL_PRODUCTS: 'http://localhost:5000/product/list/param',
 };

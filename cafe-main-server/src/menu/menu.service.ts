@@ -18,7 +18,7 @@ export class MenuService {
   async getMenuById(id: string): Promise<Menu> {
     return await this.menuRepository.findOne({
       where: { id: id },
-      relations: ['products'],
+      relations: ['products', 'allergens'],
     });
   }
 
@@ -88,6 +88,13 @@ export class MenuService {
       })
       .orderBy(sortField, orderField)
       .getMany();
+  }
+
+  async getLimitedMenu(limit: number): Promise<Menu[]> {
+    return await this.menuRepository.find({
+      take: limit,
+      relations: ['products', 'allergens'],
+    });
   }
 
   async deleteMenu(id: string): Promise<Menu> {

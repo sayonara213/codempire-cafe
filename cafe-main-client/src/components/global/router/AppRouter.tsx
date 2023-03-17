@@ -14,6 +14,7 @@ import RoleRouter from './RoleRoute';
 
 import { ROUTES } from '../../../constants/routes';
 import ProductEdit from '../../menu-edit/product-edit/product-edit';
+import MenuInfo from './../../menu-info/menu-info';
 
 const AppRouter: React.FC = () => {
   return (
@@ -27,6 +28,8 @@ const AppRouter: React.FC = () => {
           </Route>
         </Route>
         <Route path={ROUTES.menu} element={<Main />} />
+        <Route path={ROUTES.menuInfo} element={<MenuInfo isProduct={false} />} />
+        <Route path={ROUTES.productInfo} element={<MenuInfo isProduct={true} />} />
         <Route path={ROUTES.login} element={<Auth isLogin={true} />} />
         <Route path={ROUTES.register} element={<Auth isLogin={false} />} />
         <Route path={ROUTES.splashScreen} element={<SplashScreen />} />

@@ -4,6 +4,7 @@ export const normalize = css`
   html {
     line-height: 1.15;
     -webkit-text-size-adjust: 100%;
+    overflow-y: scroll;
   }
 
   body {
