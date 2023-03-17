@@ -16,9 +16,14 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
+      console.log('action.payload', action.payload);
+
       state = action.payload;
       if (action.payload.name === '' || action.payload.name === null) {
         state.name = `USER${action.payload.id.substring(0, 5)}`;
+      }
+      if (!action.payload.image) {
+        state.image = IMAGES.testUser;
       }
       return state;
     },

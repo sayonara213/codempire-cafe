@@ -8,6 +8,7 @@ import { useAppDispatch } from './../../hooks/hooks';
 import { apiUpdate } from '../../services/api.service';
 import { setPhoto, logOut } from '../../redux/user.slice';
 import Button from './../global/Button/button';
+import { API_URL } from '../../constants/url';
 
 const settingsList = [
   {
@@ -45,7 +46,6 @@ const settingsList = [
 ];
 
 const Profile: React.FC = () => {
-  const [avatar, setAvatar] = React.useState<string>(IMAGES.testUser);
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
 
@@ -59,12 +59,11 @@ const Profile: React.FC = () => {
 
   const uploadAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files![0];
-    console.log(file);
 
     dispatch(setPhoto(URL.createObjectURL(file)));
     if (file) {
       madeCompressedBase64(file, (dataUrl) => {
-        apiUpdate('http://localhost:5000/user/photo', user.id, { photo: dataUrl });
+        apiUpdate(API_URL.ADD_AVATAR, user.id, { photo: dataUrl });
       });
     }
   };
