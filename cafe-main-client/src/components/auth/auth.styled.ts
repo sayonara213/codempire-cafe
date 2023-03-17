@@ -8,6 +8,7 @@ export const AuthContainer = styled.div`
   background-color: ${({ theme }) => theme.color.white};
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;

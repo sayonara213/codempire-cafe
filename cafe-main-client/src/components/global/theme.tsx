@@ -62,3 +62,7 @@ export const Theme: React.FC<PropsWithChildren> = ({ children }) => {
     </ThemeProvider>
   );
 };
+
+// font-family: ${({ theme }) => theme.font.regular};
+// font-size: ${({ theme }) => theme.fontSize.medium};
+// color: ${({ theme }) => theme.color.text};

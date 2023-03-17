@@ -37,4 +37,27 @@ export class UserService {
     newUser.password = await bcrypt.hash(body.password, salt);
     return await this.userRepository.save(newUser);
   }
+
+  async updateUserNameAndPhone(id: string, body: any): Promise<User> {
+    const currentUser = await this.userRepository.findOne({
+      where: { id: id },
+    });
+    if (!currentUser) {
+      throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
+    }
+    currentUser.name = body.username;
+    currentUser.phone = body.phone;
+    return await this.userRepository.save(currentUser);
+  }
+
+  async updateUserPhoto(id: string, body: any): Promise<User> {
+    const currentUser = await this.userRepository.findOne({
+      where: { id: id },
+    });
+    if (!currentUser) {
+      throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
+    }
+    currentUser.image = body.photo;
+    return await this.userRepository.save(currentUser);
+  }
 }

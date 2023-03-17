@@ -23,6 +23,12 @@ export class User {
   @Column({ type: 'varchar', length: 120 })
   public email: string;
 
+  @Column({ type: 'varchar', length: 120, nullable: true })
+  public phone: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  public image: string;
+
   @Column({ type: 'varchar', length: 120 })
   @Exclude()
   public password: string;

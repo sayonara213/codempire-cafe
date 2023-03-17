@@ -4,6 +4,8 @@ import {
   Get,
   Inject,
   Post,
+  Put,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -30,6 +32,14 @@ export class AuthController {
   @Post(API.SIGN_UP)
   async register(@Body() user: CreateUserDto): Promise<any> {
     return this.service.register(user);
+  }
+
+  @Put(API.ADDITIONAL + '/:id')
+  async addNameAndPhone(
+    @Query('id') id: string,
+    @Body() body: any,
+  ): Promise<any> {
+    this.service.addNameAndPhone(id, body);
   }
 
   @Roles(UserRole.ADMIN)
