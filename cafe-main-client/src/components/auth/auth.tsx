@@ -49,7 +49,7 @@ const Auth: React.FC<AuthProps> = ({ isLogin }) => {
           <Styled.Logo src={IMAGES.logo} />
         </Styled.AuthTitleWrap>
         {formInputs.map((input, index) => (
-          <Styled.AuthInputWrap>
+          <Styled.AuthInputWrap key={index}>
             <Input
               key={index}
               placeholder={input}

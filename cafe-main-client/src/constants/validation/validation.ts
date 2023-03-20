@@ -27,3 +27,16 @@ export const validationSchemaAdditional = Yup.object().shape({
     .required("Enter user's phone")
     .matches(REGEXPS.phone, 'Please enter valid phone'),
 });
+
+export const validationSchemaPassword = Yup.object().shape({
+  oldPassword: Yup.string()
+    .max(30, 'Too long password')
+    .trim()
+    .required("Enter user's password")
+    .matches(REGEXPS.password, 'Please enter valid password'),
+  newPassword: Yup.string()
+    .max(30, 'Too long password')
+    .trim()
+    .required("Enter user's password")
+    .matches(REGEXPS.password, 'Please enter valid password'),
+});
