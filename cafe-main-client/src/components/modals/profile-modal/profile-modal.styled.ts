@@ -13,6 +13,7 @@ export const PasswordForm = styled.form`
 `;
 
 export const ModalFooter = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

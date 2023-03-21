@@ -1,91 +1,30 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import * as Styled from './profile.styled';
 import { MainContainer } from '../main/main.styled';
-import { useAppSelector } from '../../hooks/hooks';
-import { madeCompressedBase64 } from '../../services/images.service';
-import { useAppDispatch } from './../../hooks/hooks';
-import { apiUpdate } from '../../services/api.service';
-import { setPhoto, logOut } from '../../redux/user.slice';
 import Button from './../global/Button/button';
-import { API_URL } from '../../constants/url';
 import GlobalModal from '../modals/modal';
-import ProfileModal from './../modals/profile-modal/profile-modal';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '../../constants/routes';
-import DeleteModal from '../modals/delete-modal/delete-modal';
+import { useProfileState } from './profile.state';
 
 const Profile: React.FC = () => {
-  const [isModal, setIsModal] = useState(false);
-  const [modalName, setModalName] = useState('Change password');
-  const user = useAppSelector((store) => store.user);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const {
+    isModal,
+    setIsModal,
+    modalName,
+    user,
+    inputRef,
+    fetchAddresses,
+    handleClick,
+    modalSwitch,
+    uploadAvatar,
+    logout,
+    settingsList,
+    activeAddresses,
+    handleAddressModal,
+  } = useProfileState();
 
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleModal = (value: string) => {
-    setIsModal(true);
-    setModalName(value);
-  };
-
-  const handleClick = () => {
-    if (inputRef.current) {
-      inputRef.current.click();
-    }
-  };
-
-  const modalSwitch = () => {
-    switch (modalName) {
-      case 'Change password':
-        return <ProfileModal isPasswordReset={true} />;
-      case 'Edit profile':
-        return <ProfileModal isPasswordReset={false} />;
-      case 'Delete account':
-        return <DeleteModal />;
-      default:
-        return <ProfileModal isPasswordReset={true} />;
-    }
-  };
-
-  const uploadAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.currentTarget.files![0];
-
-    dispatch(setPhoto(URL.createObjectURL(file)));
-    if (file) {
-      madeCompressedBase64(file, (dataUrl) => {
-        apiUpdate(API_URL.ADD_AVATAR, user.id, { photo: dataUrl });
-      });
-    }
-  };
-
-  const logout = () => {
-    dispatch(logOut());
-    localStorage.removeItem('token');
-    window.location.reload();
-  };
-
-  const settingsList = [
-    {
-      title: 'Privacy policy',
-      onclick: () => window.open('https://loremipsum.io/privacy-policy/'),
-    },
-    {
-      title: 'Change password',
-      onclick: () => handleModal('Change password'),
-    },
-    {
-      title: 'Edit profile',
-      onclick: () => handleModal('Edit profile'),
-    },
-    {
-      title: 'Delete account',
-      onclick: () => handleModal('Delete account'),
-    },
-    {
-      title: 'Orders',
-      onclick: () => navigate(ROUTES.orders),
-    },
-  ];
+  useEffect(() => {
+    fetchAddresses();
+  }, []);
 
   return (
     <MainContainer>
@@ -108,6 +47,14 @@ const Profile: React.FC = () => {
             {settingsList.map((item, index) => (
               <Styled.UserSettingsItemWrap key={index} onClick={item.onclick}>
                 <Styled.UserSettingsItemTitle>{item.title}</Styled.UserSettingsItemTitle>
+              </Styled.UserSettingsItemWrap>
+            ))}
+          </Styled.UserSettingsSection>
+          <Styled.UserSettingsSection onClick={handleAddressModal}>
+            <Styled.UserSettingsTitle>Address</Styled.UserSettingsTitle>
+            {activeAddresses.map((item, index) => (
+              <Styled.UserSettingsItemWrap key={index} onClick={handleAddressModal}>
+                <Styled.UserSettingsItemTitle>{item.addressName}</Styled.UserSettingsItemTitle>
               </Styled.UserSettingsItemWrap>
             ))}
           </Styled.UserSettingsSection>

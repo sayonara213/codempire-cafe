@@ -2,7 +2,6 @@ import React from 'react';
 import Modal from 'react-modal';
 import * as Styled from './modal.styled';
 import { IMAGES } from './../../constants/images';
-import { useAppSelector } from '../../hooks/hooks';
 
 interface GlobalModalProps {
   isOpen: boolean;
@@ -12,12 +11,14 @@ interface GlobalModalProps {
 }
 
 const GlobalModal: React.FC<GlobalModalProps> = ({ isOpen, onChange, children, modalName }) => {
-  const user = useAppSelector((store) => store.user);
+  const handleClose = () => {
+    onChange(false);
+  };
 
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={() => onChange(false)}
+      onRequestClose={handleClose}
       ariaHideApp={false}
       style={{
         overlay: {
@@ -46,7 +47,7 @@ const GlobalModal: React.FC<GlobalModalProps> = ({ isOpen, onChange, children, m
       }}>
       <Styled.ModalHeader>
         <Styled.ModalTitle>{modalName}</Styled.ModalTitle>
-        <Styled.ModalClose onClick={() => onChange(false)} src={IMAGES.close} />
+        <Styled.ModalClose onClick={handleClose} src={IMAGES.close} />
       </Styled.ModalHeader>
       {children}
     </Modal>

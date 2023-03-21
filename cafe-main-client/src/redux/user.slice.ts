@@ -9,6 +9,7 @@ export const initialState: IUser = {
   phone: '',
   role: '',
   image: IMAGES.testUser,
+  addresses: [],
 };
 
 const userSlice = createSlice({
@@ -40,9 +41,32 @@ const userSlice = createSlice({
       state = initialState;
       return state;
     },
+    setAddresses: (state, action) => {
+      state.addresses = action.payload;
+      return state;
+    },
+    toggleAddressActive: (state, action) => {
+      const address = state.addresses.find((address) => address.id === action.payload.addressId);
+      if (address) {
+        address.isActive = action.payload.isActive;
+      }
+      return state;
+    },
+    addAddress: (state, action) => {
+      state.addresses.push(action.payload);
+      return state;
+    },
   },
 });
 
 export default userSlice.reducer;
 
-export const { setUser, setNameAndPhone, setPhoto, logOut } = userSlice.actions;
+export const {
+  setUser,
+  setNameAndPhone,
+  setPhoto,
+  logOut,
+  setAddresses,
+  toggleAddressActive,
+  addAddress,
+} = userSlice.actions;

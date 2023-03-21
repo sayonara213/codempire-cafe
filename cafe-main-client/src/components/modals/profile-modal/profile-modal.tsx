@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as Styled from './profile-modal.styled';
 import Input from '../../global/Input/input';
 import { useFormik } from 'formik';
@@ -15,9 +15,10 @@ import { setUser } from '../../../redux/user.slice';
 
 interface ProfileModalProps {
   isPasswordReset?: boolean;
+  closeModal: () => void;
 }
 
-const ProfileModal: React.FC<ProfileModalProps> = ({ isPasswordReset }) => {
+const ProfileModal: React.FC<ProfileModalProps> = ({ isPasswordReset, closeModal }) => {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
 
@@ -35,6 +36,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isPasswordReset }) => {
   const onSubmitPassword = async (formData: any) => {
     try {
       await apiUpdate(API_URL.UPDATE_PASSWORD, user.id, formData);
+      closeModal();
     } catch (error) {
       console.log(error);
     }
@@ -53,6 +55,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isPasswordReset }) => {
           role: user.role,
         }),
       );
+      closeModal();
     } catch (error) {
       console.log(error);
     }
@@ -118,7 +121,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ isPasswordReset }) => {
           />
         ))}
         <Styled.ModalFooter>
-          <Button type={'button'} isActive={true} isCancel={true}>
+          <Button type={'button'} isActive={true} isCancel={true} onClick={closeModal}>
             SKIP
           </Button>
           <Button type={'submit'} isActive={true}>
