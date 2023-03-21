@@ -11,6 +11,7 @@ import filter from '../assets/icons/filter.svg';
 import placeholderDish from '../assets/images/placeholder_dish.png';
 import remove from '../assets/icons/remove.svg';
 import arrow from '../assets/icons/arrow.svg';
+import close from '../assets/icons/close.svg';
 
 export const IMAGES = {
   logo,
@@ -26,4 +27,5 @@ export const IMAGES = {
   placeholderDish,
   remove,
   arrow,
+  close,
 };

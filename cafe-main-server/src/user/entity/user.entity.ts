@@ -1,10 +1,12 @@
 import { Exclude } from 'class-transformer';
+import { Address } from 'src/address/entity/address.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 export enum UserRole {
@@ -47,4 +49,7 @@ export class User {
   @UpdateDateColumn({ type: 'timestamp' })
   @Exclude()
   public updatedAt: Date;
+
+  @OneToMany(() => Address, (address) => address.user)
+  public addresses: Address[];
 }

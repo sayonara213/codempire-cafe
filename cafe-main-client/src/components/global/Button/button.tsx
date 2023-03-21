@@ -6,7 +6,7 @@ interface ButtonProps {
   isActive: boolean;
   children: JSX.Element | JSX.Element[] | string | string[];
   isCancel?: boolean;
-  onClick?: () => void;
+  onClick?: any;
 }
 
 const Button: React.FC<ButtonProps> = ({ children, type, isActive, isCancel, onClick }) => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
@@ -17,8 +17,20 @@ import ProductEdit from '../../menu-edit/product-edit/product-edit';
 import MenuInfo from './../../menu-info/menu-info';
 import AdditionalAuth from '../../auth/additional/additional-auth';
 import Profile from '../../user-info/profile';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { getToken } from '../../../services/storage.service';
+import { retrieveUserInfo } from '../../../services/auth.service';
 
 const AppRouter: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const token = getToken();
+
+  useEffect(() => {
+    if (token) {
+      retrieveUserInfo(dispatch);
+    }
+  }, []);
+
   return (
     <Routes>
       <Route element={<Layout />}>

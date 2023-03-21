@@ -15,8 +15,15 @@ export class UserService {
     return this.userRepository.findOne({ where: { email: email } });
   }
 
-  async getUser(id: string): Promise<User> {
+  async findById(id: string): Promise<User> {
     return this.userRepository.findOne({ where: { id: id } });
+  }
+
+  async findAddressByUserId(id: string): Promise<User> {
+    return this.userRepository.findOne({
+      where: { id: id },
+      relations: ['addresses'],
+    });
   }
 
   async getAllUsers(): Promise<User[]> {
@@ -38,18 +45,6 @@ export class UserService {
     return await this.userRepository.save(newUser);
   }
 
-  async updateUserNameAndPhone(id: string, body: any): Promise<User> {
-    const currentUser = await this.userRepository.findOne({
-      where: { id: id },
-    });
-    if (!currentUser) {
-      throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
-    }
-    currentUser.name = body.username;
-    currentUser.phone = body.phone;
-    return await this.userRepository.save(currentUser);
-  }
-
   async updateUserPhoto(id: string, body: any): Promise<User> {
     const currentUser = await this.userRepository.findOne({
       where: { id: id },
@@ -58,6 +53,57 @@ export class UserService {
       throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
     }
     currentUser.image = body.photo;
+    return await this.userRepository.save(currentUser);
+  }
+
+  async changeUserPassword(
+    id: string,
+    body: { oldPassword: string; newPassword: string },
+  ): Promise<User> {
+    const currentUser = await this.userRepository.findOne({
+      where: { id: id },
+    });
+    if (!currentUser) {
+      throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
+    }
+    const isMatch = await bcrypt.compare(
+      body.oldPassword,
+      currentUser.password,
+    );
+    if (!isMatch) {
+      throw new HttpException('Incorrect Password', HttpStatus.BAD_REQUEST);
+    }
+    const salt = await bcrypt.genSalt();
+    currentUser.password = await bcrypt.hash(body.newPassword, salt);
+    return await this.userRepository.save(currentUser);
+  }
+
+  async deleteUser(id: string): Promise<User> {
+    const currentUser = await this.userRepository.findOne({
+      where: { id: id },
+    });
+    if (!currentUser) {
+      throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
+    }
+    return await this.userRepository.remove(currentUser);
+  }
+
+  async updateUser(id: string, body: any): Promise<User> {
+    const currentUser = await this.userRepository.findOne({
+      where: { id: id },
+    });
+    if (!currentUser) {
+      throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
+    }
+    if (body.username) {
+      currentUser.name = body.username;
+    }
+    if (body.phone) {
+      currentUser.phone = body.phone;
+    }
+    if (body.email) {
+      currentUser.email = body.email;
+    }
     return await this.userRepository.save(currentUser);
   }
 }

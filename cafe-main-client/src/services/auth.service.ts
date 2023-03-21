@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 import { API_URL } from '../constants/url';
+import { setUser } from '../redux/user.slice';
+import { apiGet } from './api.service';
 import { setToken } from './storage.service';
 
 export const login = async (data: any) => {
@@ -25,4 +27,9 @@ export const register = async (data: any) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+export const retrieveUserInfo = async (dispatch: any) => {
+  const user = await apiGet(API_URL.RETRIEVE_USER_INFO);
+  dispatch(setUser(user.data));
 };

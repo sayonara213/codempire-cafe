@@ -12,6 +12,8 @@ interface InputProps {
   isPlaceholder?: boolean;
   icon?: string;
   type?: string;
+  name?: string;
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -23,6 +25,8 @@ const Input: React.FC<InputProps> = ({
   icon,
   isPlaceholder,
   type,
+  name,
+  onKeyDown,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
   const [isSelected, setIsSelected] = React.useState(false);
@@ -53,9 +57,10 @@ const Input: React.FC<InputProps> = ({
         onBlur={onBlurred}
         value={value}
         onChange={onchange}
-        name={placeholder.toLowerCase()}
+        name={name && name?.length > 0 ? name : placeholder.toLowerCase()}
         isLight={isLight}
         placeholder={isPlaceholder ? '' : placeholder}
+        onKeyDown={onKeyDown}
       />
       {isPlaceholder && (
         <Styled.InputPlaceholder isLight={isLight}>{placeholder}</Styled.InputPlaceholder>

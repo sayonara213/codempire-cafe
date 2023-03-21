@@ -1,81 +1,38 @@
-import React, { useRef } from 'react';
+import React, { useEffect } from 'react';
 import * as Styled from './profile.styled';
 import { MainContainer } from '../main/main.styled';
-import { IMAGES } from './../../constants/images';
-import { useAppSelector } from '../../hooks/hooks';
-import { madeCompressedBase64 } from '../../services/images.service';
-import { useAppDispatch } from './../../hooks/hooks';
-import { apiUpdate } from '../../services/api.service';
-import { setPhoto, logOut } from '../../redux/user.slice';
 import Button from './../global/Button/button';
-import { API_URL } from '../../constants/url';
-
-const settingsList = [
-  {
-    section: {
-      title: 'Settings',
-    },
-    items: [
-      {
-        title: 'Privacy policy',
-      },
-      {
-        title: 'Change password',
-      },
-      {
-        title: 'Delete account',
-      },
-      {
-        title: 'Orders',
-      },
-    ],
-  },
-  {
-    section: {
-      title: 'Address',
-    },
-    items: [
-      {
-        title: '2464 Royal Ln. Mesa, New Jersey 45463',
-      },
-      {
-        title: '2464 Royal Ln. Mesa, New Jersey 45463',
-      },
-    ],
-  },
-];
+import GlobalModal from '../modals/modal';
+import { useProfileState } from './profile.state';
 
 const Profile: React.FC = () => {
-  const user = useAppSelector((store) => store.user);
-  const dispatch = useAppDispatch();
+  const {
+    isModal,
+    setIsModal,
+    modalName,
+    user,
+    inputRef,
+    fetchAddresses,
+    handleClick,
+    modalSwitch,
+    uploadAvatar,
+    logout,
+    settingsList,
+    activeAddresses,
+    handleAddressModal,
+    fetchUser,
+  } = useProfileState();
 
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleClick = () => {
-    if (inputRef.current) {
-      inputRef.current.click();
-    }
-  };
-
-  const uploadAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.currentTarget.files![0];
-
-    dispatch(setPhoto(URL.createObjectURL(file)));
-    if (file) {
-      madeCompressedBase64(file, (dataUrl) => {
-        apiUpdate(API_URL.ADD_AVATAR, user.id, { photo: dataUrl });
-      });
-    }
-  };
-
-  const logout = () => {
-    dispatch(logOut());
-    localStorage.removeItem('token');
-    window.location.reload();
-  };
+  useEffect(() => {
+    fetchUser();
+    fetchAddresses();
+  }, []);
 
   return (
     <MainContainer>
+      <GlobalModal isOpen={isModal} onChange={setIsModal} modalName={modalName}>
+        {modalSwitch[modalName]}
+      </GlobalModal>
       <Styled.UserPageWrap>
         <Styled.UserInfoWrap>
           <Styled.UserAvatarWrap>
@@ -87,16 +44,22 @@ const Profile: React.FC = () => {
           <Styled.UserPagePhone>{user.phone}</Styled.UserPagePhone>
         </Styled.UserInfoWrap>
         <Styled.UserSettingsWrap>
-          {settingsList.map((settingsItem, index) => (
-            <Styled.UserSettingsSection>
-              <Styled.UserSettingsTitle>{settingsItem.section.title}</Styled.UserSettingsTitle>
-              {settingsItem.items.map((item, index) => (
-                <Styled.UserSettingsItemWrap key={index}>
-                  <Styled.UserSettingsItemTitle>{item.title}</Styled.UserSettingsItemTitle>
-                </Styled.UserSettingsItemWrap>
-              ))}
-            </Styled.UserSettingsSection>
-          ))}
+          <Styled.UserSettingsSection>
+            <Styled.UserSettingsTitle>Settings</Styled.UserSettingsTitle>
+            {settingsList.map((item, index) => (
+              <Styled.UserSettingsItemWrap key={index} onClick={item.onclick}>
+                <Styled.UserSettingsItemTitle>{item.title}</Styled.UserSettingsItemTitle>
+              </Styled.UserSettingsItemWrap>
+            ))}
+          </Styled.UserSettingsSection>
+          <Styled.UserSettingsSection onClick={handleAddressModal}>
+            <Styled.UserSettingsTitle>Address</Styled.UserSettingsTitle>
+            {activeAddresses.map((item, index) => (
+              <Styled.UserSettingsItemWrap key={index} onClick={handleAddressModal}>
+                <Styled.UserSettingsItemTitle>{item.addressName}</Styled.UserSettingsItemTitle>
+              </Styled.UserSettingsItemWrap>
+            ))}
+          </Styled.UserSettingsSection>
           <Button type='button' isActive={true} isCancel={true} onClick={logout}>
             SIGN OUT
           </Button>
@@ -105,5 +68,4 @@ const Profile: React.FC = () => {
     </MainContainer>
   );
 };
-
 export default Profile;
