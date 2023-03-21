@@ -4,6 +4,7 @@ export const API = {
   LOG_IN: '/login',
   SIGN_UP: '/register',
   ADDITIONAL: '/additional',
+  RETRIEVE_USER_INFO: '/retrieve-user',
   MENU: '/menu',
   ADD: '/add',
   DELETE: '/delete',

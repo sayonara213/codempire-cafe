@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { IUser } from '../types/user.type';
 import { classToPlain } from 'class-transformer';
+import { User } from 'src/user/entity/user.entity';
 @Injectable()
 export class AuthService {
   constructor(
@@ -52,5 +53,16 @@ export class AuthService {
 
   async allUsers() {
     return await this.userService.getAllUsers();
+  }
+
+  async getUserInfoFromToken(token: string): Promise<any> {
+    const tokenWithoutBearer = token.split(' ')[1];
+    const decodedToken = this.jwtService.verify(tokenWithoutBearer);
+    const userId = decodedToken.sub;
+    const user = await this.userService.findById(userId);
+    if (!user) {
+      throw new UnauthorizedException('Invalid token');
+    }
+    return classToPlain(user);
   }
 }

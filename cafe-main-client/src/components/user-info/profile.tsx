@@ -20,16 +20,18 @@ const Profile: React.FC = () => {
     settingsList,
     activeAddresses,
     handleAddressModal,
+    fetchUser,
   } = useProfileState();
 
   useEffect(() => {
+    fetchUser();
     fetchAddresses();
   }, []);
 
   return (
     <MainContainer>
       <GlobalModal isOpen={isModal} onChange={setIsModal} modalName={modalName}>
-        {modalSwitch()}
+        {modalSwitch[modalName]}
       </GlobalModal>
       <Styled.UserPageWrap>
         <Styled.UserInfoWrap>

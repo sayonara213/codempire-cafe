@@ -5,6 +5,7 @@ export const API_URL = {
   REGISTER_ADDITIONAL: 'http://localhost:5000/auth/additional',
   UPDATE_PASSWORD: 'http://localhost:5000/user/password',
   UPDATE_USER: 'http://localhost:5000/user',
+  RETRIEVE_USER_INFO: 'http://localhost:5000/auth/retrieve-user',
 
   GET_ADDRESS_BY_USER_ID: 'http://localhost:5000/address/user/',
   ADDRESS: 'http://localhost:5000/address',

@@ -3,13 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../constants/routes';
 import { API_URL } from '../../constants/url';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
-import { setAddresses, setPhoto, logOut } from '../../redux/user.slice';
+import { setAddresses, setPhoto, logOut, setUser } from '../../redux/user.slice';
 import { apiGet, apiUpdate } from '../../services/api.service';
 import { madeCompressedBase64 } from '../../services/images.service';
 import { IAddress } from '../../types/types.user';
 import AddressModal from '../modals/address-modal/address-modal';
 import DeleteModal from '../modals/delete-modal/delete-modal';
 import ProfileModal from '../modals/profile-modal/profile-modal';
+
+interface IModalSwitch {
+  [key: string]: JSX.Element;
+}
 
 export const useProfileState = () => {
   const [isModal, setIsModal] = useState(false);
@@ -34,6 +38,11 @@ export const useProfileState = () => {
     dispatch(setAddresses(addresses.data));
   };
 
+  const fetchUser = async () => {
+    const user = await apiGet(API_URL.RETRIEVE_USER_INFO);
+    dispatch(setUser(user.data));
+  };
+
   const handleModal = (value: string) => {
     setIsModal(true);
     setModalName(value);
@@ -49,19 +58,11 @@ export const useProfileState = () => {
     setIsModal(false);
   };
 
-  const modalSwitch = () => {
-    switch (modalName) {
-      case 'Change password':
-        return <ProfileModal isPasswordReset={true} closeModal={handleClose} />;
-      case 'Edit profile':
-        return <ProfileModal isPasswordReset={false} closeModal={handleClose} />;
-      case 'Delete account':
-        return <DeleteModal closeModal={handleClose} />;
-      case 'Addresses':
-        return <AddressModal closeModal={handleClose} />;
-      default:
-        return <ProfileModal isPasswordReset={true} closeModal={handleClose} />;
-    }
+  const modalSwitch: IModalSwitch = {
+    'Change password': <ProfileModal isPasswordReset={true} closeModal={handleClose} />,
+    'Edit profile': <ProfileModal isPasswordReset={false} closeModal={handleClose} />,
+    'Delete account': <DeleteModal closeModal={handleClose} />,
+    Addresses: <AddressModal closeModal={handleClose} />,
   };
 
   const uploadAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,5 +125,6 @@ export const useProfileState = () => {
     settingsList,
     activeAddresses,
     handleAddressModal,
+    fetchUser,
   };
 };

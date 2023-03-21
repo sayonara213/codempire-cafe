@@ -48,4 +48,10 @@ export class AuthController {
   async getProfile(@Req() req: any) {
     return this.service.allUsers();
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(API.RETRIEVE_USER_INFO)
+  async getUserInfoFromToken(@Req() req: any) {
+    return this.service.getUserInfoFromToken(req.headers.authorization);
+  }
 }
