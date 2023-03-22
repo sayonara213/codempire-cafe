@@ -6,10 +6,13 @@ import { ModalFooter } from '../profile-modal/profile-modal.styled';
 import * as Styled from './address-modal.styled';
 import CheckBox from './../../global/CheckBox/checkbox';
 import { useAppDispatch } from './../../../hooks/hooks';
-import { addAddress, toggleAddressActive } from '../../../redux/user.slice';
+import { addAddress, setAddresses, toggleAddressActive } from '../../../redux/user.slice';
 import { apiPost, apiUpdate } from '../../../services/api.service';
 import { API_URL } from '../../../constants/url';
 import { IAddress } from '../../../types/types.user';
+import { promiseToast } from '../../../notifications/notifications';
+import { IMAGES } from './../../../constants/images';
+import { apiDelete } from './../../../services/api.service';
 
 interface AddressModalProps {
   closeModal?: () => void;
@@ -48,13 +51,27 @@ const AddressModal: React.FC<AddressModalProps> = ({ closeModal }) => {
 
   const handleNewAddress = async (): Promise<void> => {
     try {
-      const response = await apiPost(`${API_URL.ADDRESS}/${id}`, {
+      const promise = apiPost(`${API_URL.ADDRESS}/${id}`, {
         addressName: search,
         isActive: true,
       });
+      promiseToast(promise, 'Adding address', 'Address added', 'Error adding address');
+
+      const response = await promise;
       dispatch(addAddress(response.data));
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleRemoveAddress = (addressId: string): void => {
+    try {
+      const promise = apiDelete(API_URL.ADDRESS, addressId);
+      promiseToast(promise, 'Removing address', 'Address removed', 'Error removing address');
+      const filteredAddresses = searchedAddresses.filter((item) => item.id !== addressId);
+      dispatch(setAddresses(filteredAddresses));
+    } catch {
+      console.log('error');
     }
   };
 
@@ -65,6 +82,8 @@ const AddressModal: React.FC<AddressModalProps> = ({ closeModal }) => {
       }
     }
   };
+
+  if (!addresses) return <div>loading...</div>;
 
   return (
     <Styled.AddressModalWrap>
@@ -80,13 +99,17 @@ const AddressModal: React.FC<AddressModalProps> = ({ closeModal }) => {
         />
       </Styled.AddressModalInputWrap>
       <Styled.AddressListWrap>
-        {searchedAddresses.map((item, index) => (
-          <Styled.AddressItemWrap key={index}>
+        {searchedAddresses?.map((item) => (
+          <Styled.AddressItemWrap key={item.addressName}>
             <CheckBox
               label={item.addressName}
               checked={item.isActive}
               value={item.id}
               onchange={handleToggle}
+            />
+            <Styled.AddressRemoveButton
+              src={IMAGES.close}
+              onClick={handleRemoveAddress.bind(null, item.id)}
             />
           </Styled.AddressItemWrap>
         ))}
