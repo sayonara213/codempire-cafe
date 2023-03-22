@@ -38,4 +38,9 @@ export class AddressService {
     address.isActive = isActive;
     return await this.addressRepository.save(address);
   }
+
+  async deleteAddress(addressId: string): Promise<Address> {
+    const address = await this.getAddressById(addressId);
+    return await this.addressRepository.remove(address);
+  }
 }

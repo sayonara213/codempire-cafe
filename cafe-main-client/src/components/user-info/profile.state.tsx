@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { ROUTES } from '../../constants/routes';
 import { API_URL } from '../../constants/url';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
+import { promiseToast } from '../../notifications/notifications';
 import { setAddresses, setPhoto, logOut, setUser } from '../../redux/user.slice';
 import { apiGet, apiUpdate } from '../../services/api.service';
 import { madeCompressedBase64 } from '../../services/images.service';
@@ -41,6 +43,7 @@ export const useProfileState = () => {
   const fetchUser = async () => {
     const user = await apiGet(API_URL.RETRIEVE_USER_INFO);
     dispatch(setUser(user.data));
+    fetchAddresses();
   };
 
   const handleModal = (value: string) => {
@@ -70,8 +73,9 @@ export const useProfileState = () => {
 
     dispatch(setPhoto(URL.createObjectURL(file)));
     if (file) {
-      madeCompressedBase64(file, (dataUrl) => {
-        apiUpdate(API_URL.ADD_AVATAR, user.id, { photo: dataUrl });
+      madeCompressedBase64(file, async (dataUrl) => {
+        const promise = apiUpdate(API_URL.ADD_AVATAR, user.id, { photo: dataUrl });
+        promiseToast(promise, 'Uploading avatar', 'Avatar uploaded', 'Error uploading avatar');
       });
     }
   };

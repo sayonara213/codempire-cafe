@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { AddressService } from './address.service';
 import { Address } from './entity/address.entity';
 
@@ -32,5 +40,10 @@ export class AddressController {
     @Body('isActive') isActive: boolean,
   ): Promise<Address> {
     return this.addressService.toggleAddressActive(addressId, isActive);
+  }
+
+  @Delete(':addressId')
+  async deleteAddress(@Param('addressId') addressId: string): Promise<Address> {
+    return this.addressService.deleteAddress(addressId);
   }
 }

@@ -12,7 +12,6 @@ const Profile: React.FC = () => {
     modalName,
     user,
     inputRef,
-    fetchAddresses,
     handleClick,
     modalSwitch,
     uploadAvatar,
@@ -25,7 +24,6 @@ const Profile: React.FC = () => {
 
   useEffect(() => {
     fetchUser();
-    fetchAddresses();
   }, []);
 
   return (
