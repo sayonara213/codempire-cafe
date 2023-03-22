@@ -3,6 +3,7 @@ import hide from '../assets/icons/hide.svg';
 import show from '../assets/icons/show.svg';
 import bell from '../assets/icons/bell.svg';
 import cart from '../assets/icons/cart.svg';
+import cartNotification from '../assets/icons/cart-notification.svg';
 import find from '../assets/icons/find.svg';
 import testUser from '../assets/images/user-test.png';
 import footerHome from '../assets/icons/footer-home.svg';
@@ -28,4 +29,5 @@ export const IMAGES = {
   remove,
   arrow,
   close,
+  cartNotification,
 };

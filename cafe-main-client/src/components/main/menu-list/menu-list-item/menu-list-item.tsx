@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES } from './../../../../constants/routes';
 
 import * as Styled from './menu-list-item.styled';
+import { useAppDispatch } from './../../../../hooks/hooks';
+import { addItemToCart } from '../../../../redux/cart.slice';
 
 interface MenuListItemProps {
   name: string;
@@ -28,10 +30,21 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
   id,
   isProduct,
 }) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleDelete = () => {
     apiDelete(API_URL.DELETE, id);
+  };
+
+  const addToCart = () => {
+    const item = {
+      id: id,
+      quantity: 1,
+      price: price,
+      isProduct: isProduct,
+    };
+    dispatch(addItemToCart(item));
   };
 
   const showInfo = () => {
@@ -39,8 +52,8 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
   };
 
   return (
-    <Styled.MenuListItemContainer onClick={showInfo}>
-      <Styled.MenuImageWrap>
+    <Styled.MenuListItemContainer>
+      <Styled.MenuImageWrap onClick={showInfo}>
         <Styled.MenuListItemImage src={image} />
       </Styled.MenuImageWrap>
       <Styled.MenuListItemTitle>{name}</Styled.MenuListItemTitle>
@@ -56,7 +69,7 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
         </Styled.ButtonWrap>
       ) : (
         <Styled.ButtonWrap>
-          <Styled.MenuListItemButton>TO CART</Styled.MenuListItemButton>
+          <Styled.MenuListItemButton onClick={addToCart}>TO CART</Styled.MenuListItemButton>
         </Styled.ButtonWrap>
       )}
     </Styled.MenuListItemContainer>

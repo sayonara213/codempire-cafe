@@ -30,6 +30,8 @@ export const HeaderLogo = styled.img`
 `;
 
 export const HeaderIcon = styled.img`
+  width: 22px;
+  height: 22px;
   margin-right: 30px;
 `;
 
