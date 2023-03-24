@@ -9,6 +9,8 @@ import { apiGet } from './../../services/api.service';
 import { API_URL } from '../../constants/url';
 import { IAllergen } from '../../types/types.allergens';
 import MenuListItem from './../main/menu-list/menu-list-item/menu-list-item';
+import { addItemToCart } from '../../redux/cart.slice';
+import { useAppDispatch } from '../../hooks/hooks';
 
 interface MenuInfoProps {
   isProduct: boolean;
@@ -17,6 +19,7 @@ interface MenuInfoProps {
 const MenuInfo: React.FC<MenuInfoProps> = ({ isProduct }) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [item, setItem] = useState<IMenu | null>(null);
   const [allergens, setAllergens] = useState<string[]>([]);
@@ -61,6 +64,16 @@ const MenuInfo: React.FC<MenuInfoProps> = ({ isProduct }) => {
     fetchLimitMenu();
   }, [id]);
 
+  const addToCart = () => {
+    const addedItem = {
+      id: id,
+      quantity: 1,
+      price: item?.price,
+      isProduct: isProduct,
+    };
+    dispatch(addItemToCart(addedItem));
+  };
+
   return (
     <MainContainer>
       <Styled.MenuInfoContainer>
@@ -87,10 +100,10 @@ const MenuInfo: React.FC<MenuInfoProps> = ({ isProduct }) => {
               <Styled.ItemPrice>{item?.weight}g</Styled.ItemPrice>
             </Styled.ItemPriceWrap>
             <Styled.ItemButtonsWrap>
-              <Button isActive={true} type={'button'}>
+              <Button isActive={true} type={'button'} onClick={addToCart}>
                 ORDER
               </Button>
-              <Button isActive={true} type={'button'} isCancel={true}>
+              <Button isActive={true} type={'button'} isCancel={true} onClick={getBack}>
                 SKIP
               </Button>
             </Styled.ItemButtonsWrap>
