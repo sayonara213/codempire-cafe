@@ -15,12 +15,12 @@ import { CreateProductDto } from './dto/product.dto';
 import { API } from './../constants/endpoints';
 import { Allergen } from 'src/allergen/allergen.entity';
 
-@Controller('product')
+@Controller(API.PRODUCT)
 export class ProductController {
   @Inject(ProductService)
   private readonly service: ProductService;
 
-  @Get(API.LIST_ALL + '/param')
+  @Get(API.LIST + '/param')
   getProductsParam(
     @Query('sortBy') sort: string,
     @Query('order') order: string,
@@ -29,12 +29,12 @@ export class ProductController {
     return this.service.getAllProductWithParam(sort, order, types);
   }
 
-  @Get(API.LIST_ALL)
+  @Get(API.LIST)
   getAllProducts(): Promise<Product[]> {
     return this.service.getAllProduct();
   }
 
-  @Get(API.LIST_ALL + '/:id/allergens')
+  @Get(API.LIST + '/:id/allergens')
   getProductAllergens(@Param('id') id: string): Promise<Allergen[]> {
     return this.service.findProductAllergens(id);
   }
@@ -57,7 +57,7 @@ export class ProductController {
     return this.service.updateProduct(id, product);
   }
 
-  @Get(`${API.GET}/:id`)
+  @Get(API.GET + API.ID_PARAM)
   getProduct(@Param('id') id: string): Promise<Product> {
     return this.service.getProductById(id);
   }

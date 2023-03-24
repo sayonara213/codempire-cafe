@@ -2,13 +2,13 @@ import { Controller, Get, Inject } from '@nestjs/common';
 import { AllergenService } from 'src/allergen/allergen.service';
 import { API } from 'src/constants/endpoints';
 
-@Controller('allergen')
+@Controller(API.ALLERGEN)
 export class AllergenController {
   @Inject(AllergenService)
   private readonly service: AllergenService;
 
-  @Get(API.LIST_ALL)
+  @Get(API.LIST)
   getAllergens() {
-    return this.service.getAllAllergens();
+    return this.service.getAll();
   }
 }

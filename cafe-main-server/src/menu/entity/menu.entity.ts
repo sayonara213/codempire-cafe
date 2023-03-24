@@ -1,4 +1,5 @@
 import { Allergen } from 'src/allergen/allergen.entity';
+import { OrderMenu } from 'src/order/entity/order-menu.entity';
 import { Product } from 'src/product/entity/product.entity';
 import {
   Entity,
@@ -6,6 +7,7 @@ import {
   Column,
   JoinTable,
   ManyToMany,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('menu')
@@ -35,4 +37,7 @@ export class Menu {
   @ManyToMany(() => Allergen)
   @JoinTable()
   allergens: Allergen[];
+
+  @OneToMany(() => OrderMenu, (orderMenu) => orderMenu.menu)
+  orderMenus: OrderMenu[];
 }

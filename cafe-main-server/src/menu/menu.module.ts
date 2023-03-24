@@ -9,9 +9,20 @@ import { ProductService } from 'src/product/product.service';
 import { Menu } from './entity/menu.entity';
 import { MenuController } from './menu.controller';
 import { MenuService } from './menu.service';
+import { OrderProduct } from './../order/entity/order-product.entity';
+import { OrderMenu } from 'src/order/entity/order-menu.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Menu, Product, Ingredient, Allergen])],
+  imports: [
+    TypeOrmModule.forFeature([
+      Menu,
+      Product,
+      Ingredient,
+      Allergen,
+      OrderProduct,
+      OrderMenu,
+    ]),
+  ],
   controllers: [MenuController],
   providers: [MenuService, ProductService, IngredientService, AllergenService],
 })

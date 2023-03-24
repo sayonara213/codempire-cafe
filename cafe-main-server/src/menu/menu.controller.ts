@@ -23,7 +23,7 @@ export class MenuController {
   @Inject(MenuService)
   private readonly service: MenuService;
 
-  @Get(API.LIST_ALL)
+  @Get(API.LIST)
   getMenus(
     @Query('sortBy') sortBy: string,
     @Query('order') order: string,
@@ -48,10 +48,10 @@ export class MenuController {
 
   @Get(`${API.GET}/:id`)
   getMenuById(@Param('id') id: string): Promise<Menu> {
-    return this.service.getMenuById(id);
+    return this.service.getById(id);
   }
 
-  @Get(API.LIST_ALL)
+  @Get(API.LIST)
   getLimitMenus(@Query('limit') limit: number): Promise<Menu[]> {
     return this.service.getLimitedMenu(limit);
   }
