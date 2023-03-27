@@ -1,13 +1,11 @@
 import { Address } from 'src/address/entity/address.entity';
 import { User } from 'src/user/entity/user.entity';
-import { Comment } from 'src/comment/entity/comment.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { OrderMenu } from './order-menu.entity';
@@ -30,14 +28,20 @@ export class Order {
   @CreateDateColumn({ type: 'timestamp' })
   public createdAt: Date;
 
+  @Column({ type: 'timestamp', nullable: true })
+  public deliveryDate: Date;
+
   @ManyToOne(() => Address, (address) => address.orders)
   public address: Address;
 
   @ManyToOne(() => User, (user) => user.orders)
   public user: User;
 
-  @OneToOne(() => Comment, (comment) => comment.order, { nullable: true })
-  public comment: Comment;
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  public comment: string;
+
+  @Column({ type: 'int', nullable: true })
+  public stars: number;
 
   @OneToMany(() => OrderMenu, (orderMenu) => orderMenu.order, {
     nullable: true,

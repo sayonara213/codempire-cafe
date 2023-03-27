@@ -11,7 +11,6 @@ import { IngredientModule } from './product/ingredient/ingredient.module';
 import { AllergenModule } from './allergen/allergen.module';
 import { AddressModule } from './address/address.module';
 import { OrderModule } from './order/order.module';
-import { CommentModule } from './comment/comment.module';
 
 const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
 
@@ -30,7 +29,6 @@ const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
     AllergenModule,
     AddressModule,
     OrderModule,
-    CommentModule,
   ],
 })
 export class AppModule {}

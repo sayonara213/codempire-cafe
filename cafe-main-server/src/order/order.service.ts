@@ -61,6 +61,8 @@ export class OrderService {
       address: address,
       orderProducts: products,
       orderMenus: menus,
+      stars: order.stars,
+      comment: order.comment,
     });
   }
 

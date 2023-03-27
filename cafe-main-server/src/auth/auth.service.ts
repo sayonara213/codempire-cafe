@@ -59,7 +59,7 @@ export class AuthService {
     const tokenWithoutBearer = token.split(' ')[1];
     const decodedToken = this.jwtService.verify(tokenWithoutBearer);
     const userId = decodedToken.sub;
-    const user = await this.userService.findById(userId);
+    const user = await this.userService.findAddressByUserId(userId);
     if (!user) {
       throw new UnauthorizedException('Invalid token');
     }

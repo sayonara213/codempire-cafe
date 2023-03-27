@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Styled from './cart-modal.styled';
 import Button from './../../global/Button/button';
 import CartItem from './cart-item/cart-item';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { setTotalPrice } from '../../../redux/cart.slice';
+import OrderModal from '../order-modal/order-modal';
 
 const CartModal: React.FC = () => {
   const cart = useAppSelector((store) => store.cart);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -26,6 +28,10 @@ const CartModal: React.FC = () => {
     );
   }
 
+  if (isOrderModalOpen) {
+    return <OrderModal />;
+  }
+
   return (
     <Styled.CartModalContainer>
       <Styled.CartModalBody>
@@ -42,7 +48,7 @@ const CartModal: React.FC = () => {
           <Button type={'button'} isActive={true} isCancel={true}>
             CANCEL
           </Button>
-          <Button type={'button'} isActive={true}>
+          <Button type={'button'} isActive={true} onClick={() => setIsOrderModalOpen(true)}>
             ORDER
           </Button>
         </Styled.FooterButtonWrap>

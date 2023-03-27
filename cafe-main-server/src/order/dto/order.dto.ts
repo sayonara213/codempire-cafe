@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsArray } from 'class-validator';
+import { IsNotEmpty, IsString, IsArray, IsDate } from 'class-validator';
 
 export interface IOrderItem {
   itemId: string;
@@ -16,5 +16,12 @@ export class CreateOrderDto {
   public addressId: string;
 
   @IsArray()
+  @IsNotEmpty()
   public itemIds: IOrderItem[];
+
+  public stars: number;
+
+  public comment: string;
+
+  public deliveryDate: Date;
 }
