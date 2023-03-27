@@ -13,15 +13,15 @@ const OrderModal: React.FC = () => {
   const [deliverDate, setDeliverDate] = useState<Date>(new Date());
   const [comment, setComment] = useState<string>('');
 
-  const handleDateChange = (e: any) => {
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDeliverNow(e.target.value === 'deliverNow');
   };
 
-  const handleCommentChange = (e: any) => {
+  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
   };
 
-  useEffect(() => {
+  const fiterAddresses = () => {
     const filteredAddresses = addresses.filter((address) => address.isActive);
     const tempAddresses = filteredAddresses.map((address) => {
       return {
@@ -30,6 +30,10 @@ const OrderModal: React.FC = () => {
       };
     });
     setSelectedAddresses(tempAddresses);
+  };
+
+  useEffect(() => {
+    fiterAddresses();
   }, [addresses]);
   return (
     <Styled.OrderModalWrap>
