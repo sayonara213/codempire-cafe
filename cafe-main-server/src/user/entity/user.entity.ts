@@ -1,5 +1,6 @@
 import { Exclude } from 'class-transformer';
 import { Address } from 'src/address/entity/address.entity';
+import { Order } from 'src/order/entity/order.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -42,14 +43,17 @@ export class User {
   @Exclude()
   public isDeleted: boolean;
 
-  @CreateDateColumn({ type: 'timestamp' })
+  @CreateDateColumn({ type: 'timestamp', select: false })
   @Exclude()
   public createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp' })
+  @UpdateDateColumn({ type: 'timestamp', select: false })
   @Exclude()
   public updatedAt: Date;
 
   @OneToMany(() => Address, (address) => address.user)
   public addresses: Address[];
+
+  @OneToMany(() => Order, (order) => order.user)
+  public orders: Order[];
 }

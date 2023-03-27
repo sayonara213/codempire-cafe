@@ -35,7 +35,7 @@ const customStyles = {
 };
 
 interface GlobalSelectProps {
-  items: IProduct[] | IAllergen[] | IIngredient[] | string[];
+  items: any[];
   selectedItems: IProduct[] | IAllergen[] | IIngredient[];
   onchange: (item: any) => void;
   isMulti?: boolean;

@@ -33,6 +33,7 @@ export const useMenuEditState = () => {
   const handleSubmit = async (values: Omit<IMenu, 'id'>) => {
     const productIds = values.products.map((product) => product.id);
     const allergensIds = values.allergens.map((allergen) => allergen.id);
+
     apiPost(API_URL.ADD, {
       name: values.name,
       price: values.price,

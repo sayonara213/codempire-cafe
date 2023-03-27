@@ -7,43 +7,42 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { API } from 'src/constants/endpoints';
 import { AddressService } from './address.service';
 import { Address } from './entity/address.entity';
 
-@Controller('address')
+@Controller(API.ADDRESS)
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
-  @Post(':userId')
+  @Post(API.ID_PARAM)
   async createAddressForUser(
-    @Param('userId') userId: string,
+    @Param('id') id: string,
     @Body() addressData: Partial<Address>,
   ): Promise<Address> {
-    return this.addressService.createAddressForUser(userId, addressData);
+    return this.addressService.createAddressForUser(id, addressData);
   }
 
-  @Get(':addressId')
-  async getAddressById(
-    @Param('addressId') addressId: string,
-  ): Promise<Address> {
-    return this.addressService.getAddressById(addressId);
+  @Get(API.ID_PARAM)
+  async getAddressById(@Param('id') id: string): Promise<Address> {
+    return this.addressService.getById(id);
   }
 
-  @Get('user/:userId')
-  async findByUserId(@Param('userId') userId: string): Promise<Address[]> {
-    return this.addressService.findByUserId(userId);
+  @Get(API.USER + API.ID_PARAM)
+  async findByUserId(@Param('id') id: string): Promise<Address[]> {
+    return this.addressService.getByUserId(id);
   }
 
-  @Put(':addressId')
+  @Put(API.ID_PARAM)
   async toggleAddressActive(
-    @Param('addressId') addressId: string,
+    @Param('id') id: string,
     @Body('isActive') isActive: boolean,
   ): Promise<Address> {
-    return this.addressService.toggleAddressActive(addressId, isActive);
+    return this.addressService.toggleAddressActive(id, isActive);
   }
 
-  @Delete(':addressId')
-  async deleteAddress(@Param('addressId') addressId: string): Promise<Address> {
-    return this.addressService.deleteAddress(addressId);
+  @Delete(API.ID_PARAM)
+  async deleteAddress(@Param('id') id: string): Promise<Address> {
+    return this.addressService.deleteAddress(id);
   }
 }

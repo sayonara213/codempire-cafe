@@ -3,7 +3,7 @@ import { API } from 'src/constants/endpoints';
 import { CreateIngredientDto } from './dto/ingredient.dto';
 import { IngredientService } from './ingredient.service';
 
-@Controller('ingredient')
+@Controller(API.INGREDIENT)
 export class IngredientController {
   @Inject(IngredientService)
   private readonly service: IngredientService;
@@ -15,10 +15,10 @@ export class IngredientController {
 
   @Get(API.GET)
   async getIngredientById(id: string) {
-    return await this.service.getIngredientById(id);
+    return await this.service.getById(id);
   }
 
-  @Get(API.LIST_ALL)
+  @Get(API.LIST)
   async getAllIngredients() {
     return await this.service.getAllIngredients();
   }

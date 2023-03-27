@@ -4,7 +4,6 @@ import { In, Repository } from 'typeorm';
 import { Product } from './entity/product.entity';
 import { CreateProductDto } from './dto/product.dto';
 import { IngredientService } from './ingredient/ingredient.service';
-import { IsArray } from 'class-validator';
 @Injectable()
 export class ProductService {
   constructor(
@@ -17,6 +16,12 @@ export class ProductService {
     return await this.productRepository.findOne({
       where: { id: id },
       relations: ['ingredients', 'ingredients.allergens'],
+    });
+  }
+
+  async getPlainProductById(id: string): Promise<Product> {
+    return await this.productRepository.findOne({
+      where: { id: id },
     });
   }
 
@@ -104,7 +109,7 @@ export class ProductService {
   async addIngredientsToProduct(idArr: string[]) {
     return await Promise.all(
       idArr.map((id) => {
-        return this.ingredientService.getIngredientById(id);
+        return this.ingredientService.getById(id);
       }),
     );
   }

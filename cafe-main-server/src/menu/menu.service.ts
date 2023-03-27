@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Menu } from './entity/menu.entity';
 import { CreateMenuDto } from './dto/menu.dto';
 import { ProductService } from 'src/product/product.service';
@@ -15,10 +15,16 @@ export class MenuService {
     private allergenService: AllergenService,
   ) {}
 
-  async getMenuById(id: string): Promise<Menu> {
+  async getById(id: string): Promise<Menu> {
     return await this.menuRepository.findOne({
       where: { id: id },
       relations: ['products', 'allergens'],
+    });
+  }
+
+  async getPlainById(id: string): Promise<Menu> {
+    return await this.menuRepository.findOne({
+      where: { id: id },
     });
   }
 
@@ -40,7 +46,7 @@ export class MenuService {
   async addAllergensToMenu(idArr: string[]) {
     return await Promise.all(
       idArr.map((id) => {
-        return this.allergenService.getAllergenById(id);
+        return this.allergenService.getById(id);
       }),
     );
   }

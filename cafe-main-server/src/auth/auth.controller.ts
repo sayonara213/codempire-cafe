@@ -13,9 +13,6 @@ import { AuthService } from './auth.service';
 import LocalAuthGuard from './guard/localAuthGuard';
 import { CreateUserDto } from '../user/dto/user.dto';
 import { JwtAuthGuard } from './guard/jwtAuthGuard';
-import { RoleGuard } from './guard/roleGuard';
-import { UserRole } from '../user/entity/user.entity';
-import { Roles } from './roles/roles.decorator';
 import { API } from '../constants/endpoints';
 
 @Controller(API.AUTH)
@@ -34,19 +31,12 @@ export class AuthController {
     return this.service.register(user);
   }
 
-  @Put(API.ADDITIONAL + '/:id')
+  @Put(API.ADDITIONAL + API.ID_PARAM)
   async addNameAndPhone(
     @Query('id') id: string,
     @Body() body: any,
   ): Promise<any> {
     this.service.addNameAndPhone(id, body);
-  }
-
-  @Roles(UserRole.ADMIN)
-  @UseGuards(JwtAuthGuard, RoleGuard)
-  @Get(API.GET_ALL_USERS)
-  async getProfile(@Req() req: any) {
-    return this.service.allUsers();
   }
 
   @UseGuards(JwtAuthGuard)

@@ -31,6 +31,7 @@ export const COLOR = {
   selectItem: '#eeeeee',
   purple: '#6200EE',
   red: '#ff0000',
+  date: '#666666',
 };
 export const BORDER_RADIUS = {
   small: '4px',

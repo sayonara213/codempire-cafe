@@ -13,7 +13,7 @@ export class IngredientService {
     private allergenService: AllergenService,
   ) {}
 
-  async getIngredientById(id: string): Promise<Ingredient> {
+  async getById(id: string): Promise<Ingredient> {
     return await this.ingredientRepository.findOne({
       where: { id: id },
       relations: ['allergens'],
@@ -43,7 +43,7 @@ export class IngredientService {
   async addAllergensToIngredient(idArr: string[]) {
     return await Promise.all(
       idArr.map((id) => {
-        return this.allergenService.getAllergenById(id);
+        return this.allergenService.getById(id);
       }),
     );
   }

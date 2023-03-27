@@ -3,8 +3,8 @@ import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { IUser } from '../types/user.type';
-import { classToPlain } from 'class-transformer';
-import { User } from 'src/user/entity/user.entity';
+import { instanceToPlain } from 'class-transformer';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -28,7 +28,7 @@ export class AuthService {
     const currentUser = await this.userService.findOne(user.email);
     return {
       access_token: await (await this.createToken(currentUser)).access_token,
-      user: classToPlain(currentUser),
+      user: instanceToPlain(currentUser),
     };
   }
 
@@ -36,7 +36,7 @@ export class AuthService {
     const newUser = await this.userService.createUser(user);
     return {
       access_token: await (await this.createToken(newUser)).access_token,
-      user: classToPlain(newUser),
+      user: instanceToPlain(newUser),
     };
   }
 
@@ -59,10 +59,10 @@ export class AuthService {
     const tokenWithoutBearer = token.split(' ')[1];
     const decodedToken = this.jwtService.verify(tokenWithoutBearer);
     const userId = decodedToken.sub;
-    const user = await this.userService.findById(userId);
+    const user = await this.userService.findAddressByUserId(userId);
     if (!user) {
       throw new UnauthorizedException('Invalid token');
     }
-    return classToPlain(user);
+    return instanceToPlain(user);
   }
 }

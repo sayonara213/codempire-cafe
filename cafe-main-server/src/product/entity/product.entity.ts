@@ -1,10 +1,12 @@
 import { Menu } from 'src/menu/entity/menu.entity';
+import { OrderProduct } from 'src/order/entity/order-product.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { Ingredient } from '../ingredient/entity/ingredient.entity';
 
@@ -37,4 +39,7 @@ export class Product {
   @ManyToMany(() => Ingredient)
   @JoinTable()
   ingredients: Ingredient[];
+
+  @OneToMany(() => OrderProduct, (orderProduct) => orderProduct.product)
+  orderProducts: OrderProduct[];
 }
