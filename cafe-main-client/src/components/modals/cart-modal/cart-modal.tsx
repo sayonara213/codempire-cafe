@@ -6,7 +6,11 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { setTotalPrice } from '../../../redux/cart.slice';
 import OrderModal from '../order-modal/order-modal';
 
-const CartModal: React.FC = () => {
+interface CartModalProps {
+  closeModal: () => void;
+}
+
+const CartModal: React.FC<CartModalProps> = ({ closeModal }) => {
   const cart = useAppSelector((store) => store.cart);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const dispatch = useAppDispatch();
@@ -29,7 +33,7 @@ const CartModal: React.FC = () => {
   }
 
   if (isOrderModalOpen) {
-    return <OrderModal />;
+    return <OrderModal closeModal={closeModal} />;
   }
 
   return (

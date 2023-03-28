@@ -59,6 +59,10 @@ const cartSlice = createSlice({
     setTotalPrice(state, action) {
       state.totalPrice = action.payload;
     },
+    clearCart(state) {
+      state.cartItems = [];
+      state.totalPrice = 0;
+    },
   },
 });
 
@@ -70,4 +74,5 @@ export const {
   incrementItemQuantity,
   decrementItemQuantity,
   setTotalPrice,
+  clearCart,
 } = cartSlice.actions;

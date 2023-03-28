@@ -13,6 +13,7 @@ import placeholderDish from '../assets/images/placeholder_dish.png';
 import remove from '../assets/icons/remove.svg';
 import arrow from '../assets/icons/arrow.svg';
 import close from '../assets/icons/close.svg';
+import orders from '../assets/icons/orders.svg';
 
 export const IMAGES = {
   logo,
@@ -30,4 +31,5 @@ export const IMAGES = {
   arrow,
   close,
   cartNotification,
+  orders,
 };

@@ -62,6 +62,7 @@ export class OrderService {
       orderProducts: products,
       orderMenus: menus,
       stars: order.stars,
+      deliveryDate: order.deliveryDate,
       comment: order.comment,
     });
   }

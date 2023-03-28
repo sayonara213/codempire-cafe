@@ -23,6 +23,10 @@ const Header: React.FC = () => {
     setIsCart(true);
   };
 
+  const closeCart = () => {
+    setIsCart(false);
+  };
+
   const location = useLocation();
 
   if (
@@ -41,7 +45,7 @@ const Header: React.FC = () => {
   return (
     <Styled.HeaderContainer>
       <GlobalModal isOpen={isCart} onChange={setIsCart} modalName={'Cart'}>
-        <CartModal />
+        <CartModal closeModal={closeCart} />
       </GlobalModal>
       <Styled.HeaderWrapper>
         <Styled.HeaderLogo src={IMAGES.logo} />
