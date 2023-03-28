@@ -20,4 +20,6 @@ export const API_URL = {
   GET_PRODUCT_BY_ID: 'http://localhost:5000/product/get/',
   GET_MENU: 'http://localhost:5000/menu/get/',
   SEARCH_ALL_PRODUCTS: 'http://localhost:5000/product/list/param',
+
+  CREATE_ORDER: 'http://localhost:5000/order/add',
 };
