@@ -17,6 +17,8 @@ import { IngredientService } from 'src/product/ingredient/ingredient.service';
 import { Ingredient } from 'src/product/ingredient/entity/ingredient.entity';
 import { AddressService } from 'src/address/address.service';
 import { Address } from 'src/address/entity/address.entity';
+import { AuthService } from 'src/auth/auth.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [

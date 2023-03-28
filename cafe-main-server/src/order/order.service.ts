@@ -51,6 +51,28 @@ export class OrderService {
       .getOne();
   }
 
+  getOrdersByUserId(id: string) {
+    return this.orderRepository
+      .createQueryBuilder('order')
+      .leftJoinAndSelect('order.user', 'user')
+      .leftJoinAndSelect('order.address', 'address')
+      .leftJoinAndSelect('order.orderProducts', 'orderProducts')
+      .leftJoinAndSelect('order.orderMenus', 'orderMenus')
+      .leftJoinAndSelect('orderMenus.menu', 'menu')
+      .leftJoinAndSelect('orderProducts.product', 'product')
+      .select([
+        'order',
+        'address',
+        'orderProducts',
+        'orderMenus',
+        'menu',
+        'product',
+        'user.id',
+      ])
+      .where('user.id = :id', { id: id })
+      .getMany();
+  }
+
   async createOrder(order: CreateOrderDto) {
     const products = await this.addProductsToOrder(order.itemIds);
     const menus = await this.addMenusToOrder(order.itemIds);
@@ -91,5 +113,27 @@ export class OrderService {
       return { menu: menuItem, quantity: item.quantity };
     });
     return await this.orderMenuRepository.save(await Promise.all(menus));
+  }
+
+  async getOrdersByUser(id: string) {
+    return await this.orderRepository
+      .createQueryBuilder('order')
+      .leftJoinAndSelect('order.user', 'user')
+      .leftJoinAndSelect('order.address', 'address')
+      .leftJoinAndSelect('order.orderProducts', 'orderProducts')
+      .leftJoinAndSelect('order.orderMenus', 'orderMenus')
+      .leftJoinAndSelect('orderMenus.menu', 'menu')
+      .leftJoinAndSelect('orderProducts.product', 'product')
+      .select([
+        'order',
+        'address',
+        'orderProducts',
+        'orderMenus',
+        'menu',
+        'product',
+        'user.id',
+      ])
+      .where('user.id = :id', { id: id })
+      .getMany();
   }
 }
