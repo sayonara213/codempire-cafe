@@ -22,4 +22,6 @@ export const API_URL = {
   SEARCH_ALL_PRODUCTS: 'http://localhost:5000/product/list/param',
 
   CREATE_ORDER: 'http://localhost:5000/order/add',
+  GET_ORDER_BY_ID: 'http://localhost:5000/order/get/',
+  GET_ORDERS_LIST: 'http://localhost:5000/order/list/',
 };

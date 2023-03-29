@@ -44,7 +44,7 @@ export const FooterContent = styled(Link)`
 `;
 
 export const FooterIcon = styled.img`
-  width: 18px;
+  height: 20px;
   object-fit: contain;
   margin-bottom: 5px;
 `;

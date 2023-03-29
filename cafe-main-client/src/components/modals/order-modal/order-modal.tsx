@@ -6,7 +6,7 @@ import { useAppSelector } from '../../../hooks/hooks';
 import GlobalDatePicker from './date-picker/date-picker';
 import { errorToast } from '../../../notifications/notifications';
 import { ISelectAddress } from './../../../types/types.address';
-import CheckOrderModal from './order-check-modal/check-order-modal';
+import CheckOrderModal from './check-order-modal/check-order-modal';
 
 interface OrderModalProps {
   closeModal: () => void;
