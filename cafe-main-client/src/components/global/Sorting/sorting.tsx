@@ -1,14 +1,16 @@
+import { ActionMeta, StylesConfig } from 'react-select';
+import { OptionType } from '../../../types/types.select';
 import { SortingSelect } from './sorting.styled';
 
-const customStyles = {
-  control: (provided: any) => ({
+const customStyles: StylesConfig<unknown, boolean> = {
+  control: (provided) => ({
     ...provided,
     width: '100%',
     background: 'none',
     border: 'none',
     boxShadow: 'none',
   }),
-  option: (provided: any, state: any) => ({
+  option: (provided, state) => ({
     ...provided,
     backgroundColor: state.isFocused ? 'black' : 'white',
     color: state.isFocused ? 'white' : 'black',
@@ -17,16 +19,16 @@ const customStyles = {
       color: 'white',
     },
   }),
-  singleValue: (provided: any) => ({
+  singleValue: (provided) => ({
     ...provided,
     color: 'black',
   }),
 };
 
 interface SortingProps {
-  options: any;
-  defaultValue: any;
-  onChange: (change: any) => any;
+  options: OptionType[];
+  defaultValue: OptionType;
+  onChange: (newValue: unknown, actionMeta: ActionMeta<unknown>) => void;
 }
 
 const GlobalSorting: React.FC<SortingProps> = ({ options, defaultValue, onChange }) => {

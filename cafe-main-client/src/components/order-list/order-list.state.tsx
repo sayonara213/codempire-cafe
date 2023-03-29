@@ -67,6 +67,10 @@ export const useOrderListState = () => {
     setOrders(splitedOrders);
   };
 
+  const handleSetOrderModalId = (id: string) => {
+    setOrderModalId(id);
+  };
+
   const handleCompleted = () => {
     setIsCompleted(true);
   };
@@ -86,5 +90,6 @@ export const useOrderListState = () => {
     handleWaiting,
     orderModalId,
     setOrderModalId,
+    handleSetOrderModalId,
   };
 };
