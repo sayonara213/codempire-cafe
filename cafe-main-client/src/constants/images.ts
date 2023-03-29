@@ -14,6 +14,7 @@ import remove from '../assets/icons/remove.svg';
 import arrow from '../assets/icons/arrow.svg';
 import close from '../assets/icons/close.svg';
 import orders from '../assets/icons/orders.svg';
+import checkMark from '../assets/icons/check-mark.svg';
 
 export const IMAGES = {
   logo,
@@ -32,4 +33,5 @@ export const IMAGES = {
   close,
   cartNotification,
   orders,
+  checkMark,
 };

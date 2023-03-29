@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { API_URL } from '../../../../constants/url';
 import { apiGet } from '../../../../services/api.service';
 import * as Styled from '../check-order-modal/check-order-modal.styled';
-import { IOrder, IOrderData } from './../../../../types/types.order';
+import { IOrder, IOrderData, OrderStatus } from './../../../../types/types.order';
+import ProgressBar from './progress-bar/progress-bar';
+import Button from './../../../global/Button/button';
 
 interface ActiveOrderModalProps {
   orderId: string;
 }
 
 const ActiveOrderModal: React.FC<ActiveOrderModalProps> = ({ orderId }) => {
-  const [orderInfo, setOrderInfo] = React.useState<IOrder>({} as IOrder);
+  const [orderInfo, setOrderInfo] = useState<IOrder>({} as IOrder);
 
   const displayOrderInfo =
     Object.keys(orderInfo).length > 0
@@ -65,6 +67,12 @@ const ActiveOrderModal: React.FC<ActiveOrderModalProps> = ({ orderId }) => {
           ))}
         </Styled.CheckOrderSection>
       ))}
+      <Styled.CheckOrderButtonsWrap>
+        <ProgressBar progress={orderInfo.status} />
+        <Button type={'button'} isActive>
+          Done
+        </Button>
+      </Styled.CheckOrderButtonsWrap>
     </Styled.CheckOrderWrap>
   );
 };

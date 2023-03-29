@@ -2,9 +2,17 @@ import { IAddress } from './types.user';
 import { IProduct } from './types.products';
 import { IMenu } from './types.menu';
 
+export enum OrderStatus {
+  CREATED = 'created',
+  READY = 'ready',
+  ON_WAY = 'onWay',
+  DELIVERED = 'delivered',
+  CANCELED = 'canceled',
+}
+
 export interface IOrder {
   id: string;
-  status: string;
+  status: OrderStatus;
   createdAt: string;
   deliveryDate: string;
   comment: string;

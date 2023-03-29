@@ -36,6 +36,7 @@ export const CheckOrderText = styled.p`
 `;
 
 export const CheckOrderButtonsWrap = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
 `;
