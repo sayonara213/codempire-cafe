@@ -20,18 +20,18 @@ export class UserController {
   }
 
   @Put('/:id')
-  async updateUser(@Query('id') id: string, @Body() body: any): Promise<any> {
+  async updateUser(@Param('id') id: string, @Body() body: any): Promise<any> {
     return this.service.updateUser(id, body);
   }
 
   @Put('/photo/:id')
-  async addPhoto(@Query('id') id: string, @Body() body: any): Promise<any> {
+  async addPhoto(@Param('id') id: string, @Body() body: any): Promise<any> {
     return this.service.updateUserPhoto(id, body);
   }
 
   @Put('/password/:id')
   async changePassword(
-    @Query('id') id: string,
+    @Param('id') id: string,
     @Body() body: { oldPassword: string; newPassword: string },
   ): Promise<any> {
     return this.service.changeUserPassword(id, body);

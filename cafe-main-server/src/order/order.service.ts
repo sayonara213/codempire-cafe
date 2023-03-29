@@ -136,4 +136,25 @@ export class OrderService {
       .where('user.id = :id', { id: id })
       .getMany();
   }
+
+  async getAllOrders() {
+    return await this.orderRepository
+      .createQueryBuilder('order')
+      .leftJoinAndSelect('order.user', 'user')
+      .leftJoinAndSelect('order.address', 'address')
+      .leftJoinAndSelect('order.orderProducts', 'orderProducts')
+      .leftJoinAndSelect('order.orderMenus', 'orderMenus')
+      .leftJoinAndSelect('orderMenus.menu', 'menu')
+      .leftJoinAndSelect('orderProducts.product', 'product')
+      .select([
+        'order',
+        'address',
+        'orderProducts',
+        'orderMenus',
+        'menu',
+        'product',
+        'user.id',
+      ])
+      .getMany();
+  }
 }

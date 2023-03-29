@@ -78,7 +78,7 @@ export const UserSettingsTitle = styled.h2`
   color: ${({ theme }) => theme.color.text};
 `;
 
-export const UserSettingsItemWrap = styled.div`
+export const ItemWrap = styled.div`
   padding: 20px 20px 20px 20px;
 
   display: flex;

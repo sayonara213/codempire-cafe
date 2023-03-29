@@ -13,7 +13,7 @@ import { setNameAndPhone } from '../../../redux/user.slice';
 import { ROUTES } from '../../../constants/routes';
 import { validationSchemaAdditional } from '../../../constants/validation/validation';
 
-interface AdditionalAuth {
+interface IAdditionalAuth {
   username: string;
   phone: string;
 }
@@ -32,7 +32,7 @@ const AdditionalAuth: React.FC = () => {
     navigate(ROUTES.menu);
   };
 
-  const onSubmit = async (formsData: AdditionalAuth) => {
+  const onSubmit = async (formsData: IAdditionalAuth) => {
     try {
       await apiUpdate(API_URL.REGISTER_ADDITIONAL, userId, formsData);
       dispatch(setNameAndPhone(formsData));

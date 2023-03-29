@@ -2,12 +2,13 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { ISelectAddress } from '../../../../types/types.address';
 import * as Styled from './check-order-modal.styled';
-import Button from './../../../global/Button/button';
+import Button from '../../../global/Button/button';
 import { API_URL } from '../../../../constants/url';
 import { apiPost } from '../../../../services/api.service';
 import { errorToast } from '../../../../notifications/notifications';
-import { successToast } from './../../../../notifications/notifications';
+import { successToast } from '../../../../notifications/notifications';
 import { clearCart } from '../../../../redux/cart.slice';
+import { IOrderData } from '../../../../types/types.order';
 
 interface CheckOrderModalProps {
   address: ISelectAddress;
@@ -25,6 +26,7 @@ const CheckOrderModal: React.FC<CheckOrderModalProps> = ({
   const user = useAppSelector((store) => store.user);
   const { cartItems } = useAppSelector((store) => store.cart);
   const dispatch = useAppDispatch();
+
   const orderInfo = [
     {
       title: 'User information',
@@ -86,7 +88,7 @@ const CheckOrderModal: React.FC<CheckOrderModalProps> = ({
       {orderInfo.map((info) => (
         <Styled.CheckOrderSection key={info.title}>
           <Styled.CheckOrderTitle>{info.title}</Styled.CheckOrderTitle>
-          {info.data.map((data) => (
+          {info.data.map((data: IOrderData) => (
             <Styled.CheckOrderData key={data.title}>
               <Styled.CheckOrderSubTitle>{data.title}</Styled.CheckOrderSubTitle>
               <Styled.CheckOrderText>{data.value}</Styled.CheckOrderText>

@@ -45,17 +45,17 @@ const Profile: React.FC = () => {
           <Styled.UserSettingsSection>
             <Styled.UserSettingsTitle>Settings</Styled.UserSettingsTitle>
             {settingsList.map((item, index) => (
-              <Styled.UserSettingsItemWrap key={index} onClick={item.onclick}>
+              <Styled.ItemWrap key={index} onClick={item.onclick}>
                 <Styled.UserSettingsItemTitle>{item.title}</Styled.UserSettingsItemTitle>
-              </Styled.UserSettingsItemWrap>
+              </Styled.ItemWrap>
             ))}
           </Styled.UserSettingsSection>
           <Styled.UserSettingsSection onClick={handleAddressModal}>
             <Styled.UserSettingsTitle>Address</Styled.UserSettingsTitle>
             {activeAddresses.map((item, index) => (
-              <Styled.UserSettingsItemWrap key={index} onClick={handleAddressModal}>
+              <Styled.ItemWrap key={index} onClick={handleAddressModal}>
                 <Styled.UserSettingsItemTitle>{item.addressName}</Styled.UserSettingsItemTitle>
-              </Styled.UserSettingsItemWrap>
+              </Styled.ItemWrap>
             ))}
           </Styled.UserSettingsSection>
           <Button type='button' isActive={true} isCancel={true} onClick={logout}>

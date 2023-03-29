@@ -89,9 +89,12 @@ export class UserService {
   }
 
   async updateUser(id: string, body: any): Promise<User> {
+    console.log(id);
     const currentUser = await this.userRepository.findOne({
       where: { id: id },
     });
+    console.log(currentUser);
+
     if (!currentUser) {
       throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
     }

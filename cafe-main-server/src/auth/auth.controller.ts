@@ -3,9 +3,9 @@ import {
   Controller,
   Get,
   Inject,
+  Param,
   Post,
   Put,
-  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -33,7 +33,7 @@ export class AuthController {
 
   @Put(API.ADDITIONAL + API.ID_PARAM)
   async addNameAndPhone(
-    @Query('id') id: string,
+    @Param('id') id: string,
     @Body() body: any,
   ): Promise<any> {
     this.service.addNameAndPhone(id, body);

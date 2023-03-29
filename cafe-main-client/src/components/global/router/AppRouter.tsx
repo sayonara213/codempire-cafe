@@ -20,6 +20,7 @@ import Profile from '../../user-info/profile';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { getToken } from '../../../services/storage.service';
 import { retrieveUserInfo } from '../../../services/auth.service';
+import OrderList from '../../order-list/order-list';
 
 const AppRouter: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -47,6 +48,7 @@ const AppRouter: React.FC = () => {
         <Route path={ROUTES.productInfo} element={<MenuInfo isProduct={true} />} />
         <Route path={ROUTES.login} element={<Auth isLogin={true} />} />
         <Route path={ROUTES.register} element={<Auth isLogin={false} />} />
+        <Route path={ROUTES.orders} element={<OrderList />} />
         <Route path={ROUTES.registerAdditional} element={<AdditionalAuth />} />
         <Route path={ROUTES.splashScreen} element={<SplashScreen />} />
       </Route>
