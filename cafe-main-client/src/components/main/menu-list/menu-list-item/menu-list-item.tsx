@@ -34,7 +34,7 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
   const navigate = useNavigate();
 
   const handleDelete = () => {
-    apiDelete(API_URL.DELETE, id);
+    isProduct ? apiDelete(API_URL.DELETE_PRODUCT, id) : apiDelete(API_URL.DELETE_MENU, id);
   };
 
   const addToCart = () => {

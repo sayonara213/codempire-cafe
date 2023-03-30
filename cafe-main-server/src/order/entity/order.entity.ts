@@ -11,7 +11,7 @@ import {
 import { OrderMenu } from './order-menu.entity';
 import { OrderProduct } from './order-product.entity';
 
-enum OrderStatus {
+export enum OrderStatus {
   CREATED = 'created',
   READY = 'ready',
   ON_WAY = 'onWay',

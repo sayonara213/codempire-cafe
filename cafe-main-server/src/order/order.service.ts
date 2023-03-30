@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { CreateOrderDto, IOrderItem } from './dto/order.dto';
 import { OrderMenu } from './entity/order-menu.entity';
 import { OrderProduct } from './entity/order-product.entity';
-import { Order } from './entity/order.entity';
+import { Order, OrderStatus } from './entity/order.entity';
 import { UserService } from 'src/user/user.service';
 import { instanceToPlain } from 'class-transformer';
 import { AddressService } from './../address/address.service';
@@ -161,6 +161,12 @@ export class OrderService {
   async setRating(id: string, stars: number) {
     const order = await this.getOrderById(id);
     order.stars = stars;
+    return await this.orderRepository.save(order);
+  }
+
+  async confirmOrder(id: string, status: OrderStatus) {
+    const order = await this.getOrderById(id);
+    order.status = status;
     return await this.orderRepository.save(order);
   }
 }

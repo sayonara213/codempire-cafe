@@ -9,7 +9,6 @@ export const API_URL = {
 
   GET_ADDRESS_BY_USER_ID: 'http://localhost:5000/address/user/',
   ADDRESS: 'http://localhost:5000/address',
-  DELETE: 'http://localhost:5000/menu/delete',
   ADD: 'http://localhost:5000/menu/add',
   ADD_PRODUCT: 'http://localhost:5000/product/add',
   GET_ALL_MENUS: 'http://localhost:5000/menu/list',
@@ -18,11 +17,15 @@ export const API_URL = {
   GET_ALL_ALLERGENS: 'http://localhost:5000/allergen/list',
   GET_PRODUCT: 'http://localhost:5000/product/',
   GET_PRODUCT_BY_ID: 'http://localhost:5000/product/get/',
+  DELETE_PRODUCT: 'http://localhost:5000/product/delete',
+
   GET_MENU: 'http://localhost:5000/menu/get/',
+  DELETE_MENU: 'http://localhost:5000/menu/delete',
   SEARCH_ALL_PRODUCTS: 'http://localhost:5000/product/list/param',
 
   CREATE_ORDER: 'http://localhost:5000/order/add',
   GET_ORDER_BY_ID: 'http://localhost:5000/order/get/',
   GET_ORDERS_LIST: 'http://localhost:5000/order/list/',
   RATE_ORDER: 'http://localhost:5000/order/rating',
+  CONFIRM_ORDER: 'http://localhost:5000/order/status',
 };
