@@ -10,6 +10,7 @@ import { Order, OrderStatus } from './entity/order.entity';
 import { UserService } from 'src/user/user.service';
 import { instanceToPlain } from 'class-transformer';
 import { AddressService } from './../address/address.service';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class OrderService {
@@ -168,5 +169,29 @@ export class OrderService {
     const order = await this.getOrderById(id);
     order.status = status;
     return await this.orderRepository.save(order);
+  }
+
+  @Cron(CronExpression.EVERY_30_SECONDS)
+  async updateOrderStatus() {
+    const orders = await this.getAllOrders();
+    const now = new Date();
+
+    orders.forEach((order) => {
+      const OneMinuteAgo = new Date(now.getTime() - 1 * 30 * 1000);
+
+      if (
+        order.status === OrderStatus.READY &&
+        order.deliveryDate <= OneMinuteAgo
+      ) {
+        order.status = OrderStatus.ON_WAY;
+        this.confirmOrder(order.id, order.status);
+      } else if (
+        order.status === OrderStatus.ON_WAY &&
+        order.deliveryDate <= OneMinuteAgo
+      ) {
+        order.status = OrderStatus.DELIVERED;
+        this.confirmOrder(order.id, order.status);
+      }
+    });
   }
 }

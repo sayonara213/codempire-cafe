@@ -61,28 +61,4 @@ export class OrderController {
   ) {
     return this.orderService.confirmOrder(id, status.status);
   }
-
-  @Cron(CronExpression.EVERY_5_MINUTES)
-  async updateOrderStatus() {
-    const orders = await this.orderService.getAllOrders();
-    const now = new Date();
-
-    orders.forEach((order) => {
-      const OneMinuteAgo = new Date(now.getTime() - 5 * 60 * 1000);
-
-      if (
-        order.status === OrderStatus.READY &&
-        order.deliveryDate <= OneMinuteAgo
-      ) {
-        order.status = OrderStatus.ON_WAY;
-        this.orderService.confirmOrder(order.id, order.status);
-      } else if (
-        order.status === OrderStatus.ON_WAY &&
-        order.deliveryDate <= OneMinuteAgo
-      ) {
-        order.status = OrderStatus.DELIVERED;
-        this.orderService.confirmOrder(order.id, order.status);
-      }
-    });
-  }
 }
