@@ -24,4 +24,5 @@ export const API_URL = {
   CREATE_ORDER: 'http://localhost:5000/order/add',
   GET_ORDER_BY_ID: 'http://localhost:5000/order/get/',
   GET_ORDERS_LIST: 'http://localhost:5000/order/list/',
+  RATE_ORDER: 'http://localhost:5000/order/rating',
 };

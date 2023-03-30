@@ -157,4 +157,10 @@ export class OrderService {
       ])
       .getMany();
   }
+
+  async setRating(id: string, stars: number) {
+    const order = await this.getOrderById(id);
+    order.stars = stars;
+    return await this.orderRepository.save(order);
+  }
 }

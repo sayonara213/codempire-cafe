@@ -13,6 +13,7 @@ export const API = {
   ALLERGEN: '/allergen',
   ADDRESS: '/address',
   COMMENT: '/comment',
+  RATING: '/rating',
   ADD: '/add',
   DELETE: '/delete',
   GET: '/get',

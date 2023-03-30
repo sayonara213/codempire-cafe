@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import { IMAGES } from './../../../../../constants/images';
 
+interface ProgressBarProps {
+  isCanceled?: boolean;
+  active?: boolean;
+}
+
 export const ProgressBarContainer = styled.div`
   padding: 0 20px;
   box-sizing: border-box;
@@ -11,7 +16,7 @@ export const ProgressBarContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const Point = styled.div<any>`
+export const Point = styled.div<ProgressBarProps>`
   width: 13px;
   height: 13px;
   border-radius: 50%;
@@ -29,7 +34,7 @@ export const Point = styled.div<any>`
   }
 `;
 
-export const Line = styled.div<any>`
+export const Line = styled.div<ProgressBarProps>`
   flex-grow: 1;
   height: 4px;
   border: 1px solid ${({ theme }) => theme.color.text};
@@ -37,7 +42,7 @@ export const Line = styled.div<any>`
     active ? theme.color.text : theme.color.white};
 `;
 
-export const PointContainer = styled.div<any>`
+export const PointContainer = styled.div<ProgressBarProps>`
   position: relative;
   display: flex;
   flex-direction: column;

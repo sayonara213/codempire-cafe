@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { API_URL } from '../../constants/url';
 import { useAppSelector } from '../../hooks/hooks';
 import { apiGet } from '../../services/api.service';
-import { IOrder, IOrderList } from '../../types/types.order';
+import { IOrder, IOrderList, OrderStatus } from '../../types/types.order';
 
 export const useOrderListState = () => {
   const options = [
@@ -51,9 +51,15 @@ export const useOrderListState = () => {
 
   const filterOrders = (fetchedOrders: IOrder[]) => {
     if (isCompleted) {
-      return fetchedOrders.filter((order: IOrder) => order.status === 'delivered');
+      return fetchedOrders.filter(
+        (order: IOrder) =>
+          order.status === OrderStatus.DELIVERED || order.status === OrderStatus.CANCELED,
+      );
     } else {
-      return fetchedOrders.filter((order: IOrder) => order.status !== 'delivered');
+      return fetchedOrders.filter(
+        (order: IOrder) =>
+          order.status !== OrderStatus.DELIVERED && order.status !== OrderStatus.CANCELED,
+      );
     }
   };
 

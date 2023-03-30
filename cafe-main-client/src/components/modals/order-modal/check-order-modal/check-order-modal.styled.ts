@@ -40,3 +40,7 @@ export const CheckOrderButtonsWrap = styled.div`
   display: flex;
   flex-direction: row;
 `;
+
+export const CheckOrderButtonWrap = styled.div`
+  width: 50%;
+`;

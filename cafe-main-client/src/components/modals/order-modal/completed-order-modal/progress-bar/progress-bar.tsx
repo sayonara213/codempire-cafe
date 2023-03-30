@@ -5,6 +5,11 @@ interface ProgressBarProps {
   progress: OrderStatus;
 }
 
+interface PointWithLineProps {
+  point: number;
+  text: string;
+}
+
 const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => {
   const pointStatus = {
     created: 1,
@@ -16,7 +21,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => {
 
   const currentStatus = pointStatus[progress];
 
-  const PointWithLine = ({ point, text }: any) => (
+  const PointWithLine = ({ point, text }: PointWithLineProps) => (
     <>
       <Styled.PointContainer isCanceled={progress === OrderStatus.CANCELED}>
         <Styled.Point active={point <= currentStatus} />

@@ -5,6 +5,7 @@ import {
   Inject,
   Param,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import { CreateOrderDto } from './dto/order.dto';
@@ -42,5 +43,10 @@ export class OrderController {
   @Get(API.LIST)
   async getOrders() {
     return this.orderService.getAllOrders();
+  }
+
+  @Put(API.RATING + API.ID_PARAM)
+  async rateOrder(@Param('id') id: string, @Body() rating: { stars: number }) {
+    return this.orderService.setRating(id, rating.stars);
   }
 }
