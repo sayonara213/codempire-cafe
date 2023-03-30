@@ -51,6 +51,13 @@ const OrderList: React.FC = () => {
         <GlobalSorting options={options} defaultValue={options[0]} onChange={onOptionSelect} />
       </Styled.OrderListHeader>
       <Styled.OrderListBody>
+        {orders.length === 0 && (
+          <Styled.OrderListEmpty>
+            <Styled.OrderListEmptyText>
+              {isCompleted ? 'No completed orders' : 'No waiting orders'}
+            </Styled.OrderListEmptyText>
+          </Styled.OrderListEmpty>
+        )}
         {orders.map((item: IOrderList) => (
           <OrderListItem
             item={item}

@@ -6,10 +6,11 @@ import { Repository } from 'typeorm';
 import { CreateOrderDto, IOrderItem } from './dto/order.dto';
 import { OrderMenu } from './entity/order-menu.entity';
 import { OrderProduct } from './entity/order-product.entity';
-import { Order } from './entity/order.entity';
+import { Order, OrderStatus } from './entity/order.entity';
 import { UserService } from 'src/user/user.service';
 import { instanceToPlain } from 'class-transformer';
 import { AddressService } from './../address/address.service';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class OrderService {
@@ -156,5 +157,41 @@ export class OrderService {
         'user.id',
       ])
       .getMany();
+  }
+
+  async setRating(id: string, stars: number) {
+    const order = await this.getOrderById(id);
+    order.stars = stars;
+    return await this.orderRepository.save(order);
+  }
+
+  async confirmOrder(id: string, status: OrderStatus) {
+    const order = await this.getOrderById(id);
+    order.status = status;
+    return await this.orderRepository.save(order);
+  }
+
+  @Cron(CronExpression.EVERY_30_SECONDS)
+  async updateOrderStatus() {
+    const orders = await this.getAllOrders();
+    const now = new Date();
+
+    orders.forEach((order) => {
+      const OneMinuteAgo = new Date(now.getTime() - 1 * 30 * 1000);
+
+      if (
+        order.status === OrderStatus.READY &&
+        order.deliveryDate <= OneMinuteAgo
+      ) {
+        order.status = OrderStatus.ON_WAY;
+        this.confirmOrder(order.id, order.status);
+      } else if (
+        order.status === OrderStatus.ON_WAY &&
+        order.deliveryDate <= OneMinuteAgo
+      ) {
+        order.status = OrderStatus.DELIVERED;
+        this.confirmOrder(order.id, order.status);
+      }
+    });
   }
 }

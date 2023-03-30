@@ -17,7 +17,13 @@ const OrderItemField: React.FC<OrderItemFieldProps> = ({ order, handleSetOrderMo
     <ItemWrap key={order.id} onClick={handleClick}>
       <Styled.ItemParamWrap>
         <Styled.ItemId>{order.id.slice(-5).toUpperCase()}</Styled.ItemId>
-        <Styled.ItemTime>{new Date(order.createdAt).toLocaleTimeString()}</Styled.ItemTime>
+        <Styled.ItemTime>
+          {new Date(order.createdAt).toLocaleTimeString('en-US', {
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
+        </Styled.ItemTime>
       </Styled.ItemParamWrap>
       <Styled.ItemItemsList>
         {[

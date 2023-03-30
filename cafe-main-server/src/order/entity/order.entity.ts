@@ -11,8 +11,10 @@ import {
 import { OrderMenu } from './order-menu.entity';
 import { OrderProduct } from './order-product.entity';
 
-enum OrderStatus {
-  PENDING = 'pending',
+export enum OrderStatus {
+  CREATED = 'created',
+  READY = 'ready',
+  ON_WAY = 'onWay',
   DELIVERED = 'delivered',
   CANCELED = 'canceled',
 }
@@ -22,7 +24,7 @@ export class Order {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @Column({ type: 'enum', enum: OrderStatus, default: OrderStatus.PENDING })
+  @Column({ type: 'enum', enum: OrderStatus, default: OrderStatus.CREATED })
   public status: OrderStatus;
 
   @CreateDateColumn({ type: 'timestamp' })

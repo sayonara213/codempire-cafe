@@ -25,3 +25,18 @@ export const OrderListBody = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const OrderListEmpty = styled.div`
+  margin-top: 24px;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const OrderListEmptyText = styled.h1`
+  font-family: ${({ theme }) => theme.font.medium};
+  font-size: ${({ theme }) => theme.fontSize.large};
+  color: ${({ theme }) => theme.color.text};
+`;
