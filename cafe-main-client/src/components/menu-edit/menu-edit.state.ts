@@ -1,17 +1,20 @@
 import { useFormik } from 'formik';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { IMAGES } from '../../constants/images';
 import { API_URL } from '../../constants/url';
-import { apiGet, apiPost } from '../../services/api.service';
+import { apiGet, apiPost, apiUpdate } from '../../services/api.service';
 import { madeCompressedBase64 } from '../../services/images.service';
 import { IAllergen } from '../../types/types.allergens';
 import { IMenu } from '../../types/types.menu';
 import { IProduct } from '../../types/types.products';
+import { errorToast, successToast } from './../../notifications/notifications';
 
 export const useMenuEditState = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [image, setImage] = useState<string>(IMAGES.placeholderDish);
   const [allergens, setAllergens] = useState<IAllergen[]>([]);
+  const { id } = useParams();
 
   const fetchProducts = async () => {
     const response = await apiGet(API_URL.GET_ALL_PRODUCTS);
@@ -34,7 +37,7 @@ export const useMenuEditState = () => {
     const productIds = values.products.map((product) => product.id);
     const allergensIds = values.allergens.map((allergen) => allergen.id);
 
-    apiPost(API_URL.ADD, {
+    const data = {
       name: values.name,
       price: values.price,
       weight: values.weight,
@@ -42,7 +45,28 @@ export const useMenuEditState = () => {
       image: values.image,
       products: productIds,
       allergens: allergensIds,
-    });
+    };
+    id ? handleEditSubmit(data) : handleCreateSubmit(data);
+  };
+
+  const handleCreateSubmit = async (values: any) => {
+    try {
+      await apiPost(API_URL.ADD, values);
+      successToast('Menu created successfully');
+    } catch {
+      errorToast('Menu creation failed');
+    }
+  };
+
+  const handleEditSubmit = async (values: any) => {
+    console.log(values);
+
+    try {
+      apiUpdate(API_URL.UPDATE_MENU, id!, values);
+      successToast('Menu updated successfully');
+    } catch {
+      errorToast('Menu update failed');
+    }
   };
 
   const formik = useFormik<Omit<IMenu, 'id'>>({
@@ -111,6 +135,18 @@ export const useMenuEditState = () => {
     formik.setFieldValue('allergens', allergens);
   };
 
+  const fetchMenuById = async () => {
+    if (id) {
+      const response = await apiGet(API_URL.GET_MENU + id);
+      const menu = response.data;
+      handleProduct(menu.products);
+      setImage(menu.image);
+      formik.setFieldValue('image', menu.image);
+      formik.setFieldValue('name', menu.name);
+      formik.setFieldValue('description', menu.description);
+    }
+  };
+
   const inputs = [
     {
       label: 'Name',
@@ -160,5 +196,6 @@ export const useMenuEditState = () => {
     handleAllergens,
     inputs,
     fetchAllergens,
+    fetchMenuById,
   };
 };

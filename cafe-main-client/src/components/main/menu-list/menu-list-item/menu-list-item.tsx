@@ -51,6 +51,10 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
     isProduct ? navigate(ROUTES.product + id) : navigate(ROUTES.menu + id);
   };
 
+  const handleEdit = () => {
+    isProduct ? navigate(ROUTES.editProduct + id) : navigate(ROUTES.editMenu + id);
+  };
+
   return (
     <Styled.MenuListItemContainer>
       <Styled.MenuImageWrap onClick={showInfo}>
@@ -64,7 +68,7 @@ const MenuListItem: React.FC<MenuListItemProps> = ({
       </Styled.MenuParamWrap>
       {isAdmin ? (
         <Styled.ButtonWrap>
-          <Styled.MenuListItemButton>Edit</Styled.MenuListItemButton>
+          <Styled.MenuListItemButton onClick={handleEdit}>Edit</Styled.MenuListItemButton>
           <Styled.MenuListDeleteButton onClick={handleDelete}>Delete</Styled.MenuListDeleteButton>
         </Styled.ButtonWrap>
       ) : (

@@ -11,6 +11,7 @@ export const API_URL = {
   ADDRESS: 'http://localhost:5000/address',
   ADD: 'http://localhost:5000/menu/add',
   ADD_PRODUCT: 'http://localhost:5000/product/add',
+  UPDATE_PRODUCT: 'http://localhost:5000/product/update',
   GET_ALL_MENUS: 'http://localhost:5000/menu/list',
   GET_ALL_PRODUCTS: 'http://localhost:5000/product/list',
   GET_ALL_INGREDIENTS: 'http://localhost:5000/ingredient/list/',
@@ -20,6 +21,7 @@ export const API_URL = {
   DELETE_PRODUCT: 'http://localhost:5000/product/delete',
 
   GET_MENU: 'http://localhost:5000/menu/get/',
+  UPDATE_MENU: 'http://localhost:5000/menu/update',
   DELETE_MENU: 'http://localhost:5000/menu/delete',
   SEARCH_ALL_PRODUCTS: 'http://localhost:5000/product/list/param',
 
