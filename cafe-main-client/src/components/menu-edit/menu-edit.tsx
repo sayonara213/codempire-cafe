@@ -18,11 +18,13 @@ const MenuEdit: React.FC = () => {
     handleAllergens,
     inputs,
     fetchAllergens,
+    fetchMenuById,
   } = useMenuEditState();
 
   useEffect(() => {
     fetchProducts();
     fetchAllergens();
+    fetchMenuById();
   }, []);
 
   return (

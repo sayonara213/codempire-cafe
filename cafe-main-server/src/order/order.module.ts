@@ -17,8 +17,8 @@ import { IngredientService } from 'src/product/ingredient/ingredient.service';
 import { Ingredient } from 'src/product/ingredient/entity/ingredient.entity';
 import { AddressService } from 'src/address/address.service';
 import { Address } from 'src/address/entity/address.entity';
-import { AuthService } from 'src/auth/auth.service';
-import { JwtService } from '@nestjs/jwt';
+import { Notification } from 'src/notifications/entity/notifications.entity';
+import { NotificationsModule } from 'src/notifications/notifications.module';
 
 @Module({
   imports: [
@@ -32,7 +32,9 @@ import { JwtService } from '@nestjs/jwt';
       Allergen,
       Ingredient,
       Address,
+      Notification,
     ]),
+    NotificationsModule,
   ],
   controllers: [OrderController],
   providers: [

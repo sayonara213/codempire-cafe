@@ -1,17 +1,20 @@
 import { useFormik } from 'formik';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { IMAGES } from '../../../constants/images';
 import { API_URL } from '../../../constants/url';
-import { apiGet, apiPost } from '../../../services/api.service';
+import { apiGet, apiPost, apiUpdate } from '../../../services/api.service';
 import { madeCompressedBase64 } from '../../../services/images.service';
 import { IAllergen } from '../../../types/types.allergens';
 import { IProduct, productTypes } from '../../../types/types.products';
+import { errorToast, successToast } from './../../../notifications/notifications';
 
 export const useProductEditState = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [image, setImage] = useState<string>(IMAGES.placeholderDish);
   const [allergens, setAllergens] = useState<IAllergen[]>([]);
   const [selectedAllergens, setSelectedAllergens] = useState<IAllergen[]>([]);
+  const { id } = useParams();
 
   const fetchIngredients = async () => {
     const response = await apiGet(API_URL.GET_ALL_INGREDIENTS);
@@ -23,12 +26,9 @@ export const useProductEditState = () => {
     setAllergens(response.data);
   };
 
-  const handleSubmit = async (values: Omit<IProduct, 'id'>) => {
-    console.log(values);
-
+  const handleSubmit = (values: Omit<IProduct, 'id'>) => {
     const ingredientsId = values.ingredients.map((ingredient) => ingredient.id);
-
-    apiPost(API_URL.ADD_PRODUCT, {
+    const data = {
       name: values.name,
       price: values.price,
       weight: values.weight,
@@ -36,13 +36,28 @@ export const useProductEditState = () => {
       image: values.image,
       type: values.type,
       ingredients: ingredientsId,
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    };
+    id ? handleEditSubmit(data) : handleCreateSubmit(data);
+  };
+
+  const handleCreateSubmit = async (values: any) => {
+    try {
+      await apiPost(API_URL.ADD_PRODUCT, values);
+      successToast('Product was created successfully');
+    } catch {
+      errorToast("Product wasn't created");
+    }
+  };
+
+  const handleEditSubmit = async (values: any) => {
+    console.log(values);
+
+    try {
+      await apiUpdate(API_URL.UPDATE_PRODUCT, id!, values);
+      successToast('Product was updated successfully');
+    } catch {
+      errorToast("Product wasn't updated");
+    }
   };
 
   const formik = useFormik<Omit<IProduct, 'id'>>({
@@ -57,6 +72,22 @@ export const useProductEditState = () => {
     },
     onSubmit: handleSubmit,
   });
+
+  const fetchSelectedProduct = async () => {
+    if (id) {
+      const response = await apiGet(API_URL.GET_PRODUCT_BY_ID + id);
+      const product = response.data;
+
+      setImage(product.image);
+      formik.setFieldValue('name', product.name);
+      formik.setFieldValue('price', product.price);
+      formik.setFieldValue('description', product.description);
+      formik.setFieldValue('weight', product.weight);
+      formik.setFieldValue('image', product.image);
+      formik.setFieldValue('type', product.type);
+      handleIngredient(product.ingredients);
+    }
+  };
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files![0];
@@ -154,5 +185,6 @@ export const useProductEditState = () => {
     inputs,
     fetchAllergens,
     selectedAllergens,
+    fetchSelectedProduct,
   };
 };

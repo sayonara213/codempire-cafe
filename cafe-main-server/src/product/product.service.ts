@@ -95,22 +95,17 @@ export class ProductService {
     return await this.productRepository.remove(product);
   }
 
-  async updateProduct(id: string, product: CreateProductDto): Promise<Product> {
-    const productToUpdate = await this.productRepository.findOne({
-      where: { id: id },
-    });
-    productToUpdate.name = product.name;
-    productToUpdate.description = product.description;
-    productToUpdate.price = product.price;
-    productToUpdate.weight = product.weight;
-    return await this.productRepository.save(productToUpdate);
-  }
-
   async addIngredientsToProduct(idArr: string[]) {
     return await Promise.all(
       idArr.map((id) => {
         return this.ingredientService.getById(id);
       }),
     );
+  }
+
+  async updateProduct(id: string, product: CreateProductDto): Promise<any> {
+    const ingredients = await this.addIngredientsToProduct(product.ingredients);
+    const newProduct = { ...product, ingredients: ingredients };
+    await this.productRepository.save({ id: id, ...newProduct });
   }
 }

@@ -6,6 +6,7 @@ import {
   Inject,
   Param,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -54,5 +55,13 @@ export class MenuController {
   @Get(API.LIST)
   getLimitMenus(@Query('limit') limit: number): Promise<Menu[]> {
     return this.service.getLimitedMenu(limit);
+  }
+
+  @Put(API.UPDATE + API.ID_PARAM)
+  updateMenu(
+    @Param('id') id: string,
+    @Body() menu: CreateMenuDto,
+  ): Promise<Menu> {
+    return this.service.updateMenu(id, menu);
   }
 }

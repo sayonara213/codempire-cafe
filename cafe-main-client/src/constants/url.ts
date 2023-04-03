@@ -11,6 +11,7 @@ export const API_URL = {
   ADDRESS: 'http://localhost:5000/address',
   ADD: 'http://localhost:5000/menu/add',
   ADD_PRODUCT: 'http://localhost:5000/product/add',
+  UPDATE_PRODUCT: 'http://localhost:5000/product/update',
   GET_ALL_MENUS: 'http://localhost:5000/menu/list',
   GET_ALL_PRODUCTS: 'http://localhost:5000/product/list',
   GET_ALL_INGREDIENTS: 'http://localhost:5000/ingredient/list/',
@@ -20,6 +21,7 @@ export const API_URL = {
   DELETE_PRODUCT: 'http://localhost:5000/product/delete',
 
   GET_MENU: 'http://localhost:5000/menu/get/',
+  UPDATE_MENU: 'http://localhost:5000/menu/update',
   DELETE_MENU: 'http://localhost:5000/menu/delete',
   SEARCH_ALL_PRODUCTS: 'http://localhost:5000/product/list/param',
 
@@ -28,4 +30,10 @@ export const API_URL = {
   GET_ORDERS_LIST: 'http://localhost:5000/order/list/',
   RATE_ORDER: 'http://localhost:5000/order/rating',
   CONFIRM_ORDER: 'http://localhost:5000/order/status',
+
+  GET_NOTIFICATIONS: 'http://localhost:5000/notifications/list/user/',
+  GET_ADMIN_NOTIFICATIONS: 'http://localhost:5000/notifications/list/admin/',
+  GET_USER_SSE: 'http://localhost:5000/notifications/sse/user',
+  GET_ADMIN_SSE: 'http://localhost:5000/notifications/sse/admin',
+  SET_NOTIFICATION_AS_READ: 'http://localhost:5000/notifications/update',
 };

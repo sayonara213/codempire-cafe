@@ -11,6 +11,10 @@ export const ROUTES = {
   splashScreen: '/splash-screen',
   createMenu: '/menu/create',
   createProduct: '/product/create',
+
   menuInfo: '/menu/:id',
   productInfo: '/product/:id',
+
+  editMenu: '/menu/edit/',
+  editProduct: '/product/edit/',
 };

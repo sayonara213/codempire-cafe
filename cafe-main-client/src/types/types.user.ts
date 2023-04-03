@@ -13,3 +13,8 @@ export interface IAddress {
   addressName: string;
   isActive: boolean;
 }
+
+export enum UserRole {
+  ADMIN = 'admin',
+  USER = 'user',
+}

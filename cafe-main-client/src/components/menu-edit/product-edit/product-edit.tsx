@@ -9,21 +9,18 @@ import { useProductEditState } from './product-edit.state';
 const ProductEdit: React.FC = () => {
   const {
     fetchIngredients,
-    products,
     image,
-    allergens,
     formik,
     handleFile,
-    handleIngredient,
-    handleAllergens,
     inputs,
     fetchAllergens,
-    selectedAllergens,
+    fetchSelectedProduct,
   } = useProductEditState();
 
   useEffect(() => {
     fetchIngredients();
     fetchAllergens();
+    fetchSelectedProduct();
   }, []);
 
   return (

@@ -21,4 +21,6 @@ export const API = {
   LIST: '/list',
   UPDATE: '/update',
   ID_PARAM: '/:id',
+  SSE_ADMIN: '/sse/admin',
+  SSE_USER: '/sse/user',
 };

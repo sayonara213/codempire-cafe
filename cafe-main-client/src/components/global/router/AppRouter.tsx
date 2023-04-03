@@ -44,8 +44,13 @@ const AppRouter: React.FC = () => {
           </Route>
         </Route>
         <Route path={ROUTES.menu} element={<Main />} />
+
         <Route path={ROUTES.menuInfo} element={<MenuInfo isProduct={false} />} />
         <Route path={ROUTES.productInfo} element={<MenuInfo isProduct={true} />} />
+
+        <Route path={ROUTES.editMenu + ':id'} element={<MenuEdit />} />
+        <Route path={ROUTES.editProduct + ':id'} element={<ProductEdit />} />
+
         <Route path={ROUTES.login} element={<Auth isLogin={true} />} />
         <Route path={ROUTES.register} element={<Auth isLogin={false} />} />
         <Route path={ROUTES.orders} element={<OrderList />} />

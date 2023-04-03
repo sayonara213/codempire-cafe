@@ -12,6 +12,7 @@ import { AllergenModule } from './allergen/allergen.module';
 import { AddressModule } from './address/address.module';
 import { OrderModule } from './order/order.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { NotificationsModule } from './notifications/notifications.module';
 
 const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
 
@@ -31,6 +32,7 @@ const envFilePath: string = getEnvPath(`${__dirname}/common/envs`);
     AllergenModule,
     AddressModule,
     OrderModule,
+    NotificationsModule,
   ],
 })
 export class AppModule {}

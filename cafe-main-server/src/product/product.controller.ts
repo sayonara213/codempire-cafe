@@ -49,9 +49,9 @@ export class ProductController {
     return this.service.deleteProduct(id);
   }
 
-  @Put(API.UPDATE)
+  @Put(API.UPDATE + API.ID_PARAM)
   updateProduct(
-    @Body('id') id: string,
+    @Param('id') id: string,
     @Body() product: CreateProductDto,
   ): Promise<Product> {
     return this.service.updateProduct(id, product);

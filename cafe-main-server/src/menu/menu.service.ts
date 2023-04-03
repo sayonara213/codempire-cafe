@@ -107,4 +107,11 @@ export class MenuService {
     const menu = await this.menuRepository.findOne({ where: { id: id } });
     return await this.menuRepository.remove(menu);
   }
+
+  async updateMenu(id: string, menu: CreateMenuDto): Promise<Menu> {
+    const products = await this.addProductsToMenu(menu.products);
+    const allergens = await this.addAllergensToMenu(menu.allergens);
+    const newMenu = { ...menu, products: products, allergens: allergens };
+    return await this.menuRepository.save({ id: id, ...newMenu });
+  }
 }
