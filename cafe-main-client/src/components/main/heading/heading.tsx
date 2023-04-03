@@ -6,6 +6,7 @@ import { ROUTES } from './../../../constants/routes';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { setIsProduct, setOrderBy } from '../../../redux/menuList.slice';
 import GlobalSorting from '../../global/Sorting/sorting';
+import Button from './../../global/Button/button';
 
 const options = [
   { value: { name: 'price', order: 'asc' }, label: 'Price Asc' },
@@ -45,12 +46,20 @@ const Heading: React.FC<RoleProps> = ({ isAdmin }) => {
   return (
     <Styled.HeadingContainer>
       <Styled.HeadingButtonWrap>
-        <Styled.HeadingButton onClick={handleClickMenu}>MENU</Styled.HeadingButton>
-        <Styled.HeadingButton onClick={handleClickProduct}>PRODUCTS</Styled.HeadingButton>
+        <Button onClick={handleClickMenu} isActive type={'button'}>
+          MENU
+        </Button>
+        <Button onClick={handleClickProduct} isActive type={'button'}>
+          PRODUCTS
+        </Button>
         {isAdmin && (
           <>
-            <Styled.HeadingButton onClick={handleAddMenu}>ADD MENU</Styled.HeadingButton>
-            <Styled.HeadingButton onClick={handleAddProduct}>ADD PRODUCT</Styled.HeadingButton>
+            <Button onClick={handleAddMenu} isActive type={'button'}>
+              ADD MENU
+            </Button>
+            <Button onClick={handleAddProduct} isActive type={'button'}>
+              ADD PRODUCT
+            </Button>
           </>
         )}
       </Styled.HeadingButtonWrap>
