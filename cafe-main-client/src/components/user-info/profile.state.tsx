@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { ROUTES } from '../../constants/routes';
 import { API_URL } from '../../constants/url';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';

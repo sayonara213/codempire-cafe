@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { OrderMenu } from './order-menu.entity';
 import { OrderProduct } from './order-product.entity';
+import { Notification } from 'src/notifications/entity/notifications.entity';
 
 export enum OrderStatus {
   CREATED = 'created',
@@ -54,4 +55,7 @@ export class Order {
     nullable: true,
   })
   public orderProducts: OrderProduct[];
+
+  @OneToMany(() => Notification, (notification) => notification.order)
+  public notifications: Notification[];
 }

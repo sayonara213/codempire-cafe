@@ -15,6 +15,7 @@ import arrow from '../assets/icons/arrow.svg';
 import close from '../assets/icons/close.svg';
 import orders from '../assets/icons/orders.svg';
 import checkMark from '../assets/icons/check-mark.svg';
+import bellNotification from '../assets/icons/bell-notification.svg';
 
 export const IMAGES = {
   logo,
@@ -34,4 +35,5 @@ export const IMAGES = {
   cartNotification,
   orders,
   checkMark,
+  bellNotification,
 };

@@ -30,4 +30,10 @@ export const API_URL = {
   GET_ORDERS_LIST: 'http://localhost:5000/order/list/',
   RATE_ORDER: 'http://localhost:5000/order/rating',
   CONFIRM_ORDER: 'http://localhost:5000/order/status',
+
+  GET_NOTIFICATIONS: 'http://localhost:5000/notifications/list/user/',
+  GET_ADMIN_NOTIFICATIONS: 'http://localhost:5000/notifications/list/admin/',
+  GET_USER_SSE: 'http://localhost:5000/notifications/sse/user',
+  GET_ADMIN_SSE: 'http://localhost:5000/notifications/sse/admin',
+  SET_NOTIFICATION_AS_READ: 'http://localhost:5000/notifications/update',
 };

@@ -8,15 +8,23 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { setSearch } from '../../redux/menuList.slice';
 import GlobalModal from './../modals/modal';
 import CartModal from './../modals/cart-modal/cart-modal';
+import NotificationsModal from '../modals/notifications-modal/notifications.modal';
+import { ROUTES } from './../../constants/routes';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const value = useAppSelector((store) => store.menuList.search);
   const cart = useAppSelector((store) => store.cart);
+  const notifications = useAppSelector((store) => store.notifications.notificationsList);
+  const [showNotifications, setShowNotifications] = React.useState(false);
   const [isCart, setIsCart] = React.useState(false);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearch(e.target.value));
+  };
+
+  const handleShowNotifications = () => {
+    setShowNotifications(true);
   };
 
   const showCart = () => {
@@ -29,10 +37,14 @@ const Header: React.FC = () => {
 
   const location = useLocation();
 
+  const checkIfUnreadNotifications = () => {
+    return notifications.some((notification) => notification.isSeen === false);
+  };
+
   if (
-    location.pathname === '/login' ||
-    location.pathname === '/register' ||
-    location.pathname === '/register/additional'
+    location.pathname === ROUTES.login ||
+    location.pathname === ROUTES.register ||
+    location.pathname === ROUTES.registerAdditional
   )
     return (
       <Styled.HeaderContainer>
@@ -47,9 +59,20 @@ const Header: React.FC = () => {
       <GlobalModal isOpen={isCart} onChange={setIsCart} modalName={'Cart'}>
         <CartModal closeModal={closeCart} />
       </GlobalModal>
+      {showNotifications && (
+        <GlobalModal
+          isOpen={showNotifications}
+          onChange={setShowNotifications}
+          modalName={'Notifications'}>
+          <NotificationsModal />
+        </GlobalModal>
+      )}
       <Styled.HeaderWrapper>
         <Styled.HeaderLogo src={IMAGES.logo} />
-        <Styled.HeaderIcon src={IMAGES.bell} />
+        <Styled.HeaderIcon
+          src={checkIfUnreadNotifications() ? IMAGES.bellNotification : IMAGES.bell}
+          onClick={handleShowNotifications}
+        />
         <Styled.HeaderIcon
           src={cart.cartItems.length > 0 ? IMAGES.cartNotification : IMAGES.cart}
           onClick={showCart}

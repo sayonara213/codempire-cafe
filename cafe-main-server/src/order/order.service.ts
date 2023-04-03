@@ -11,6 +11,7 @@ import { UserService } from 'src/user/user.service';
 import { instanceToPlain } from 'class-transformer';
 import { AddressService } from './../address/address.service';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { NotificationsService } from 'src/notifications/notifications.service';
 
 @Injectable()
 export class OrderService {
@@ -25,6 +26,7 @@ export class OrderService {
     private readonly menuService: MenuService,
     private readonly productService: ProductService,
     private readonly addressService: AddressService,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   async getOrderById(id: string) {
@@ -79,7 +81,7 @@ export class OrderService {
     const menus = await this.addMenusToOrder(order.itemIds);
     const user = instanceToPlain(await this.userService.findById(order.userId));
     const address = await this.addressService.getById(order.addressId);
-    return await this.orderRepository.save({
+    const newOrder = await this.orderRepository.save({
       user: user,
       address: address,
       orderProducts: products,
@@ -88,6 +90,8 @@ export class OrderService {
       deliveryDate: order.deliveryDate,
       comment: order.comment,
     });
+    await this.notificationsService.createNotification(newOrder);
+    return newOrder;
   }
 
   async addProductsToOrder(itemIds: IOrderItem[]) {
@@ -168,6 +172,7 @@ export class OrderService {
   async confirmOrder(id: string, status: OrderStatus) {
     const order = await this.getOrderById(id);
     order.status = status;
+    this.notificationsService.updateNotification(order);
     return await this.orderRepository.save(order);
   }
 
