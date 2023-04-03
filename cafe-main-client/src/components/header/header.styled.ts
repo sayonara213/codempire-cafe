@@ -47,3 +47,9 @@ export const HeaderFormWrap = styled.div`
 
   width: 326px;
 `;
+
+export const HeaderUserWrap = styled.div`
+  @media (max-width: 960px) {
+    display: none;
+  }
+`;

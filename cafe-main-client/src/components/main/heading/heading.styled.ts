@@ -10,27 +10,27 @@ export const HeadingContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 960px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
-export const HeadingButtonWrap = styled.div``;
+export const HeadingButtonWrap = styled.div`
+  width: 60%;
 
-export const HeadingButton = styled.button`
-  margin-right: 20px;
-  padding: 0;
+  display: flex;
+  gap: 20px;
 
-  width: 225px;
-  height: 50px;
-  border: none;
-
-  background-color: ${({ theme }) => theme.color.dark};
-  border-radius: ${({ theme }) => theme.borderRadius.small};
-  color: ${({ theme }) => theme.color.white};
-  font-family: ${({ theme }) => theme.font.regular};
-  font-size: ${({ theme }) => theme.fontSize.medium};
+  @media (max-width: 960px) {
+    width: 100%;
+    justify-content: flex-start;
+  }
 `;
 
 export const SelectWrap = styled.div`
-  width: 225px;
+  width: auto;
 `;
 
 export const HeadingSelect = styled(Select)`

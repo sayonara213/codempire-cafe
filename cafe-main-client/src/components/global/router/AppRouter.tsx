@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
@@ -25,12 +25,20 @@ import OrderList from '../../order-list/order-list';
 const AppRouter: React.FC = () => {
   const dispatch = useAppDispatch();
   const token = getToken();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (token) {
       retrieveUserInfo(dispatch);
     }
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
   }, []);
+
+  if (isLoading) {
+    return <SplashScreen />;
+  }
 
   return (
     <Routes>

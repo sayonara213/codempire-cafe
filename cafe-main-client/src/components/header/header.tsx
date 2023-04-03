@@ -88,7 +88,9 @@ const Header: React.FC = () => {
           />
         </Styled.HeaderFormWrap>
       </Styled.HeaderWrapper>
-      <User />
+      <Styled.HeaderUserWrap>
+        <User />
+      </Styled.HeaderUserWrap>
     </Styled.HeaderContainer>
   );
 };
